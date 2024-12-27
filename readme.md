@@ -2,7 +2,7 @@
 
 Syrup is a browser extension built to help users find and apply the best coupons—without the hidden agendas or profit-first approach of traditional tools like Honey.
 
-<p>This was made for a youtube video, you can watch it [here](https://youtu.be/uBy9rERgmlU).</p>
+<p>This was made for a youtube video, you can watch it https://youtu.be/uBy9rERgmlU.</p>
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=uBy9rERgmlU"><img src="https://img.youtube.com/vi/uBy9rERgmlU/0.jpg" alt="Honey Is A Scam... So I Made My Own"></a>
