@@ -1,0 +1,31 @@
+{
+    "manifest_version": 3,
+    "name": "Syrup",
+    "description": "Find and apply the best coupons automatically and not steal commisions from the stores.",
+    "version": "0.1",
+    "permissions": ["activeTab", "storage"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "icons/Syrup.png",
+            "48": "icons/Syrup.png",
+            "128": "icons/Syrup.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["icons/Syrup.png"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

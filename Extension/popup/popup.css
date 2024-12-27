@@ -1,0 +1,129 @@
+body {
+    width: 360px;
+    height: 400px;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f1f1f1;
+    padding: 10px;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+}
+
+#header h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+}
+
+#PageInfo {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    background-color: #e8e8e8;
+    border-radius: 5px;
+}
+
+#PageInfo img {
+    margin-left: 10px;
+}
+
+#PageDomain {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Coupons section */
+#Coupons {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#Coupons h2 {
+    font-size: 18px;
+    margin-left: 10px;
+    color: #555;
+}
+
+/* Coupon list container */
+#CouponList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+/* Individual coupon styling */
+.Coupon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 2px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.Coupon:hover {
+    transform: scale(1.02);
+}
+
+/* Coupon information styling */
+.CouponInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 220px; /* Prevent long descriptions from overflowing */
+}
+
+.CouponTitle {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    color: #222;
+}
+
+.CouponDescription {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+/* Coupon button */
+.CouponButton {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.CouponButton:hover {
+    background-color: #0056b3;
+}
