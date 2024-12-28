@@ -1,3 +1,4 @@
 stores.json
 coupons.json
 node_modules/
+Scraper/src/*.json

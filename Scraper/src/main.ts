@@ -1,5 +1,9 @@
 import { writeFile } from "fs";
+import path from "path";
 import puppeteer, { Browser } from "puppeteer";
+import fs from "fs";
+import ProgressBar from "progress";
+
 const ua =
     "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.3";
 
@@ -60,8 +64,6 @@ async function getCouponCodesFromDomain(domain: string) {
     couponCodes = couponCodes.filter(
         (code) => code !== null && code !== undefined
     );
-
-    console.log(couponCodes);
 
     await browser.close();
     return couponCodes;
@@ -171,4 +173,82 @@ async function getCouponForStore(storeDomain: string) {
     });
 }
 
-getCouponForStore("codecademy.com");
+async function getAllCouponCodesInAlphabet(char: string) {
+    const allStores = require("./stores.json");
+
+    const stores = allStores.filter((store: any) =>
+        store.storeName.startsWith(char)
+    );
+
+    let ExistingStore = [];
+
+    if (fs.existsSync(path.join(__dirname, `coupons${char}.json`))) {
+        ExistingStore = require(`./coupons${char}.json`);
+    }
+
+    for (const existingStore of ExistingStore) {
+        const store = stores.find(
+            (store: any) => store.storeDomain === existingStore.storeDomain
+        );
+
+        if (store) {
+            store.coupons = existingStore.coupons;
+        }
+    }
+
+    const bar = new ProgressBar(`Processing ${char} [:bar] :current/:total`, {
+        total: stores.length,
+        width: 40,
+        complete: "=",
+        incomplete: " ",
+    });
+
+    for (const store of stores) {
+        if (store.coupons) {
+            console.log(
+                `Already have Coupons for ${store.storeName}: ${store.coupons}`
+            );
+            bar.tick();
+            continue;
+        }
+        const coupons = await getCouponCodesFromDomain(store.storeDomain);
+        store.coupons = coupons;
+        writeFile(
+            path.join(__dirname, `coupons${char}.json`),
+            JSON.stringify(stores),
+            (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            }
+        );
+        bar.tick();
+    }
+}
+
+(async () => {
+    const alhpabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0".split("");
+    const bar = new ProgressBar("Processing [:bar] :current/:total", {
+        total: alhpabet.length,
+        width: 40,
+        complete: "=",
+        incomplete: " ",
+    });
+
+    let currentChar = 0;
+    let char = alhpabet[currentChar];
+    while (true) {
+        try {
+            await getAllCouponCodesInAlphabet(char);
+            currentChar++;
+            bar.tick();
+            if (currentChar >= alhpabet.length) {
+                break;
+            }
+            char = alhpabet[currentChar];
+        } catch (error) {
+            console.log(error);
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+        }
+    }
+})();
