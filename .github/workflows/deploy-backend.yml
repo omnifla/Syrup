@@ -34,7 +34,6 @@ jobs:
 
                   git rm -rf .
 
-                  cp -r backend/* .
                   git add .
 
                   git -c user.name='github-actions' -c user.email='actions@github.com' commit -m "Deploy backend"
