@@ -34,6 +34,9 @@ jobs:
 
                   git rm -rf .
 
+                  echo "node_modules/" > .gitignore
+                  echo "Scraper/" >> .gitignore
+
                   git add .
 
                   git -c user.name='github-actions' -c user.email='actions@github.com' commit -m "Deploy backend"
