@@ -83,9 +83,9 @@ const GetCouponData = async (couponId: string, domain: string) => {
     } = await res.json();
 
     return {
-        code: data.code,
-        title: data.title,
-        description: data.desc,
+        couponCode: data.code,
+        couponTitle: data.title,
+        couponDescription: data.desc,
     };
 };
 
@@ -132,29 +132,24 @@ const SaveCoupons = async (coupons: any) => {
             continue;
         }
 
-        const storeCoupons = [];
-
         const couponIds = await GetCouponIds(store.storeDomain);
-        for (const couponId of couponIds) {
-            const couponData = await GetCouponData(couponId, store.storeDomain);
-            console.log(`
-                Store: ${store.storeName}
-                \tCoupon: ${couponData.code}
-                \tTitle: ${couponData.title}
-                \tDescription: ${couponData.description}`);
+        const couponsData: Promise<{
+            couponCode: string;
+            couponTitle: string;
+            couponDescription: string;
+        }>[] = [];
 
-            storeCoupons.push({
-                couponCode: couponData.code,
-                couponTitle: couponData.title,
-                couponDescription: couponData.description,
-            });
+        for (const couponId of couponIds) {
+            const couponData = GetCouponData(couponId, store.storeDomain);
+            couponsData.push(couponData);
         }
 
         coupons.push({
             storeName: store.storeName,
             storeDomain: store.storeDomain,
-            coupons: storeCoupons,
+            coupons: await Promise.all(couponsData),
         });
+
         SaveCoupons(coupons);
 
         bar.tick();
