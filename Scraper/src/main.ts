@@ -1,254 +1,164 @@
 import { writeFile } from "fs";
 import path from "path";
-import puppeteer, { Browser } from "puppeteer";
 import fs from "fs";
 import ProgressBar from "progress";
 
-const ua =
+const stores: {
+    storeName: string;
+    storeDomain: string;
+}[] = JSON.parse(fs.readFileSync(path.join(__dirname, "stores.json"), "utf-8"));
+
+const USER_AGENT =
     "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.3";
 
-async function getCouponCode(browser: Browser, couponLink: string) {
-    const couponPage = await browser.newPage();
-    await couponPage.setUserAgent(ua);
+const COUPON_API_URL = "https://couponfollow.com/portalapi/coupon/popup";
+const WEBSITE_LINK = "https://couponfollow.com/site/";
 
-    await couponPage.goto(couponLink, {
-        waitUntil: "domcontentloaded",
-    });
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    const couponCode = await couponPage.$("#code");
-    const code = await couponCode?.evaluate((node) => {
-        return node.getAttribute("value");
-    });
+const retry = async <T>(
+    fn: () => Promise<T>,
+    retries = 3,
+    delayMs = 3000
+): Promise<T> => {
+    for (let attempt = 0; attempt < retries; attempt++) {
+        try {
+            return await fn();
+        } catch (error) {
+            if (attempt < retries - 1) {
+                console.warn(`Retrying... (${attempt + 1}/${retries})`);
+                await delay(delayMs);
+            } else {
+                console.error(`Failed after ${retries} attempts.`);
+                throw error;
+            }
+        }
+    }
+    throw new Error("Function failed after all retries");
+};
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    await couponPage.close();
-    return code;
-}
-
-async function getCouponCodesFromDomain(domain: string) {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = (await browser.pages())[0];
-    await page.setUserAgent(ua);
-
-    await page.goto(`https://couponfollow.com/site/${domain}`, {
-        waitUntil: "networkidle0",
-    });
-
-    const articles = await page.$$("article");
-
-    let couponLinks = await Promise.all(
-        articles.map(async (article) => {
-            const dataModal = await article.evaluate((node) => {
-                return node.getAttribute("data-modal");
-            });
-            return dataModal;
+const GetCouponIds = async (domain: string) => {
+    const res = await retry(() =>
+        fetch(WEBSITE_LINK + domain, {
+            headers: {
+                "User-Agent": USER_AGENT,
+            },
+            method: "GET",
         })
     );
 
-    couponLinks = couponLinks.filter(
-        (dataModal: any) =>
-            dataModal !== null &&
-            dataModal.includes("#") &&
-            dataModal.startsWith("https://couponfollow.com/site/")
-    );
+    const data = await res.text();
 
-    const couponCodesPromises: Promise<string | null | undefined>[] = [];
-    for (const couponLink of couponLinks) {
-        if (!couponLink) continue;
-        couponCodesPromises.push(getCouponCode(browser, couponLink));
+    const regex = /data-cid="(\d+)"/g;
+    const matches = data.matchAll(regex);
+    const couponIds: string[] = [];
+    for (const match of matches) {
+        couponIds.push(match[1]);
     }
 
-    let couponCodes = await Promise.all(couponCodesPromises);
+    return couponIds;
+};
 
-    couponCodes = couponCodes.filter(
-        (code) => code !== null && code !== undefined
+const GetCouponData = async (couponId: string, domain: string) => {
+    const res = await retry(() =>
+        fetch(COUPON_API_URL, {
+            headers: {
+                "User-Agent": USER_AGENT,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: couponId, domainName: domain }),
+            method: "POST",
+        })
     );
 
-    await browser.close();
-    return couponCodes;
-}
+    const data: {
+        code: string;
+        popupDesc: string;
+        title: string;
+        desc: string;
+        outUrl: string;
+        emailOutUrl: string;
+        verified: boolean;
+        exclusive: boolean;
+    } = await res.json();
 
-async function getAllStoreInAlphabet(browser: Browser, char: string) {
-    const page = await browser.newPage();
+    return {
+        code: data.code,
+        title: data.title,
+        description: data.desc,
+    };
+};
 
-    await page.goto(`https://couponfollow.com/site/browse/${char}/all`, {
-        waitUntil: "networkidle0",
-    });
-
-    const storeLinks = await page.$$eval(".store-link", (nodes) => {
-        return nodes.map((node) => {
-            return node.getAttribute("href");
-        });
-    });
-
-    const storeNames = await page.$$eval(".store-link", (nodes) => {
-        return nodes.map((node) => {
-            return node.textContent;
-        });
-    });
-
-    let storeNamesAndLinks = storeLinks.map((storeLink, index) => {
-        return {
-            storeName: storeNames[index],
-            storeDomain: storeLink?.replace("site/", "").replace("/", ""),
-        };
-    });
-
-    await page.close();
-    return storeNamesAndLinks;
-}
-
-async function getAllAlphabet() {
-    const browser = await puppeteer.launch({ headless: false });
-
-    const alhpabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0".split("");
-
-    const alphabetPromises: Promise<
-        { storeName: string | null; storeDomain: string | undefined }[]
-    >[] = [];
-
-    for (const char of alhpabet) {
-        alphabetPromises.push(getAllStoreInAlphabet(browser, char));
-    }
-
-    const stores = await Promise.all(alphabetPromises);
-
-    let allStores: {
-        storeName: string | null;
-        storeDomain: string | undefined;
-    }[] = [];
-    stores.forEach((store) => {
-        allStores = allStores.concat(store);
-    });
-
-    console.log("Total Stores Count:", allStores.length);
-
-    writeFile("stores.json", JSON.stringify(allStores), (err) => {
-        if (err) {
-            console.log(err);
-        }
-    });
-
-    await browser.close();
-    return allStores;
-}
-
-async function getAllCouponCodes() {
-    const allStores = require("./stores.json");
-
-    for (const store of allStores) {
-        const coupons = await getCouponCodesFromDomain(store.storeDomain);
-        store.coupons = coupons;
-
-        console.log(`Got Coupons for ${store.storeName}: ${coupons}`);
-
-        writeFile("coupons.json", JSON.stringify(allStores), (err) => {
+const SaveCoupons = async (coupons: any) => {
+    writeFile(
+        path.join(__dirname, "coupons.json"),
+        JSON.stringify(coupons, null, 4),
+        (err) => {
             if (err) {
-                console.log(err);
+                console.error(err);
             }
-        });
-    }
-}
-
-async function getCouponForStore(storeDomain: string) {
-    const allStores = require("./stores.json");
-
-    const store = allStores.find(
-        (store: any) => store.storeDomain === storeDomain
-    );
-
-    if (!store) {
-        console.log("Store not found");
-        return;
-    }
-
-    const coupons = await getCouponCodesFromDomain(store.storeDomain);
-    store.coupons = coupons;
-
-    writeFile("coupons.json", JSON.stringify(allStores), (err) => {
-        if (err) {
-            console.log(err);
         }
-    });
-}
-
-async function getAllCouponCodesInAlphabet(char: string) {
-    const allStores = require("./stores.json");
-
-    const stores = allStores.filter((store: any) =>
-        store.storeName.startsWith(char)
     );
+};
 
-    let ExistingStore = [];
+(async () => {
+    const coupons: {
+        storeName: string;
+        storeDomain: string;
+        coupons: {
+            couponCode: string;
+            couponTitle: string;
+            couponDescription: string;
+        }[];
+    }[] = [];
 
-    if (fs.existsSync(path.join(__dirname, `coupons${char}.json`))) {
-        ExistingStore = require(`./coupons${char}.json`);
-    }
-
-    for (const existingStore of ExistingStore) {
-        const store = stores.find(
-            (store: any) => store.storeDomain === existingStore.storeDomain
+    if (fs.existsSync(path.join(__dirname, "coupons.json"))) {
+        coupons.push(
+            ...JSON.parse(
+                fs.readFileSync(path.join(__dirname, "coupons.json"), "utf-8")
+            )
         );
-
-        if (store) {
-            store.coupons = existingStore.coupons;
-        }
     }
 
-    const bar = new ProgressBar(`Processing ${char} [:bar] :current/:total`, {
+    const bar = new ProgressBar(":bar :current/:total", {
         total: stores.length,
-        width: 40,
-        complete: "=",
-        incomplete: " ",
     });
 
     for (const store of stores) {
-        if (store.coupons) {
-            console.log(
-                `Already have Coupons for ${store.storeName}: ${store.coupons}`
-            );
+        if (
+            coupons.some((coupon) => coupon.storeDomain === store.storeDomain)
+        ) {
             bar.tick();
             continue;
         }
-        const coupons = await getCouponCodesFromDomain(store.storeDomain);
-        store.coupons = coupons;
-        writeFile(
-            path.join(__dirname, `coupons${char}.json`),
-            JSON.stringify(stores),
-            (err) => {
-                if (err) {
-                    console.log(err);
-                }
-            }
-        );
+
+        const storeCoupons = [];
+
+        const couponIds = await GetCouponIds(store.storeDomain);
+        for (const couponId of couponIds) {
+            const couponData = await GetCouponData(couponId, store.storeDomain);
+            console.log(`
+                Store: ${store.storeName}
+                \tCoupon: ${couponData.code}
+                \tTitle: ${couponData.title}
+                \tDescription: ${couponData.description}`);
+
+            storeCoupons.push({
+                couponCode: couponData.code,
+                couponTitle: couponData.title,
+                couponDescription: couponData.description,
+            });
+        }
+
+        coupons.push({
+            storeName: store.storeName,
+            storeDomain: store.storeDomain,
+            coupons: storeCoupons,
+        });
+        SaveCoupons(coupons);
+
         bar.tick();
     }
-}
 
-(async () => {
-    const alhpabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0".split("");
-    const bar = new ProgressBar("Processing [:bar] :current/:total", {
-        total: alhpabet.length,
-        width: 40,
-        complete: "=",
-        incomplete: " ",
-    });
-
-    let currentChar = 0;
-    let char = alhpabet[currentChar];
-    while (true) {
-        try {
-            await getAllCouponCodesInAlphabet(char);
-            currentChar++;
-            bar.tick();
-            if (currentChar >= alhpabet.length) {
-                break;
-            }
-            char = alhpabet[currentChar];
-        } catch (error) {
-            console.log(error);
-            await new Promise((resolve) => setTimeout(resolve, 5000));
-        }
-    }
+    SaveCoupons(coupons);
 })();
