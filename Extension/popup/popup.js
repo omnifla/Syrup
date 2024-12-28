@@ -44,13 +44,15 @@ function addCoupon(coupon) {
 }
 
 function fetchCoupons() {
-    fetch(`http://localhost:8080/coupons/${PageDomain.textContent}`)
+    fetch(
+        `https://abdallah-alwarawreh.github.io/Syrup/backend/${PageDomain.textContent.toLowerCase()}/coupons.json`
+    )
         .then((response) => response.json())
         .then((data) => {
             data.forEach((coupon) => {
                 addCoupon({
-                    code: coupon,
-                    description: "",
+                    code: coupon.couponCode,
+                    description: coupon.couponDescription,
                 });
             });
         });

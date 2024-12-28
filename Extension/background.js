@@ -1,6 +1,10 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "getCoupons") {
-        fetch("http://localhost:8080/coupons/" + request.domain)
+        fetch(
+            "https://abdallah-alwarawreh.github.io/Syrup/backend/" +
+                request.domain +
+                "/coupons.json"
+        )
             .then((response) => response.json())
             .then((data) => {
                 sendResponse({ coupons: data });
