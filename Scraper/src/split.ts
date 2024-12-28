@@ -1,11 +1,17 @@
 import fs from "fs";
 import path from "path";
+import ProgressBar from "progress";
 
 const coupons: {
     storeName: string;
     storeDomain: string;
-    coupons: string[];
+    coupons: {
+        couponCode: string;
+        couponTitle: string;
+        couponDescription: string;
+    }[];
 }[] = require("./coupons.json");
+const bar = new ProgressBar(":bar :current/:total", { total: coupons.length });
 
 coupons.forEach((store) => {
     if (store.coupons) {
@@ -30,7 +36,5 @@ coupons.forEach((store) => {
             }
         );
     }
-    console.log(store.storeName);
-    console.log(store.storeDomain);
-    console.log(store.coupons);
+    bar.tick();
 });

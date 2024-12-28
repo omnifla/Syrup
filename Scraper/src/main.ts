@@ -92,7 +92,7 @@ const GetCouponData = async (couponId: string, domain: string) => {
 const SaveCoupons = async (coupons: any) => {
     writeFile(
         path.join(__dirname, "coupons.json"),
-        JSON.stringify(coupons, null, 4),
+        JSON.stringify(coupons),
         (err) => {
             if (err) {
                 console.error(err);
