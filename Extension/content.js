@@ -64,28 +64,6 @@ async function fetchCoupons(domain) {
 async function ApplyCouponOnPage() {
     const domain = window.location.hostname.replace("www.", "");
     const path = window.location.pathname;
-    if (domain === "codecademy.com") {
-        if (path.includes("checkout")) {
-            document.querySelector("#promo-button").click();
-            await new Promise((resolve) => setTimeout(resolve, 500));
-
-            let worked = false;
-            for (let coupon of coupons) {
-                worked = await ApplyCoupon(
-                    "#coupon-section > div > div > input",
-                    coupon,
-                    "#coupon-section > button",
-                    "#__next > main > div > form > div > div.gamut-1m8kivo-StyledColumn.e1y0e4q30 > div > div > div.e1n1w96r1.gamut-ra7di1-StyledColumn.e1y0e4q30 > div.gamut-1e7wabp-Box.ebnwbv90 > div > div.gamut-1a6yuhl-FlexBox.e1tc6bzh0 > span",
-                    "#coupon-section > div > span"
-                );
-
-                if (worked) break;
-            }
-
-            if (!worked) console.log("No coupons worked bruh");
-            else console.log("Coupon worked!");
-        }
-    }
 }
 
 async function main() {
@@ -96,7 +74,13 @@ async function main() {
     // this is just a demo, i wont be adding every website
     // for future readers, you can add more websites here or just make an endpoint for the javascript to run
     // TODO: add more websites
-    if (coupons.length > 0 && path.includes("checkout")) {
+    if (
+        coupons.length > 0 &&
+        (path.includes("checkout") ||
+            path.includes("cart") ||
+            path.includes("basket") ||
+            path.includes("order"))
+    ) {
         const SyrupIcon = chrome.runtime.getURL("icons/Syrup.png");
         const popupHTML = `
             <div id="coupon-popup" style="
@@ -124,10 +108,11 @@ async function main() {
                             margin: 0; 
                             font-size: 14px; 
                             color: #666;
-                        ">Would you like to apply them to your cart?</p>
+                        ">Syrup has found coupons for this site! click on the extension icon on top to check them out</p>
                     </div>
                 </div>
                 <div style="display: flex; justify-content: space-between; gap: 10px;">
+                <!--
                     <button id="apply-coupon" style="
                         background-color: #007bff; 
                         color: #ffffff; 
@@ -139,6 +124,7 @@ async function main() {
                         transition: background-color 0.2s ease;
                         width: 100%;
                     ">Apply</button>
+                -->
                     <button id="close-popup" style="
                         background-color: #f8f9fa; 
                         color: #333; 
@@ -157,13 +143,13 @@ async function main() {
 
         document.getElementById("syrupIcon").src = SyrupIcon;
 
-        document
-            .getElementById("apply-coupon")
-            .addEventListener("click", () => {
-                document.getElementById("coupon-popup").remove();
+        // document
+        //     .getElementById("apply-coupon")
+        //     .addEventListener("click", () => {
+        //         document.getElementById("coupon-popup").remove();
 
-                ApplyCouponOnPage();
-            });
+        //         ApplyCouponOnPage();
+        //     });
 
         document.getElementById("close-popup").addEventListener("click", () => {
             document.getElementById("coupon-popup").remove();
