@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Syrup",
     "description": "Find and apply the best coupons automatically and not steal commisions from the stores.",
-    "version": "0.1",
+    "version": "0.2",
     "permissions": ["activeTab", "storage"],
     "background": {
         "service_worker": "background.js",
