@@ -3,7 +3,7 @@
     "name": "Syrup",
     "description": "A Honey alternative, find and apply the best coupons automatically.",
     "version": "0.2",
-    "permissions": ["activeTab", "storage"],
+    "permissions": ["activeTab"],
     "background": {
         "service_worker": "background.js",
         "scripts": ["background.js"]
