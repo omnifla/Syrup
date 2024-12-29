@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Syrup",
-    "description": "Find and apply the best coupons automatically and not steal commisions from the stores.",
+    "description": "A Honey alternative, find and apply the best coupons automatically.",
     "version": "0.2",
     "permissions": ["activeTab", "storage"],
     "background": {
