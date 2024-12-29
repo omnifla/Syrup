@@ -5,8 +5,7 @@
     "version": "0.1",
     "permissions": ["activeTab", "storage"],
     "background": {
-        "service_worker": "background.js",
-        "scripts": ["background.js"]
+        "service_worker": "background.js"
     },
     "action": {
         "default_popup": "index.html",
