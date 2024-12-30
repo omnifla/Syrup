@@ -1,0 +1,33 @@
+name: Build Extension
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-extension:
+    name: Build Extension
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build Project
+        run: |
+          cd Extension-React
+          npm install
+          npm run build
+          mv dist Syrup-dev
+
+      - name: Upload dist Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Syrup-dev
+          path: Extension-React/Syrup-dev
