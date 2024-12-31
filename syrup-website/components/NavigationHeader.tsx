@@ -8,39 +8,31 @@ import {
     NavigationMenuList,
     NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
-import Image, { StaticImageData } from "next/image";
 import { Icon } from "@iconify/react";
-import { ModeToggle } from "./theme-toggle";
 import { GithubButton } from "./Github";
+import { Pacifico } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const pacifico = Pacifico({
+    weight: "400",
+    subsets: ["latin"],
+});
 
 const NavigationHeader = ({
-    logoSrc,
     title,
     links,
 }: {
-    logoSrc: StaticImageData;
     title: string;
     links: { href: string; label: string }[];
 }) => {
     return (
-        <header className="flex h-20 w-full shrink-0 items-center justify-between px-4 md:px-6 bg-background shadow-md border-border border-b-2">
+        <header className="flex z-10 h-20 w-full shrink-0 items-center justify-between px-4 md:px-6 absolute text-primary-foreground">
             <div className="flex items-center space-x-4">
-                <Image
-                    src={logoSrc}
-                    alt="Logo"
-                    width={40}
-                    height={40}
-                    className="rounded-lg"
-                    unoptimized={true}
-                    priority
-                    quality={100}
-                />
-                <h1 className="text-xl font-semibold">{title}</h1>
+                <h1 className={cn(pacifico.className, "text-2xl")}>{title}</h1>
             </div>
 
             <NavigationMenu>
                 <NavigationMenuList className="hidden md:flex space-x-4">
-                    <ModeToggle />
                     <GithubButton />
                     {links.map((link) => (
                         <NavigationMenuLink asChild key={link.href}>
@@ -63,10 +55,6 @@ const NavigationHeader = ({
                             </Link>
                         ))}
                     </nav>
-
-                    <div className="absolute bottom-4 right-4">
-                        <ModeToggle />
-                    </div>
                 </SheetContent>
             </Sheet>
         </header>
@@ -74,7 +62,6 @@ const NavigationHeader = ({
 };
 
 NavigationHeader.propTypes = {
-    logoSrc: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     links: PropTypes.arrayOf(
         PropTypes.shape({

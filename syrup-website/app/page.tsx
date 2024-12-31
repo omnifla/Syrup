@@ -1,9 +1,20 @@
 import React from "react";
 import NavigationHeader from "@/components/NavigationHeader";
-import Syrup from "@/public/Syrup.svg";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import StarUsButton from "@/components/StarUs";
+import LaptopSyrup from "@/public/LaptopSyrup.png";
+import Image from "next/image";
+import { Pacifico, Roboto } from "next/font/google";
+import { cn } from "@/lib/utils";
+import HeroAbstract from "@/public/HeroAbstract.svg";
+
+const pacifico = Pacifico({
+    weight: "400",
+    subsets: ["latin"],
+});
+
+const roboto = Roboto({
+    weight: "400",
+    subsets: ["latin"],
+});
 
 export default function Home() {
     const navLinks = [
@@ -13,31 +24,54 @@ export default function Home() {
     ];
 
     return (
-        <main>
-            <NavigationHeader logoSrc={Syrup} title="Syrup" links={navLinks} />
+        <main className={roboto.className}>
+            <NavigationHeader title="Syrup" links={navLinks} />
             {/* Hero */}
-            <div className="container mx-auto flex flex-col items-center text-center py-20 px-6">
-                <h1 className="text-5xl font-bold text-primary">
-                    Ethical Savings, Simplified
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground max-w-2xl">
-                    <span className="text-primary">Syrup</span> helps you
-                    discover and apply the best coupons effortlessly, with full
-                    transparency and no shady practices.
-                </p>
-                <div className="mt-6 flex flex-col sm:flex-row gap-4">
-                    <Button asChild variant="default">
-                        <Link href="#">Get Started</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="About">About</Link>
-                    </Button>
+            <div className="relative bg-[#A02801] flex flex-row items-center text-center px-16 pt-32 overflow-hidden h-screen">
+                {/* Right */}
+                <div className="flex-1 p-8 flex justify-center items-center h-full">
+                    <Image
+                        src={LaptopSyrup}
+                        alt="Laptop with Syrup"
+                        className="max-w-full h-auto rounded-lg"
+                        quality={100}
+                    />
+                </div>
+
+                {/* Left */}
+                <div className="flex-1 flex flex-col h-full text-primary-foreground text-left gap-8">
+                    <h1 className={cn(pacifico.className, "text-5xl")}>
+                        Syrup
+                    </h1>
+
+                    <div className="flex flex-col gap-4">
+                        <h1 className="text-5xl">
+                            Save Money. Stay Transparent.
+                        </h1>
+                        <p className="text-lg">
+                            Syrup is the ethical, open-source browser extension
+                            that finds and applies the best discounts,
+                            <b>
+                                {" "}
+                                no tracking, no bullshit, just savings you can
+                                trust.
+                            </b>
+                        </p>
+                    </div>
+                </div>
+
+                {/* Abstract svgs */}
+                <div className="absolute bottom-0 right-0 w-full h-full -z-1 select-none pointer-events-none">
+                    <Image
+                        src={HeroAbstract}
+                        alt="Hero Abstract"
+                        className="absolute -bottom-32 -right-16"
+                    />
                 </div>
             </div>
 
+            {/*  */}
             <div className="h-96"></div>
-
-            <StarUsButton />
         </main>
     );
 }
