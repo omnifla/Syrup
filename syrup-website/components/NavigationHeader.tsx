@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
     NavigationMenu,
@@ -43,9 +42,12 @@ const NavigationHeader = ({
             </NavigationMenu>
             <Sheet>
                 <SheetTrigger asChild>
-                    <Button variant="outline" className="md:hidden">
-                        <Icon icon="mdi:menu" />
-                    </Button>
+                    <Icon
+                        icon="mdi:menu"
+                        width="24"
+                        height="24"
+                        className="md:hidden"
+                    />
                 </SheetTrigger>
                 <SheetContent>
                     <nav className="flex flex-col space-y-4">

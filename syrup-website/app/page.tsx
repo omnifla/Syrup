@@ -27,9 +27,9 @@ export default function Home() {
         <main className={roboto.className}>
             <NavigationHeader title="Syrup" links={navLinks} />
             {/* Hero */}
-            <div className="relative bg-[#A02801] flex flex-row items-center text-center px-16 pt-32 overflow-hidden h-screen">
+            <div className="relative bg-[#A02801] flex flex-row items-center text-center px-4 sm:px-16 pt-32 overflow-hidden h-screen">
                 {/* Right */}
-                <div className="flex-1 p-8 flex justify-center items-center h-full">
+                <div className="flex-1 p-8 justify-center items-center h-full hidden lg:flex">
                     <Image
                         src={LaptopSyrup}
                         alt="Laptop with Syrup"
@@ -45,7 +45,7 @@ export default function Home() {
                     </h1>
 
                     <div className="flex flex-col gap-4">
-                        <h1 className="text-5xl">
+                        <h1 className="text-3xl sm:text-5xl">
                             Save Money. Stay Transparent.
                         </h1>
                         <p className="text-lg">
@@ -65,7 +65,7 @@ export default function Home() {
                     <Image
                         src={HeroAbstract}
                         alt="Hero Abstract"
-                        className="absolute -bottom-32 -right-16"
+                        className="absolute bottom-0 sm:-bottom-8 md:-bottom-32 -right-8"
                     />
                 </div>
             </div>
