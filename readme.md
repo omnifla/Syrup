@@ -1,3 +1,6 @@
+[![Build Extension](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/build-extension.yml/badge.svg)](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/build-extension.yml)
+[![Deploy Backend](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/deploy-backend.yml/badge.svg)](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/deploy-backend.yml)
+
 # Syrup, a Honey alternative
 
 Syrup is an open-source browser extension designed to help users discover and apply the best coupons effortlessly. Unlike traditional tools such as Honey, Syrup prioritizes transparency and user benefits over profit-driven motives or hidden agendas.
