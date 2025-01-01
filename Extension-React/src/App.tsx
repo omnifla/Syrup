@@ -19,12 +19,12 @@ const Popup: React.FC = () => {
                 if (tab.url) {
                     const url = new URL(tab.url);
                     const fullDomain = url.hostname.replace("www.", "");
-                    const domain = fullDomain.split('.').slice(-2).join('.');
-                    if (fullDomain.split('.').length > 2) {
-                        setIsSubDomain(true)
+                    const domain = fullDomain.split(".").slice(-2).join(".");
+                    if (fullDomain.split(".").length > 2) {
+                        setIsSubDomain(true);
                         setPageSubDomain(fullDomain);
                     } else {
-                        setIsSubDomain(false)
+                        setIsSubDomain(false);
                         setPageSubDomain("");
                     }
 
@@ -40,7 +40,10 @@ const Popup: React.FC = () => {
         });
     }, []);
 
-    const handleCopy: (code: string, index: number) => void = (code: string, index: number) => {
+    const handleCopy: (code: string, index: number) => void = (
+        code: string,
+        index: number
+    ) => {
         navigator.clipboard.writeText(code);
 
         const newCoupons = [...couponsDomain];
@@ -57,17 +60,20 @@ const Popup: React.FC = () => {
         <div className="w-96 h-[32rem] flex flex-col p-4 bg-background">
             <Header pageIcon={pageIcon} pageDomain={pageDomain} />
             <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
-            coupons for {pageDomain}
+                coupons for {pageDomain}
             </h2>
             <CouponsList coupons={couponsDomain} handleCopy={handleCopy} />
             {isSubDomain && (
-            <>
-                <Header pageIcon={pageIcon} pageDomain={pageSubDomain} />
-                <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
-                coupons for {pageSubDomain}
-                </h2>
-                <CouponsList coupons={couponsSubDomain} handleCopy={handleCopy} />
-            </>
+                <>
+                    <Header pageIcon={pageIcon} pageDomain={pageSubDomain} />
+                    <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
+                        coupons for {pageSubDomain}
+                    </h2>
+                    <CouponsList
+                        coupons={couponsSubDomain}
+                        handleCopy={handleCopy}
+                    />
+                </>
             )}
         </div>
     );
