@@ -68,9 +68,9 @@ const Popup: React.FC = () => {
     };
 
     return (
-        <div className="w-96 h-[32rem] flex flex-col p-4 bg-background">
+        <div className="w-96 h-[32rem] flex flex-col p-4 bg-white dark:bg-slate-900">
             <Header pageIcon={pageIcon} pageDomain={pageDomain} />
-            <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
+            <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2 dark:text-white">
                 Coupons
             </h2>
             <CouponsList coupons={coupons} handleCopy={handleCopy} />
