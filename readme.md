@@ -1,42 +1,102 @@
-[![Build Extension](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/build-extension.yml/badge.svg)](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/build-extension.yml)
-[![Deploy Backend](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/deploy-backend.yml/badge.svg)](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/deploy-backend.yml)
+# Syrup: The Open-Source Honey Alternative  
 
-# Syrup, a Honey alternative
+[![Build Extension](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/build-extension.yml/badge.svg)](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/build-extension.yml) [![Deploy Backend](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/deploy-backend.yml/badge.svg)](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/deploy-backend.yml) [![Discord](https://img.shields.io/discord/1322120002576453745?color=5865F2&label=Discord&logo=discord&logoColor=white)](https://dsc.gg/hexium)
 
-Syrup is an open-source browser extension designed to help users discover and apply the best coupons effortlessly. Unlike traditional tools such as Honey, Syrup prioritizes transparency and user benefits over profit-driven motives or hidden agendas.
 
-<p>This was made for a youtube video which you can watch here:</p>
-<div align="center">
-  <a href="https://www.youtube.com/watch?v=uBy9rERgmlU"><img src="imgs/thumbnail.png" alt="Honey Is A Scam... So I Made My Own"></a>
-</div>
-
-<div align="center">
-  <a href="https://dsc.gg/hexium"><img src="https://img.shields.io/discord/1322120002576453745?color=5865F2&label=Discord&logo=discord&logoColor=white" alt="Discord"></a>
-</div>
+Syrup is a lightweight, open-source browser extension designed to make finding and applying the best coupons effortless. Unlike traditional tools like Honey, Syrup prioritizes **transparency**, **user privacy**, and **ethical design** over profit-driven motives.  
 
 ---
 
-## Prerequisites
+## 🎥 Featured Video  
 
--   **Browser**: Any browser that supports webextensions (Chrome, Edge, Firefox, Brave etc.).
--   **Development Tools**: Node.js and npm (if making changes).
+Watch how and why Syrup was made!  
 
----
-
-## Special Thanks To ❤️:
-
--   **Nufshi** and **skyerush.** for their help in creating this video
--   **Dominik** for his support and guidance
--   **Taco** for his amazing emotional Support
+<div align="center">  
+  <a href="https://www.youtube.com/watch?v=uBy9rERgmlU">  
+    <img src="imgs/thumbnail.png" alt="Honey Is A Scam... So I Made My Own">  
+  </a>  
+</div>  
 
 ---
 
-## License
+## 🌟 Features  
 
-This project is licensed under the MIT License.
+- 🔍 **Smart Coupon Finder**: Automatically scans for and applies the best coupons during checkout.  
+- 🌱 **Ethical & Transparent**: Open-source and free from hidden agendas or shady affiliate deals.  
+- 🔒 **Privacy-Focused**: No tracking, no data harvesting—just savings.  
 
 ---
 
-## Contribution
+## 🛠️ Prerequisites  
 
-Contributions are welcome! Feel free to fork the repository and submit a pull request with your improvements or ideas. 🚀
+To use or contribute to Syrup, make sure you have the following:  
+
+### For Users:  
+- A supported browser: Chrome, Edge, Firefox, Brave, or any browser with WebExtension support.  
+
+### For Developers:  
+- [Node.js](https://nodejs.org/) and npm installed for development.  
+
+---
+
+## 🚀 Installation  
+
+1. **Download the Extension**:  
+   Clone or download the repo:  
+   ```bash  
+   git clone https://github.com/Abdallah-Alwarawreh/Syrup.git  
+   cd Extension-React  
+   ```  
+
+2. **Build the Extension**:  
+   Install dependencies and build:  
+   ```bash  
+   npm install  
+   npm run build  
+   ```  
+
+3. **Add to Your Browser**:  
+   - Open your browser’s developer mode.  
+   - Load the `dist` folder as an unpacked extension.  
+
+---
+
+## 🤝 Contribution  
+
+We welcome contributions to improve Syrup! Here’s how you can help:  
+
+1. Fork the repository.  
+2. Create a branch for your feature or bug fix:  
+   ```bash  
+   git checkout -b my-new-feature  
+   ```  
+3. Commit your changes and push the branch:  
+   ```bash  
+   git commit -m "Add my feature"  
+   git push origin my-new-feature  
+   ```  
+4. Open a Pull Request!  
+
+For major changes, please open an issue first to discuss what you’d like to contribute.  
+
+---
+
+## ❤️ Acknowledgements  
+
+Special thanks to the amazing people who made Syrup possible:  
+
+- **Nufshi** and **skyerush** for their support in creating the video.  
+- Thanks for our lovely contributors @cranberry3148 @hammerill @CuriousCodingCanadian @MerkomassDev
+- and **Taco** for incredible emotional support.  
+
+---
+
+## 📄 License  
+
+Syrup is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute this project.  
+
+---
+
+## 🗨️ Join the Community  
+
+Have questions, ideas, or just want to connect? Join our [Discord Community](https://dsc.gg/hexium)!  
