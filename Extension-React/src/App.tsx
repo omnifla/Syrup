@@ -4,8 +4,8 @@ import Header from "./components/Header";
 import CouponsList from "./components/CouponsList";
 import { fetchCoupons } from "./lib/utils";
 import { ThemeToggle } from "./components/ThemeToggle";
+import { parseDomain } from "parse-domain";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const domainReplacements: any = {
     "nordcheckout.com": "nordvpn.com",
 };
@@ -19,34 +19,45 @@ const Popup: React.FC = () => {
     const [couponsSubDomain, setCouponsSubDomain] = useState<Coupon[] | null>(
         null
     );
+    const [errorMsg, setErrorMsg] = useState<string>("");
 
     useEffect(() => {
         if (!chrome.tabs) {
-            const url = new URL(window.location.href);
-            let fullDomain = url.hostname.replace("www.", "");
+            let fullDomain = window.location.hostname.replace("www.", "");
             const searchParams = new URLSearchParams(window.location.search);
             if (searchParams.has("domain")) {
                 fullDomain = searchParams.get("domain") || "";
             }
-            if (domainReplacements[fullDomain])
-                fullDomain = domainReplacements[fullDomain];
-            const domain = fullDomain.split(".").slice(-2).join(".");
 
-            if (fullDomain.split(".").length > 2) {
-                setIsSubDomain(true);
-                setPageSubDomain(fullDomain);
-            } else {
-                setIsSubDomain(false);
-                setPageSubDomain("");
-            }
-
-            setPageDomain(domain);
-            setPageIcon(
-                `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
+            const parseResult: any = parseDomain(
+                domainReplacements[fullDomain] || fullDomain
             );
+            try {
+                const domain = `${
+                    parseResult.domain
+                }.${parseResult.topLevelDomains.join(".")}`;
 
-            fetchCoupons(domain, setCouponsDomain);
-            fetchCoupons(fullDomain, setCouponsSubDomain);
+                if (parseResult.subDomains.length > 0) {
+                    setIsSubDomain(true);
+                    setPageSubDomain(parseResult.hostname);
+                } else {
+                    setIsSubDomain(false);
+                    setPageSubDomain("");
+                }
+
+                setPageDomain(domain);
+                setPageIcon(
+                    `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
+                );
+
+                fetchCoupons(domain, setCouponsDomain);
+                fetchCoupons(parseResult.hostname, setCouponsSubDomain);
+
+                setErrorMsg("");
+            } catch (error) {
+                console.error("Error parsing domain:", error);
+                setErrorMsg("Domain seems to be invalid?");
+            }
 
             return;
         }
@@ -56,25 +67,37 @@ const Popup: React.FC = () => {
                 const tab = tabs[0];
                 if (tab.url) {
                     const url = new URL(tab.url);
-                    let fullDomain = url.hostname.replace("www.", "");
-                    if (domainReplacements[fullDomain])
-                        fullDomain = domainReplacements[fullDomain];
-                    const domain = fullDomain.split(".").slice(-2).join(".");
-                    if (fullDomain.split(".").length > 2) {
-                        setIsSubDomain(true);
-                        setPageSubDomain(fullDomain);
-                    } else {
-                        setIsSubDomain(false);
-                        setPageSubDomain("");
-                    }
+                    const fullDomain = url.hostname.replace("www.", "");
 
-                    setPageDomain(domain);
-                    setPageIcon(
-                        `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
+                    const parseResult: any = parseDomain(
+                        domainReplacements[fullDomain] || fullDomain
                     );
+                    try {
+                        const domain = `${
+                            parseResult.domain
+                        }.${parseResult.topLevelDomains.join(".")}`;
 
-                    fetchCoupons(domain, setCouponsDomain);
-                    fetchCoupons(fullDomain, setCouponsSubDomain);
+                        if (parseResult.subDomains.length > 0) {
+                            setIsSubDomain(true);
+                            setPageSubDomain(parseResult.hostname);
+                        } else {
+                            setIsSubDomain(false);
+                            setPageSubDomain("");
+                        }
+
+                        setPageDomain(domain);
+                        setPageIcon(
+                            `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
+                        );
+
+                        fetchCoupons(domain, setCouponsDomain);
+                        fetchCoupons(parseResult.hostname, setCouponsSubDomain);
+
+                        setErrorMsg("");
+                    } catch (error) {
+                        console.error("Error parsing domain:", error);
+                        setErrorMsg("Domain seems to be invalid?");
+                    }
                 }
             }
         });
@@ -101,17 +124,31 @@ const Popup: React.FC = () => {
             <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
                 Coupons
             </h2>
-            <Header pageIcon={pageIcon} pageDomain={pageDomain} />
-            <CouponsList coupons={couponsDomain} handleCopy={handleCopy} />
-
-            {isSubDomain && (
-                <div className="h-[50%] pt-2">
-                    <Header pageIcon={pageIcon} pageDomain={pageSubDomain} />
+            {errorMsg ? (
+                <p className="text-sm text-center text-red-500 dark:text-red-300">
+                    {errorMsg}
+                </p>
+            ) : (
+                <>
+                    <Header pageIcon={pageIcon} pageDomain={pageDomain} />
                     <CouponsList
-                        coupons={couponsSubDomain}
+                        coupons={couponsDomain}
                         handleCopy={handleCopy}
                     />
-                </div>
+
+                    {isSubDomain && (
+                        <div className="h-[50%] pt-2">
+                            <Header
+                                pageIcon={pageIcon}
+                                pageDomain={pageSubDomain}
+                            />
+                            <CouponsList
+                                coupons={couponsSubDomain}
+                                handleCopy={handleCopy}
+                            />
+                        </div>
+                    )}
+                </>
             )}
 
             <div className="flex items-center absolute top-1 right-1">
