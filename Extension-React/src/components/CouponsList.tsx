@@ -19,12 +19,12 @@ const CouponsList: React.FC<{
                     ))}
                 </div>
             ) : (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground dark:text-slate-400">
                     No coupons available for this site.
                 </p>
             )
         ) : (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground dark:text-slate-400">
                 Loading coupons for this site...
             </p>
         )}
