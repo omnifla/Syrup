@@ -6,6 +6,7 @@ export interface Coupon {
     title: string;
     description: string;
     copied?: boolean;
+    expirationDate: string;
 }
 
 const CouponCard: React.FC<{
@@ -17,6 +18,11 @@ const CouponCard: React.FC<{
         <div>
             <p className="font-bold text-primary">{coupon.code}</p>
             <p className="text-sm text-muted-foreground">{coupon.title}</p>
+            {coupon.expirationDate && (
+                <p className="text-sm text-muted-foreground text-orange-400">
+                    Expires: {coupon.expirationDate}
+                </p>
+            )}
         </div>
         <Button onClick={onCopy} className="bg-primary text-primary-foreground">
             {copied ? "Copied!" : "Copy"}

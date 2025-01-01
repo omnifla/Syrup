@@ -4,18 +4,44 @@ import Header from "./components/Header";
 import CouponsList from "./components/CouponsList";
 import { fetchCoupons } from "./lib/utils";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const domainReplacements: any = {
+    "nordcheckout.com": "nordvpn.com",
+};
+
 const Popup: React.FC = () => {
     const [pageDomain, setPageDomain] = useState<string>("");
     const [pageIcon, setPageIcon] = useState<string>("");
-    const [coupons, setCoupons] = useState<Coupon[]>([]);
+    const [coupons, setCoupons] = useState<Coupon[] | null>(null);
 
     useEffect(() => {
+        if (!chrome.tabs) {
+            const url = new URL(window.location.href);
+            let domain = url.hostname.replace("www.", "");
+
+            const searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.has("domain")) {
+                domain = searchParams.get("domain") || "";
+            }
+            if (domainReplacements[domain]) domain = domainReplacements[domain];
+
+            setPageDomain(domain);
+            setPageIcon(
+                `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
+            );
+
+            fetchCoupons(domain, setCoupons);
+            return;
+        }
+
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (tabs.length > 0) {
                 const tab = tabs[0];
                 if (tab.url) {
                     const url = new URL(tab.url);
-                    const domain = url.hostname.replace("www.", "");
+                    let domain = url.hostname.replace("www.", "");
+                    if (domainReplacements[domain])
+                        domain = domainReplacements[domain];
 
                     setPageDomain(domain);
                     setPageIcon(
@@ -31,7 +57,7 @@ const Popup: React.FC = () => {
     const handleCopy = (code: string, index: number) => {
         navigator.clipboard.writeText(code);
 
-        const newCoupons = [...coupons];
+        const newCoupons = coupons ? [...coupons] : [];
         newCoupons[index] = { ...newCoupons[index], copied: true };
         setCoupons(newCoupons);
 
