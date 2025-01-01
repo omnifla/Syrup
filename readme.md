@@ -18,7 +18,7 @@ Syrup is an open-source browser extension designed to help users discover and ap
 
 ## Prerequisites
 
--   **Browser**: Any browser that supports Chromium extensions (Chrome, Edge, Brave etc.).
+-   **Browser**: Any browser that supports webextensions (Chrome, Edge, Firefox, Brave etc.).
 -   **Development Tools**: Node.js and npm (if making changes).
 
 ---
