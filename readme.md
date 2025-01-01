@@ -23,7 +23,7 @@ Watch how and why Syrup was made!
 
 - 🔍 **Smart Coupon Finder**: Automatically scans for and applies the best coupons during checkout.  
 - 🌱 **Ethical & Transparent**: Open-source and free from hidden agendas or shady affiliate deals.  
-- 🔒 **Privacy-Focused**: No tracking, no data harvesting—just savings.  
+- 🔒 **Privacy-Focused**: No tracking, no data harvesting just savings.  
 
 ---
 
