@@ -4,21 +4,60 @@ import Header from "./components/Header";
 import CouponsList from "./components/CouponsList";
 import { fetchCoupons } from "./lib/utils";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const domainReplacements: any = {
+    "nordcheckout.com": "nordvpn.com",
+};
+
 const Popup: React.FC = () => {
     const [pageDomain, setPageDomain] = useState<string>("");
     const [pageSubDomain, setPageSubDomain] = useState<string>("");
     const [isSubDomain, setIsSubDomain] = useState<boolean>(false);
     const [pageIcon, setPageIcon] = useState<string>("");
-    const [couponsDomain, setCouponsDomain] = useState<Coupon[]>([]);
-    const [couponsSubDomain, setCouponsSubDomain] = useState<Coupon[]>([]);
+    const [couponsDomain, setCouponsDomain] = useState<Coupon[] | null>(null);
+    const [couponsSubDomain, setCouponsSubDomain] = useState<Coupon[] | null>(
+        null
+    );
 
     useEffect(() => {
+        if (!chrome.tabs) {
+            const url = new URL(window.location.href);
+            let fullDomain = url.hostname.replace("www.", "");
+            const searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.has("domain")) {
+                fullDomain = searchParams.get("domain") || "";
+            }
+            if (domainReplacements[fullDomain])
+                fullDomain = domainReplacements[fullDomain];
+            const domain = fullDomain.split(".").slice(-2).join(".");
+
+            if (fullDomain.split(".").length > 2) {
+                setIsSubDomain(true);
+                setPageSubDomain(fullDomain);
+            } else {
+                setIsSubDomain(false);
+                setPageSubDomain("");
+            }
+
+            setPageDomain(domain);
+            setPageIcon(
+                `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
+            );
+
+            fetchCoupons(domain, setCouponsDomain);
+            fetchCoupons(fullDomain, setCouponsSubDomain);
+
+            return;
+        }
+
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (tabs.length > 0) {
                 const tab = tabs[0];
                 if (tab.url) {
                     const url = new URL(tab.url);
-                    const fullDomain = url.hostname.replace("www.", "");
+                    let fullDomain = url.hostname.replace("www.", "");
+                    if (domainReplacements[fullDomain])
+                        fullDomain = domainReplacements[fullDomain];
                     const domain = fullDomain.split(".").slice(-2).join(".");
                     if (fullDomain.split(".").length > 2) {
                         setIsSubDomain(true);
@@ -46,7 +85,7 @@ const Popup: React.FC = () => {
     ) => {
         navigator.clipboard.writeText(code);
 
-        const newCoupons = [...couponsDomain];
+        const newCoupons = [...(couponsDomain || [])];
         newCoupons[index] = { ...newCoupons[index], copied: true };
         setCouponsDomain(newCoupons);
 
@@ -57,23 +96,21 @@ const Popup: React.FC = () => {
     };
 
     return (
-        <div className="w-96 h-[32rem] flex flex-col p-4 bg-background">
-            <Header pageIcon={pageIcon} pageDomain={pageDomain} />
-            <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
-                coupons for {pageDomain}
+        <div className="w-96 h-[32rem] flex flex-col p-4 pt-2 bg-white dark:bg-slate-900">
+            <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2 dark:text-white">
+                Coupons
             </h2>
+            <Header pageIcon={pageIcon} pageDomain={pageDomain} />
             <CouponsList coupons={couponsDomain} handleCopy={handleCopy} />
+
             {isSubDomain && (
-                <>
+                <div className="h-[50%] pt-2 bg-white dark:bg-slate-900">
                     <Header pageIcon={pageIcon} pageDomain={pageSubDomain} />
-                    <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
-                        coupons for {pageSubDomain}
-                    </h2>
                     <CouponsList
                         coupons={couponsSubDomain}
                         handleCopy={handleCopy}
                     />
-                </>
+                </div>
             )}
         </div>
     );
