@@ -3,6 +3,7 @@ import { Coupon } from "./components/CouponCard";
 import Header from "./components/Header";
 import CouponsList from "./components/CouponsList";
 import { fetchCoupons } from "./lib/utils";
+import { ThemeToggle } from "./components/ThemeToggle";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const domainReplacements: any = {
@@ -96,15 +97,15 @@ const Popup: React.FC = () => {
     };
 
     return (
-        <div className="w-96 h-[32rem] flex flex-col p-4 pt-2 bg-white dark:bg-slate-900">
-            <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2 dark:text-white">
+        <div className="w-96 h-[32rem] flex flex-col p-4 pt-2">
+            <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
                 Coupons
             </h2>
             <Header pageIcon={pageIcon} pageDomain={pageDomain} />
             <CouponsList coupons={couponsDomain} handleCopy={handleCopy} />
 
             {isSubDomain && (
-                <div className="h-[50%] pt-2 bg-white dark:bg-slate-900">
+                <div className="h-[50%] pt-2">
                     <Header pageIcon={pageIcon} pageDomain={pageSubDomain} />
                     <CouponsList
                         coupons={couponsSubDomain}
@@ -112,6 +113,10 @@ const Popup: React.FC = () => {
                     />
                 </div>
             )}
+
+            <div className="flex items-center absolute top-1 right-1">
+                <ThemeToggle />
+            </div>
         </div>
     );
 };

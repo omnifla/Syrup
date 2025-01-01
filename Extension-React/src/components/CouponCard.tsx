@@ -14,24 +14,17 @@ const CouponCard: React.FC<{
     onCopy: () => void;
     copied: boolean;
 }> = ({ coupon, onCopy, copied }) => (
-    <Card className="p-4 pt-2 pb-2 flex justify-between items-center bg-card text-card-foreground dark:bg-slate-800 dark:border-slate-700">
+    <Card className="p-4 pt-2 pb-2 flex justify-between items-center bg-card text-card-foreground">
         <div>
-            <p className="text-sm font-bold text-primary dark:text-white">
-                {coupon.code}
-            </p>
-            <p className="text-sm text-muted-foreground dark:text-slate-400">
-                {coupon.title}
-            </p>
+            <p className="text-sm font-bold text-primary">{coupon.code}</p>
+            <p className="text-sm text-muted-foreground">{coupon.title}</p>
             {coupon.expirationDate && (
-                <p className="text-sm text-muted-foreground text-orange-400">
+                <p className="text-sm text-muted-foreground">
                     Expires: {coupon.expirationDate}
                 </p>
             )}
         </div>
-        <Button
-            onClick={onCopy}
-            className="bg-primary text-primary-foreground dark:bg-slate-700"
-        >
+        <Button onClick={onCopy} className="bg-primary text-primary-foreground">
             {copied ? "Copied!" : "Copy"}
         </Button>
     </Card>
