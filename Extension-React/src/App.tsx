@@ -51,7 +51,7 @@ const Popup: React.FC = () => {
                 );
 
                 fetchCoupons(domain, setCouponsDomain);
-                fetchCoupons(fullDomain, setCouponsSubDomain);
+                fetchCoupons(parseResult.hostname, setCouponsSubDomain);
 
                 setErrorMsg("");
             } catch (error) {
@@ -79,7 +79,7 @@ const Popup: React.FC = () => {
 
                         if (parseResult.subDomains.length > 0) {
                             setIsSubDomain(true);
-                            setPageSubDomain(fullDomain);
+                            setPageSubDomain(parseResult.hostname);
                         } else {
                             setIsSubDomain(false);
                             setPageSubDomain("");
@@ -91,7 +91,7 @@ const Popup: React.FC = () => {
                         );
 
                         fetchCoupons(domain, setCouponsDomain);
-                        fetchCoupons(fullDomain, setCouponsSubDomain);
+                        fetchCoupons(parseResult.hostname, setCouponsSubDomain);
 
                         setErrorMsg("");
                     } catch (error) {
