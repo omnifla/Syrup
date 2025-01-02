@@ -3,7 +3,9 @@
 [![Build Extension](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/build-extension.yml/badge.svg)](https://github.com/Abdallah-Alwarawreh/Syrup/actions/workflows/build-extension.yml) [![Discord](https://img.shields.io/discord/1322120002576453745?color=5865F2&label=Discord&logo=discord&logoColor=white)](https://dsc.gg/hexium)
 
 
-Syrup is a lightweight, open-source browser extension designed to make finding and applying the best coupons effortless. Unlike traditional tools like Honey, Syrup prioritizes **transparency**, **user privacy**, and **ethical design** over profit-driven motives.  
+Syrup is a lightweight, open-source browser extension designed to make finding and applying the best coupons effortless. Unlike traditional tools like Honey, Syrup prioritizes **transparency**, **user privacy**, and **ethical design** over profit-driven motives.
+
+Please read [the privacy policy](./PRIVACY.md).
 
 ---
 
