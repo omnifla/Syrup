@@ -15,6 +15,17 @@ export function Footer() {
                                 <Button
                                     variant="link"
                                     className="text-gray-300 p-0 h-auto"
+                                    asChild
+                                >
+                                    <Link href="https://github.com/Abdallah-Alwarawreh/Syrup">
+                                        GitHub
+                                    </Link>
+                                </Button>
+                            </li>
+                            <li>
+                                <Button
+                                    variant="link"
+                                    className="text-gray-300 p-0 h-auto"
                                 >
                                     <Link href="https://dsc.gg/Hexium">
                                         Contact Us
