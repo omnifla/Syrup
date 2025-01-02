@@ -45,10 +45,19 @@ export function Hero() {
                 </p>
                 <Button
                     size="lg"
-                    className="bg-[#a82c04] hover:bg-[#8a2503] text-white px-8"
+                    className="bg-[#a82c04] hover:bg-[#8a2503] text-white px-8 mr-6"
                     asChild
                 >
                     <Link href="/download">Add to {browser}</Link>
+                </Button>
+                <Button
+                    size="lg"
+                    className="bg-[#a82c04] hover:bg-[#8a2503] text-white px-8"
+                    asChild
+                >
+                    <Link href="https://github.com/Abdallah-Alwarawreh/Syrup">
+                        View on GitHub
+                    </Link>
                 </Button>
             </div>
         </section>
