@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import LaptopSyrup from "@/public/LaptopSyrup.png";
 import Image from "next/image";
 import { motion } from "motion/react";
+import Link from "next/link";
 
 export function Hero() {
     const [browser, setBrowser] = useState("Chrome");
@@ -45,8 +46,9 @@ export function Hero() {
                 <Button
                     size="lg"
                     className="bg-[#a82c04] hover:bg-[#8a2503] text-white px-8"
+                    asChild
                 >
-                    Add to {browser}
+                    <Link href="/download">Add to {browser}</Link>
                 </Button>
             </div>
         </section>
