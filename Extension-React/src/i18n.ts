@@ -9,7 +9,7 @@ const language = universalLanguageDetect({
     fallbackLanguage: "en", // Fallback language in case the user's language cannot be resolved
 })
 
-export const languages = ["en", "de", "cz", "pt", "ro", "ar"];  // load these from /public/locales?
+export const languages = ["en", "de", "cz", "pt", "ro", "ar"];  // load these from /public/_locales?
 export const languageNames: Record<string, string> = {
     "en": "English",
     "de": "German",
@@ -19,18 +19,23 @@ export const languageNames: Record<string, string> = {
     "ar": "Arabic",
 };
 
+const options = {
+  loadPath: "/_locales/{{lng}}/translation.json",
+}
+const backend = new Backend(null, options);
+
+
 i18n
-    // load translations using http from /public/locales
-    .use(Backend)
+    // load translations using http from /public/_locales
+    .use(backend)
     // passes i18n to react-i18next
     .use(initReactI18next)
     .init({
-    lng: language,
-    fallbackLng: "en",
-
-    interpolation: {
-        escapeValue: false,
-    },
+        lng: language,
+        fallbackLng: "en",
+        interpolation: {
+            escapeValue: false,
+        },
 });
 
 export default i18n;
