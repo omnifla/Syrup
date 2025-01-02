@@ -7,6 +7,9 @@ Syrup is a lightweight, open-source browser extension designed to make finding a
 
 Please read [the privacy policy](./Privacy%20Policy.md).
 
+You can help the project financially by becoming a patreon member [here](https://www.patreon.com/c/abdallahalwarawreh/membership). 
+
+
 ---
 
 ## 🎥 Featured Video  
