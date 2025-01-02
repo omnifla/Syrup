@@ -1,27 +1,34 @@
-
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
+// TODO: add actual translations
 const resources = {
-    en: {
+    'en': {
         translation: {
             "languageName": "English",
+            "English": "English",
+            "Deutsch": "German",
             "Coupons": "Coupons",
         },
     },
-    de: {
+    'de': {
         translation: {
             "languageName": "Deutsch",
+            "English": "Englisch",
+            "Deutsch": "Deutsch",
             "Coupons": "Gutscheine",
         },
     }
 }
 
-i18n.use(
-    initReactI18next // passes i18n to react-i18next
-).init({
+export const languages = Object.keys(resources);
+export const languageNames = languages.map((lang) => resources[lang as keyof typeof resources].translation.languageName);
+
+i18n
+    // passes i18n to react-i18next
+    .use(initReactI18next)
+    .init({
     resources: resources,
-    lng: "en", // could change this to a language detector
     fallbackLng: "en",
 
     interpolation: {
