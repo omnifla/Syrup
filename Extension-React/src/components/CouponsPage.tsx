@@ -33,7 +33,7 @@ const CouponsPage: React.FC<CouponData> = ({pageIcon, pageDomain, pageSubDomain,
                 </h2>
             {errorMsg ? (
                 <p className="text-sm text-center text-red-500 dark:text-red-300">
-                    {errorMsg}
+                    {t(errorMsg)}
                 </p>
             ) : (
                 <>

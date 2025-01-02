@@ -23,7 +23,8 @@ const CouponsEntry: React.FC<CouponData> = ({pageIcon, pageDomain, couponsDomain
             <Header pageIcon={pageIcon} pageDomain={pageDomain} />
             <CouponsList
                 coupons={couponsDomain}
-                handleCopy={handleCopy} />
+                handleCopy={handleCopy}
+            />
         </div>
     );
 }
