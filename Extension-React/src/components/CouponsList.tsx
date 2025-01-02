@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import CouponCard, { Coupon } from "./CouponCard";
+import CouponCard, { Coupon } from "@/components/CouponCard";
 
 const CouponsList: React.FC<{
     coupons: Coupon[] | null;

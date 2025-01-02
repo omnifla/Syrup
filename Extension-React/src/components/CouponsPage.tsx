@@ -1,5 +1,5 @@
-import CouponsEntry from "./CouponsEntry";
-import { ThemeToggle } from "./ThemeToggle";
+import CouponsEntry from "@/components/CouponsEntry";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export interface CouponData {
     pageIcon: string;

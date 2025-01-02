@@ -1,5 +1,5 @@
-import Header from "./Header";
-import CouponsList from "./CouponsList";
+import Header from "@/components/Header";
+import CouponsList from "@/components/CouponsList";
 
 export interface CouponData {
     pageIcon: string;
