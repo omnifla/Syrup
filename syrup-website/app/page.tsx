@@ -7,7 +7,7 @@ import { FAQ } from "@/components/faq";
 import { Footer } from "@/components/footer";
 import { Roboto } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Testimonials } from "@/components/testimonials";
+import { Testimonials } from "@/components/Testimonials";
 
 const roboto = Roboto({
     weight: "400",
