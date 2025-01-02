@@ -38,7 +38,7 @@ export function LanguageSwitcher() {
                                         >
                                             <img src={languagePath(lang)} alt={lang} className="h-[1.2rem] w-[1.2rem] aspect-auto" />
                                         </Button>
-                                        <p className="text-white text-sm ml-2 hover:cursor-pointer">{t(languageNames[languages.indexOf(lang)])}</p>
+                                        <p className="text-white text-sm ml-2 hover:cursor-pointer">{t(languageNames[lang])}</p>
                                     </div>
                                 ))
                             }
