@@ -4,9 +4,7 @@ import type { NextRequest } from 'next/server'
 // Add the extension download link for chromium-based browsers
 const extensionMarketplace = {
   "Firefox": "https://addons.mozilla.org/en-US/firefox/addon/syrup/",
-  // TODO: use a proper link for chrome-based browsers and Safari
-  "Safari": "https://apps.apple.com/us/story/id1377753262",
-  "Chrome": "https://chromewebstore.google.com/",
+  "Chrome": "https://chromewebstore.google.com/detail/syrup/odfgjmajnbkiabjnfiijllkihjpilfch",
 }
 
 // Returns the corresponding URL according to the browser name
