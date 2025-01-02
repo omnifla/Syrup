@@ -11,7 +11,7 @@ export function Header() {
                     alt="Syrup Logo"
                     width={32}
                     height={32}
-                    className="w-8 h-8"
+                    className="w-8 h-8 rounded-lg"
                 />
                 <span className="text-xl font-semibold">Syrup</span>
             </Link>

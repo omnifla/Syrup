@@ -66,7 +66,8 @@ export function Footer() {
                 </div>
                 <div className="border-t border-gray-800 mt-12 pt-8 text-center">
                     <p>
-                        © {new Date().getFullYear()} Syrup. All rights reserved.
+                        © {"2024 - " + new Date().getFullYear()} Syrup. All
+                        rights reserved.
                     </p>
                 </div>
             </div>
