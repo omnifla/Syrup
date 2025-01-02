@@ -5,7 +5,7 @@
 
 Syrup is a lightweight, open-source browser extension designed to make finding and applying the best coupons effortless. Unlike traditional tools like Honey, Syrup prioritizes **transparency**, **user privacy**, and **ethical design** over profit-driven motives.
 
-Please read [the privacy policy](./PRIVACY.md).
+Please read [the privacy policy](./"Privacy Policy.md").
 
 ---
 
