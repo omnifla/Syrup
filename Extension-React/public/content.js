@@ -74,6 +74,15 @@
         });
     }
 
+    function getTranslation(key, data = {}) {
+            let translated = chrome.i18n.getMessage(key);
+            for (const [name, value] of Object.entries(data)) {
+                    translated = translated.replace(new RegExp(`%${name}%`, "g"), value);
+                }
+            return translated;
+        }
+    const __ = getTranslation;
+
     function isVisible(el) {
         if (!el) return false;
         return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
@@ -87,7 +96,6 @@
 
     function replaceValue(selector, value) {
         const el = document.querySelector(selector);
-        console.log("setting", el, "to", value);
         if (el) {
             el.value = value;
             // Fire typical events to ensure the page sees the input
@@ -318,7 +326,7 @@
 
         container.innerHTML = `
             <h2 style="margin: 0 0 10px 0; font-size: 22px;">
-                Testing Coupons...
+                ${__("testing_coupons")}
             </h2>
             <p id="syrup-test-step" style="margin: 5px 0; font-size: 16px; color: #333;"></p>
             <p id="syrup-test-status" style="margin: 5px 0; font-size: 14px; color: #666;"></p>
@@ -333,7 +341,7 @@
                     cursor: pointer;
                     margin-right: 8px;
                 ">
-                    Cancel
+                    ${__("cancel")}
                 </button>
                 <button id="syrup-use-best-btn" style="
                     background-color: #ff9800;
@@ -344,7 +352,7 @@
                     font-size: 14px;
                     cursor: pointer;
                 ">
-                    Use Best
+                    ${__("use_best")}
                 </button>
             </div>
         `;
@@ -380,12 +388,12 @@
         const statusEl = container.querySelector("#syrup-test-status");
 
         if (stepEl) {
-            stepEl.textContent = `Testing coupon ${currentIndex} of ${total}`;
+            stepEl.textContent = __(`testing_coupon_current_of_total`, { currentIndex, total });
         }
         if (statusEl) {
             statusEl.textContent = currentCoupon
-                ? `Now trying "${currentCoupon}". Best price so far: $${bestPriceSoFar}`
-                : `Best price so far: $${bestPriceSoFar}`;
+                ? __(`now_trying_best_so_far`, { currentCoupon, bestPriceSoFar })
+                : __(`best_price_so_far`, { bestPriceSoFar });
         }
     }
 
@@ -405,29 +413,31 @@
         if (useBestBtn) useBestBtn.remove();
 
         if (wasCancelled) {
-            if (stepEl) stepEl.textContent = "Testing Cancelled.";
+            if (stepEl) stepEl.textContent = __("testing_cancelled");
             if (statusEl) {
-                statusEl.textContent = "Scan was stopped. No coupons applied.";
+                statusEl.textContent = __("scan_was_stopped_no_coupons_applied");
             }
         } else if (bestCoupon) {
-            if (stepEl) stepEl.textContent = "We found the best coupon!";
+            if (stepEl) stepEl.textContent = __("we_found_the_best_coupon");
             if (statusEl) {
-                statusEl.textContent = `Applied coupon "${bestCoupon}" and saved $${savings.toFixed(
-                    2
-                )}. New total: $${finalPrice.toFixed(2)}`;
+                statusEl.textContent = __(`applied_coupon_and_saved_savings_new_total`, {
+                    bestCoupon,
+                    savings: savings.toFixed(2),
+                    finalPrice: finalPrice.toFixed(2)
+                });
             }
         } else {
-            if (stepEl) stepEl.textContent = "No better price found.";
+            if (stepEl) stepEl.textContent = __("no_better_price_found");
             if (statusEl) {
                 statusEl.textContent =
-                    "All coupons tested, but none lowered your total.";
+                    __("all_coupons_tested_but_none_lowered_your_total");
             }
         }
 
         // "Got it" button
         const gotItBtn = document.createElement("button");
         gotItBtn.id = "syrup-got-it-btn";
-        gotItBtn.textContent = "Got it";
+        gotItBtn.textContent = __("got_it");
         gotItBtn.style.marginTop = "15px";
         gotItBtn.style.backgroundColor = "#28a745";
         gotItBtn.style.color = "#fff";
@@ -463,10 +473,10 @@
                 font-family: Arial, sans-serif;
             ">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <img src="${syrupIconUrl}" alt="Syrup Logo" style="width: 40px; height: 40px; border-radius: 8px;">
+                    <img src="${syrupIconUrl}" alt="${__("syrup_logo")}" style="width: 40px; height: 40px; border-radius: 8px;">
                     <div>
-                        <h3 style="margin: 0; font-size: 18px; color: #333;">Syrup found coupons!</h3>
-                        <p style="margin: 0; font-size: 14px; color: #666;">Click Apply to try them all.</p>
+                        <h3 style="margin: 0; font-size: 18px; color: #333;">${__("syrup_found_coupons")}</h3>
+                        <p style="margin: 0; font-size: 14px; color: #666;">${__("click_apply_to_try_them_all")}</p>
                     </div>
                 </div>
                 <div style="display: flex; justify-content: space-between; gap: 10px;">
@@ -480,7 +490,7 @@
                         cursor: pointer; 
                         transition: background-color 0.2s ease;
                         width: 100%;
-                    ">Apply</button>
+                    ">${__("apply")}</button>
                     <button id="ignore-coupons-btn" style="
                         background-color: #f8f9fa; 
                         color: #333; 
@@ -491,7 +501,7 @@
                         cursor: pointer; 
                         transition: background-color 0.2s ease;
                         width: 100%;
-                    ">Ignore</button>
+                    ">${__("ignore")}</button>
                 </div>
             </div>
         `;
@@ -530,10 +540,10 @@
                 font-family: Arial, sans-serif;
             ">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <img src="${syrupIconUrl}" alt="Syrup Logo" style="width: 40px; height: 40px; border-radius: 8px;">
+                    <img src="${syrupIconUrl}" alt="${__("syrup_logo")}" style="width: 40px; height: 40px; border-radius: 8px;">
                     <div>
-                        <h3 style="margin: 0; font-size: 18px; color: #333;">Syrup found coupons!</h3>
-                        <p style="margin: 0; font-size: 14px; color: #666;">No auto-apply setup for this site.</p>
+                        <h3 style="margin: 0; font-size: 18px; color: #333;">${__("syrup_found_coupons")}</h3>
+                        <p style="margin: 0; font-size: 14px; color: #666;">${__("no_auto_apply_setup")}</p>
                     </div>
                 </div>
                 <div style="display: flex; justify-content: space-between; gap: 10px;">
@@ -547,7 +557,7 @@
                         cursor: pointer; 
                         transition: background-color 0.2s ease;
                         width: 100%;
-                    ">Show Extension</button>
+                    ">${__("show_extension")}</button>
                     <button id="ignore-no-config-btn" style="
                         background-color: #f8f9fa; 
                         color: #333; 
@@ -558,7 +568,7 @@
                         cursor: pointer; 
                         transition: background-color 0.2s ease;
                         width: 100%;
-                    ">Ignore</button>
+                    ">${__("ignore")}</button>
                 </div>
             </div>
         `;
