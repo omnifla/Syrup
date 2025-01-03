@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button.tsx";
-import i18n, { languageNames, languages } from "@/i18n.ts";
-import { useTranslation } from "react-i18next";
+import i18n, { languageNames, languages, switchLanguage } from "@/i18n.ts";
 import { useState } from "react";
 
 import '@/components/languageswitcher.css';
 
 
 export function LanguageSwitcher() {
-    const { t } = useTranslation();
     const [language, setLanguage] = useState(i18n.language);
 
     const languagePath = (lang: string) => {
@@ -29,7 +27,7 @@ export function LanguageSwitcher() {
                             {
                                 languages.map((lang) => (
                                     <div className="flex flex-row items-center" onClick={() => {
-                                        i18n.changeLanguage(lang);
+                                        switchLanguage(lang);
                                         setLanguage(lang);
                                     }}>
                                         <Button
@@ -38,7 +36,7 @@ export function LanguageSwitcher() {
                                         >
                                             <img src={languagePath(lang)} alt={lang} className="h-[1.2rem] w-[1.2rem] aspect-auto" />
                                         </Button>
-                                        <p className="text-white text-sm ml-2 hover:cursor-pointer">{t(languageNames[lang])}</p>
+                                        <p className="text-white text-sm ml-2 hover:cursor-pointer">{languageNames[lang]}</p>
                                     </div>
                                 ))
                             }
