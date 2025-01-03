@@ -3,6 +3,7 @@
     "name": "Syrup (Open Beta)",
     "description": "A Honey alternative, find and apply the best coupons automatically.",
     "version": "0.3",
+    "default_locale": "en",
     "permissions": ["activeTab"],
     "background": {
         "service_worker": "background.js",

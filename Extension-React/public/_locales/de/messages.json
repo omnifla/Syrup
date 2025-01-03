@@ -1,0 +1,8 @@
+{
+  "syrup_no_coupons": {
+    "message": "[Syrup] Keine Gutscheine gefunden."
+  },
+  "no_coupons": {
+    "message": "Keine Gutscheine gefunden"
+  }
+}
