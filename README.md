@@ -89,7 +89,7 @@ For major changes, please open an issue first to discuss what you’d like to co
 
 ## 📚 Tech Stack
 
-[Techstack](https://github.com/Abdallah-Alwarawreh/Syrup/techstack.md)
+[Techstack](./techstack.md)
 
 ---
 
