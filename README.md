@@ -87,6 +87,12 @@ For major changes, please open an issue first to discuss what you’d like to co
 
 ---
 
+## 📚 Tech Stack
+
+[Techstack](./techstack.md)
+
+---
+
 ## ❤️ Acknowledgements  
 
 Special thanks to the amazing people who made Syrup possible:  
