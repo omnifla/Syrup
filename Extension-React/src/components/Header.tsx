@@ -1,11 +1,16 @@
-const Header: React.FC<{ pageIcon: string; pageDomain: string }> = ({
-    pageIcon,
-    pageDomain,
-}) => (
-    <div className="flex items-center gap-4 pb-2 mb-2 pt-1 border-border border-b-2">
-        <img src={pageIcon} alt="Page Icon" className="w-8 h-8 rounded-full" />
-        <p className="text-lg font-bold text-primary">{pageDomain}</p>
-    </div>
-);
+import Dropdown from "./Dropdown";
+
+const Header: React.FC<{}> = () => {
+
+    return (
+        <header className="flex p-4 items-center justify-between">
+            <div className="left flex gap-4 flex-rows">
+                <a href="https://joinsyrup.com" target="_blank"><img className="w-8 h-8 rounded-[5px]" src="/icons/Syrup.png" alt="" /></a>
+                <h1 className="text-2xl font-bold">Syrup</h1>
+            </div>
+            <Dropdown />
+        </header>
+    );
+}
 
 export default Header;

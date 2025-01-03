@@ -3,6 +3,7 @@ import { Coupon } from "@/components/CouponCard";
 import { fetchCoupons } from "@/lib/utils";
 import { parseDomain } from "parse-domain";
 import CouponsPage from "@/components/CouponsPage";
+import Header from "@/components/Header";
 
 const domainReplacements: any = {
     "nordcheckout.com": "nordvpn.com",
@@ -118,15 +119,18 @@ const Popup: React.FC = () => {
     };
 
     return (
-        <CouponsPage
-            pageIcon={pageIcon}
-            pageDomain={pageDomain}
-            pageSubDomain={pageSubDomain}
-            isSubDomain={isSubDomain}
-            couponsDomain={couponsDomain}
-            couponsSubDomain={couponsSubDomain}
-            handleCopy={handleCopy}
-            errorMsg={errorMsg} />
+        <main className="grid grid-cols-1 grid-rows-[10%,90%] h-screen w-screen overflow-hidden">
+            <Header />
+            <CouponsPage
+                pageIcon={pageIcon}
+                pageDomain={pageDomain}
+                pageSubDomain={pageSubDomain}
+                isSubDomain={isSubDomain}
+                couponsDomain={couponsDomain}
+                couponsSubDomain={couponsSubDomain}
+                handleCopy={handleCopy}
+                errorMsg={errorMsg} />
+        </main>
     );
 };
 
