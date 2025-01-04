@@ -6,7 +6,7 @@
      * 1. Configurations
      *******************************************************/
     const maxWaitTime = 4000;
-    let currentLang = "en";
+    let currentLang = chrome.i18n.getUILanguage() || "en";
     let translations = {};
 
     const domainReplacements = {
@@ -107,7 +107,7 @@
     function getLanguageFromStorage(callback) {
         chrome.storage.sync.get().then((data) => {
             storedLanguage = data["language"];
-            callback(storedLanguage || "en");
+            callback(storedLanguage || chrome.i18n.getUILanguage() || "en");
         });
     }
 
