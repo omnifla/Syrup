@@ -6,6 +6,8 @@
      * 1. Configurations
      *******************************************************/
     const maxWaitTime = 4000;
+    let currentLang = "en";
+    let translations = {};
 
     const domainReplacements = {
         "nordcheckout.com": "nordvpn.com",
@@ -82,8 +84,39 @@
         });
     }
 
+    async function loadTranslations(lang) {
+        const url = chrome.runtime.getURL(`_locales/${lang}/messages.json`);
+
+        try {
+            const response = await fetch(url);
+            console.log("response", response);
+
+            const translations = await response.json();
+            return translations;
+        } catch (error) {
+            console.error("Failed to load translations:", error);
+            return {};
+        }
+    }
+
+    async function setLanguage(lang) {
+        currentLang = lang;
+        translations = await loadTranslations(lang);
+    }
+
+    function getLanguageFromStorage(callback) {
+        chrome.storage.sync.get().then((data) => {
+            storedLanguage = data["language"];
+            callback(storedLanguage || "en");
+        });
+    }
+
+    function getMessage(key) {
+        return translations[key]?.message || key;
+    }
+
     function getTranslation(key, data = {}) {
-        let translated = chrome.i18n.getMessage(key);
+        let translated = getMessage(key);
         for (const [name, value] of Object.entries(data)) {
             translated = translated.replace(
                 new RegExp(`%${name}%`, "g"),
@@ -734,4 +767,6 @@
     setTimeout(() => {
         main().catch((err) => console.error("[Syrup] Main error:", err));
     }, 3000);
+
+    getLanguageFromStorage(setLanguage);
 })();
