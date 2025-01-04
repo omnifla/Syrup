@@ -1,39 +1,9 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Star } from "lucide-react";
+import testimonials from "@/lib/Testimonials";
 
 export function Testimonials() {
-    const testimonials = [
-        {
-            name: "Zixy",
-            avatar: "",
-            role: "",
-            content:
-                "Syrup helped me save money, actually giving me useful and working promo codes. Syrup is saving me money, while Honey is taking it away. I reccomend it to anyone that sees this! 5 stars",
-        },
-        {
-            name: "Lord Chemeron",
-            avatar: "/Testimonials/Lord Chemeron.jpg",
-            role: "Student, Programmer, Linux user",
-            content:
-                "As a broke programming student, Syrup saves me money and time, time I can spend tweaking my Arch install (i use arch btw). Good, 10/10.",
-        },
-        {
-            name: "Sulsta",
-            avatar: "",
-            role: "",
-            content:
-                "Syrup is like insanly good and it saves me a lot of money because it gives me working discount codes and doesn't replace my affiliate cookies",
-        },
-        {
-            name: "ItsAdi1982",
-            avatar: "",
-            role: "Student, Tech Enthusiast",
-            content:
-                "This is an incredibly efficient tool that helps save money, prioritizes privacy, and remains fully open-source.",
-        },
-    ];
-
     return (
         <section className="py-24">
             <div className="container mx-auto px-4">
@@ -42,7 +12,7 @@ export function Testimonials() {
                         What Our Users Say
                     </h2>
                     <p className="text-gray-600 text-lg">
-                        Join over 17 million people who save with Syrup
+                        Join people who save with Syrup
                     </p>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

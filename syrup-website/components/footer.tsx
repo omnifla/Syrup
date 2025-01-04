@@ -38,7 +38,7 @@ export function Footer() {
                                     className="text-gray-300 p-0 h-auto"
                                     asChild
                                 >
-                                    <Link href="https://github.com/Abdallah-Alwarawreh/Syrup/blob/main/Privacy%20Policy.md">
+                                    <Link href="/PrivacyPolicy">
                                         Privacy Policy
                                     </Link>
                                 </Button>
