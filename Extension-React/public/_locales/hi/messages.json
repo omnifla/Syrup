@@ -1,62 +1,62 @@
 {
     "apply": {
-        "message": "\u0905\u092a\u094d\u0932\u093e\u0908"
+        "message": "अप्लाई"
     },
     "ignore": {
-        "message": "\u0905\u0928\u0926\u0947\u0916\u093e \u0915\u0930\u0947"
+        "message": "अनदेखा करे"
     },
     "syrup_logo": {
-        "message": "Syrup \u0932\u094b\u0917\u094b"
+        "message": "Syrup लोगो"
     },
     "show_extension": {
-        "message": "\u090f\u0915\u094d\u0938\u091f\u0948\u0928\u094d\u0936\u0928 \u0926\u093f\u0916\u093e\u090f"
+        "message": "एक्सटैन्शन दिखाए"
     },
     "no_auto_apply_setup": {
-        "message": "\u0907\u0938 \u0938\u093e\u0907\u091f \u0915\u0947 \u0932\u093f\u090f \u0915\u094b\u0908 \u0911\u091f\u094b \u0905\u092a\u094d\u0932\u093e\u0908 \u0938\u0947\u091f\u0905\u092a \u0928\u0939\u0940\u0902 \u0939\u0948\u0964"
+        "message": "इस साइट के लिए कोई ऑटो अप्लाई सेटअप नहीं है।"
     },
     "click_apply_to_try_them_all": {
-        "message": "\u0909\u0928 \u0938\u092d\u0940 \u0915\u094b \u0906\u091c\u093c\u092e\u093e\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0905\u092a\u094d\u0932\u093e\u0908 \u092a\u0930 \u0915\u094d\u0932\u093f\u0915 \u0915\u0930\u0947\u0964"
+        "message": "उन सभी को आज़माने के लिए अप्लाई पर क्लिक करे।"
     },
     "syrup_found_coupons": {
-        "message": "Syrup \u0915\u094b \u0915\u0942\u092a\u0928 \u092e\u093f\u0932\u0947!"
+        "message": "Syrup को कूपन मिले!"
     },
     "got_it": {
-        "message": "\u0938\u092e\u091d \u0917\u092f\u093e"
+        "message": "समझ गया"
     },
     "testing_coupons": {
-        "message": "\u0915\u0942\u092a\u0928 \u0915\u0940 \u091c\u093e\u0901\u091a..."
+        "message": "कूपन की जाँच..."
     },
     "testing_coupon_current_of_total": {
-        "message": "\u0915\u0942\u092a\u0928 \u0915\u0940 \u091c\u093e\u0901\u091a %currentIndex% \u0915\u093e %total%"
+        "message": "कूपन की जाँच %currentIndex% का %total%"
     },
     "cancel": {
-        "message": "\u0930\u0926\u094d\u0926 \u0915\u0930\u0947\u0902"
+        "message": "रद्द करें"
     },
     "use_best": {
-        "message": "\u0938\u092c\u0938\u0947 \u0905\u091a\u094d\u091b\u093e \u0907\u0938\u094d\u0924\u0947\u092e\u093e\u0932 \u0915\u0930\u0947"
+        "message": "सबसे अच्छा इस्तेमाल करे"
     },
     "testing_cancelled": {
-        "message": "\u091c\u093e\u0901\u091a \u0930\u0926\u094d\u0926 \u0915\u0940 \u0917\u0908\u0964"
+        "message": "जाँच रद्द की गई।"
     },
     "scan_was_stopped_no_coupons_applied": {
-        "message": "\u0938\u094d\u0915\u0948\u0928 \u0930\u094b\u0915 \u0926\u093f\u092f\u093e \u0917\u092f\u093e\u0964 \u0915\u094b\u0908 \u0915\u0942\u092a\u0928 \u0907\u0938\u094d\u0924\u0947\u092e\u093e\u0932 \u0928\u0939\u0940\u0902 \u0915\u093f\u092f\u093e \u0917\u092f\u093e\u0964"
+        "message": "स्कैन रोक दिया गया। कोई कूपन इस्तेमाल नहीं किया गया।"
     },
     "we_found_the_best_coupon": {
-        "message": "\u0939\u092e\u0947\u0902 \u0938\u092c\u0938\u0947 \u0905\u091a\u094d\u091b\u093e \u0915\u0942\u092a\u0928 \u092e\u093f\u0932\u093e!"
+        "message": "हमें सबसे अच्छा कूपन मिला!"
     },
     "applied_coupon_and_saved_savings_new_total": {
-        "message": "\u0915\u0942\u092a\u0928 \u0932\u093e\u0917\u0942 \"%bestCoupon%\" \u0914\u0930 \u092c\u091a\u093e\u092f\u093e %savings% \u0928\u092f\u093e \u0915\u0941\u0932 \u0930\u093e\u0936\u093f: %finalPrice%"
+        "message": "कूपन लागू \"%bestCoupon%\" और बचाया %savings% नया कुल राशि: %finalPrice%"
     },
     "no_better_price_found": {
-        "message": "\u0907\u0938\u0938\u0947 \u092c\u0947\u0939\u0924\u0930 \u0915\u0940\u092e\u0924 \u0928\u0939\u0940\u0902 \u092e\u093f\u0932\u0940\u0964"
+        "message": "इससे बेहतर कीमत नहीं मिली।"
     },
     "all_coupons_tested_but_none_lowered_your_total": {
-        "message": "\u0938\u092d\u0940 \u0915\u0942\u092a\u0928\u094b\u0902 \u0915\u093e \u092a\u0930\u0940\u0915\u094d\u0937\u0923 \u0915\u093f\u092f\u093e \u0917\u092f\u093e, \u0932\u0947\u0915\u093f\u0928 \u0915\u093f\u0938\u0940 \u0938\u0947 \u092d\u0940 \u0906\u092a\u0915\u0940 \u0915\u0941\u0932 \u0930\u093e\u0936\u093f \u0915\u092e \u0928\u0939\u0940\u0902 \u0915\u0940\u0964"
+        "message": "सभी कूपनों का परीक्षण किया गया, लेकिन किसी से भी आपकी कुल राशि कम नहीं की।"
     },
     "now_trying_best_so_far": {
-        "message": "\u0905\u092c \u0915\u094b\u0936\u093f\u0936 \u0915\u0930 \u0930\u0939\u0947 \"%currentCoupon%\" \u0905\u092d\u0940 \u0924\u0915 \u0915\u0940 \u0905\u091a\u094d\u091b\u0940 \u0915\u0940\u092e\u0924: $%bestPriceSoFar%"
+        "message": "अब कोशिश कर रहे \"%currentCoupon%\" अभी तक की अच्छी कीमत: $%bestPriceSoFar%"
     },
     "best_price_so_far": {
-        "message": "\u0905\u092d\u0940 \u0924\u0915 \u0915\u0940 \u0905\u091a\u094d\u091b\u0940 \u0915\u0940\u092e\u0924: $%bestPriceSoFar%"
+        "message": "अभी तक की अच्छी कीमत: $%bestPriceSoFar%"
     }
 }

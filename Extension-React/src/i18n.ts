@@ -3,15 +3,15 @@ import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
 import universalLanguageDetect from "@unly/universal-language-detector";
 
-import langNames from '@/json/language_names.json';
+import langNames from "@/json/language_names.json";
 
-export const languages = Object.keys(langNames);  // load these from /public/_locales?
+export const languages = Object.keys(langNames);
 export const languageNames: Record<string, string> = langNames;
 const fallbackLanguage = "en";
 let storedLanguage: string;
 
 const getLanguage: Promise<string> = chrome.storage.sync.get().then((data) => {
-   storedLanguage = data["language"];
+    storedLanguage = data["language"];
 
     if (!storedLanguage) {
         storedLanguage = universalLanguageDetect({
@@ -24,19 +24,22 @@ const getLanguage: Promise<string> = chrome.storage.sync.get().then((data) => {
 });
 
 const saveLanguage = (lang: string): void => {
-    chrome.storage.sync.set({
-        "language": lang
-    }, () => {
-        storedLanguage = lang;
-    });
-}
+    chrome.storage.sync.set(
+        {
+            language: lang,
+        },
+        () => {
+            storedLanguage = lang;
+        }
+    );
+};
 
 export const initializeI18n = async () => {
-    const language = await getLanguage || fallbackLanguage;
+    const language = (await getLanguage) || fallbackLanguage;
 
     const options = {
         loadPath: "/_locales/{{lng}}/translation.json",
-    }
+    };
     const backend = new Backend(null, options);
 
     i18n
@@ -51,13 +54,13 @@ export const initializeI18n = async () => {
                 escapeValue: false,
             },
         });
-}
+};
 
-initializeI18n()
+initializeI18n();
 
 export const switchLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
     saveLanguage(lng);
-}
+};
 
 export default i18n;

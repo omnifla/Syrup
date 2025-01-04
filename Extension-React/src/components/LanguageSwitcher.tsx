@@ -1,49 +1,52 @@
-import { Button } from "@/components/ui/button.tsx";
-import i18n, { languageNames, languages, switchLanguage } from "@/i18n.ts";
+import { Button } from "@/components/ui/button";
+import i18n, { languageNames, languages, switchLanguage } from "@/i18n";
 import { useState } from "react";
-
-import '@/components/languageswitcher.css';
-
 
 export function LanguageSwitcher() {
     const [language, setLanguage] = useState(i18n.language);
 
     const languagePath = (lang: string) => {
         return `/icons/${lang}.svg`;
-    }
+    };
 
     return (
-        <div className='dropdown'>
+        <div className="relative group">
             <div className="flex">
-                <Button
-                    variant="ghost"
-                    size="icon"
-                >
-                    <img src={languagePath(language)} alt={language} className="h-[1.2rem] aspect-auto" />
+                <Button variant="ghost" size="icon">
+                    <img
+                        src={languagePath(language)}
+                        alt={language}
+                        className="h-[1.2rem] aspect-auto"
+                    />
                 </Button>
-                <div className="hidden flex-col absolute wrapper">
-                    <div className="">
-                        <div className="flex flex-col pr-4 pl-3 py-1 mt-5 border-1 border-white border-opacity-70 bg-accent rounded-lg dropdown-content">
-                            {
-                                languages.map((lang) => (
-                                    <div className="flex flex-row items-center" onClick={() => {
-                                        switchLanguage(lang);
-                                        setLanguage(lang);
-                                    }}>
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                        >
-                                            <img src={languagePath(lang)} alt={lang} className="h-[1.2rem] w-[1.2rem] aspect-auto" />
-                                        </Button>
-                                        <p className="text-white text-sm ml-2 hover:cursor-pointer">{languageNames[lang]}</p>
-                                    </div>
-                                ))
-                            }
-                        </div>
+                <div className="hidden group-hover:block absolute top-full right-0 z-10 pt-2">
+                    <div className="border border-white/70 bg-accent rounded-lg max-h-[50vh] overflow-y-auto">
+                        {languages.map((lang) => (
+                            <div
+                                key={lang}
+                                className="flex flex-row items-center hover:bg-white/10 transition-colors px-3 py-2"
+                                onClick={() => {
+                                    switchLanguage(lang);
+                                    setLanguage(lang);
+                                }}
+                            >
+                                <Button variant="ghost" size="icon">
+                                    <img
+                                        src={languagePath(lang)}
+                                        alt={lang}
+                                        className="h-[1.2rem] w-[1.2rem] aspect-auto"
+                                    />
+                                </Button>
+                                <p className="text-sm ml-2 cursor-pointer whitespace-nowrap">
+                                    {languageNames[lang]}
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+
+export default LanguageSwitcher;

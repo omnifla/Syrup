@@ -6,7 +6,7 @@
      * 1. Configurations
      *******************************************************/
     const maxWaitTime = 4000;
-    
+
     const domainReplacements = {
         "nordcheckout.com": "nordvpn.com",
     };
@@ -22,12 +22,14 @@
         },
         "nordvpn.com": {
             inputSelector: "input[name='couponCode']",
-            preApplyButtonSelector: "p[data-testid='coupon-show-form-button'] > a",
+            preApplyButtonSelector:
+                "p[data-testid='coupon-show-form-button'] > a",
             applyButtonSelector: "button[data-testid='coupon-apply-button']",
             successSelector: "div[data-testid='coupon-applied-message']",
             failureSelector: "div[data-testid='coupon-error-alert']",
             priceSelector: "span[data-testid='CartSummary-total-amount']",
-            removeCouponButtonSelector: "button[data-testid='coupon-delete-applied-button']",
+            removeCouponButtonSelector:
+                "button[data-testid='coupon-delete-applied-button']",
         },
     };
 
@@ -49,7 +51,10 @@
     function detectPlatform() {
         const html = document.documentElement.innerHTML.toLowerCase();
 
-        if (html.includes("woocommerce") || html.includes("wp-content/plugins/woocommerce")) {
+        if (
+            html.includes("woocommerce") ||
+            html.includes("wp-content/plugins/woocommerce")
+        ) {
             return "woocommerce";
         }
 
@@ -63,29 +68,39 @@
 
     async function fetchCoupons(domain) {
         return new Promise((resolve, reject) => {
-            chrome.runtime.sendMessage({ action: "getCoupons", domain }, (response) => {
-                if (response && response.coupons) {
-                    coupons = response.coupons;
-                    resolve();
-                } else {
-                    reject("No coupons found");
+            chrome.runtime.sendMessage(
+                { action: "getCoupons", domain },
+                (response) => {
+                    if (response && response.coupons) {
+                        coupons = response.coupons;
+                        resolve();
+                    } else {
+                        reject("No coupons found");
+                    }
                 }
-            });
+            );
         });
     }
 
     function getTranslation(key, data = {}) {
-            let translated = chrome.i18n.getMessage(key);
-            for (const [name, value] of Object.entries(data)) {
-                    translated = translated.replace(new RegExp(`%${name}%`, "g"), value);
-                }
-            return translated;
+        let translated = chrome.i18n.getMessage(key);
+        for (const [name, value] of Object.entries(data)) {
+            translated = translated.replace(
+                new RegExp(`%${name}%`, "g"),
+                value
+            );
         }
+        return translated;
+    }
     const __ = getTranslation;
 
     function isVisible(el) {
         if (!el) return false;
-        return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+        return !!(
+            el.offsetWidth ||
+            el.offsetHeight ||
+            el.getClientRects().length
+        );
     }
 
     function parsePrice(str) {
@@ -145,7 +160,9 @@
             preApplyButton.click();
         }
 
-        const input = inputSelector ? document.querySelector(inputSelector) : null;
+        const input = inputSelector
+            ? document.querySelector(inputSelector)
+            : null;
         const applyButton = applyButtonSelector
             ? document.querySelector(applyButtonSelector)
             : null;
@@ -256,12 +273,19 @@
                 config.priceSelector
             );
 
-            if (result.success && result.priceDrop > 0 && result.finalPrice < bestPrice) {
+            if (
+                result.success &&
+                result.priceDrop > 0 &&
+                result.finalPrice < bestPrice
+            ) {
                 bestPrice = result.finalPrice;
                 bestCoupon = couponCode;
             }
 
-            await revertCoupon(config.inputSelector, config.removeCouponButtonSelector);
+            await revertCoupon(
+                config.inputSelector,
+                config.removeCouponButtonSelector
+            );
         }
 
         // Stopped by user
@@ -281,7 +305,11 @@
                 config.failureSelector,
                 config.priceSelector
             );
-            finishTestingPopover(bestCoupon, bestPrice, originalPrice - bestPrice);
+            finishTestingPopover(
+                bestCoupon,
+                bestPrice,
+                originalPrice - bestPrice
+            );
         } else {
             finishTestingPopover(null, originalPrice, 0);
         }
@@ -378,30 +406,50 @@
             });
     }
 
-    function updateTestingPopover(currentIndex, total, currentCoupon, bestPriceSoFar) {
+    function updateTestingPopover(
+        currentIndex,
+        total,
+        currentCoupon,
+        bestPriceSoFar
+    ) {
         // The popover is inside an overlay, so find the popover elements
         if (!testPopoverElement) return;
-        const container = testPopoverElement.querySelector("#syrup-testing-popover");
+        const container = testPopoverElement.querySelector(
+            "#syrup-testing-popover"
+        );
         if (!container) return;
 
         const stepEl = container.querySelector("#syrup-test-step");
         const statusEl = container.querySelector("#syrup-test-status");
 
         if (stepEl) {
-            stepEl.textContent = __(`testing_coupon_current_of_total`, { currentIndex, total });
+            stepEl.textContent = __(`testing_coupon_current_of_total`, {
+                currentIndex,
+                total,
+            });
         }
         if (statusEl) {
             statusEl.textContent = currentCoupon
-                ? __(`now_trying_best_so_far`, { currentCoupon, bestPriceSoFar })
+                ? __(`now_trying_best_so_far`, {
+                      currentCoupon,
+                      bestPriceSoFar,
+                  })
                 : __(`best_price_so_far`, { bestPriceSoFar });
         }
     }
 
-    function finishTestingPopover(bestCoupon, finalPrice, savings, wasCancelled = false) {
+    function finishTestingPopover(
+        bestCoupon,
+        finalPrice,
+        savings,
+        wasCancelled = false
+    ) {
         if (!testPopoverElement) return;
 
         // Find the actual popover container
-        const container = testPopoverElement.querySelector("#syrup-testing-popover");
+        const container = testPopoverElement.querySelector(
+            "#syrup-testing-popover"
+        );
         if (!container) return;
 
         const stepEl = container.querySelector("#syrup-test-step");
@@ -415,22 +463,28 @@
         if (wasCancelled) {
             if (stepEl) stepEl.textContent = __("testing_cancelled");
             if (statusEl) {
-                statusEl.textContent = __("scan_was_stopped_no_coupons_applied");
+                statusEl.textContent = __(
+                    "scan_was_stopped_no_coupons_applied"
+                );
             }
         } else if (bestCoupon) {
             if (stepEl) stepEl.textContent = __("we_found_the_best_coupon");
             if (statusEl) {
-                statusEl.textContent = __(`applied_coupon_and_saved_savings_new_total`, {
-                    bestCoupon,
-                    savings: savings.toFixed(2),
-                    finalPrice: finalPrice.toFixed(2)
-                });
+                statusEl.textContent = __(
+                    `applied_coupon_and_saved_savings_new_total`,
+                    {
+                        bestCoupon,
+                        savings: savings.toFixed(2),
+                        finalPrice: finalPrice.toFixed(2),
+                    }
+                );
             }
         } else {
             if (stepEl) stepEl.textContent = __("no_better_price_found");
             if (statusEl) {
-                statusEl.textContent =
-                    __("all_coupons_tested_but_none_lowered_your_total");
+                statusEl.textContent = __(
+                    "all_coupons_tested_but_none_lowered_your_total"
+                );
             }
         }
 
@@ -473,10 +527,16 @@
                 font-family: Arial, sans-serif;
             ">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <img src="${syrupIconUrl}" alt="${__("syrup_logo")}" style="width: 40px; height: 40px; border-radius: 8px;">
+                    <img src="${syrupIconUrl}" alt="${__(
+            "syrup_logo"
+        )}" style="width: 40px; height: 40px; border-radius: 8px;">
                     <div>
-                        <h3 style="margin: 0; font-size: 18px; color: #333;">${__("syrup_found_coupons")}</h3>
-                        <p style="margin: 0; font-size: 14px; color: #666;">${__("click_apply_to_try_them_all")}</p>
+                        <h3 style="margin: 0; font-size: 18px; color: #333;">${__(
+                            "syrup_found_coupons"
+                        )}</h3>
+                        <p style="margin: 0; font-size: 14px; color: #666;">${__(
+                            "click_apply_to_try_them_all"
+                        )}</p>
                     </div>
                 </div>
                 <div style="display: flex; justify-content: space-between; gap: 10px;">
@@ -507,21 +567,25 @@
         `;
         document.body.insertAdjacentHTML("beforeend", popupHTML);
 
-        document.getElementById("apply-coupons-btn").addEventListener("click", async () => {
-            document.getElementById("coupon-popup")?.remove();
-            const config = determineConfig();
-            if (config) {
-                await tryAllCouponsAndPickBest(config);
-            } else {
-                // If no config found, show "No Config" popup
-                const SyrupIcon = chrome.runtime.getURL("icons/Syrup.png");
-                showNoConfigPopup(SyrupIcon);
-            }
-        });
+        document
+            .getElementById("apply-coupons-btn")
+            .addEventListener("click", async () => {
+                document.getElementById("coupon-popup")?.remove();
+                const config = determineConfig();
+                if (config) {
+                    await tryAllCouponsAndPickBest(config);
+                } else {
+                    // If no config found, show "No Config" popup
+                    const SyrupIcon = chrome.runtime.getURL("icons/Syrup.png");
+                    showNoConfigPopup(SyrupIcon);
+                }
+            });
 
-        document.getElementById("ignore-coupons-btn").addEventListener("click", () => {
-            document.getElementById("coupon-popup")?.remove();
-        });
+        document
+            .getElementById("ignore-coupons-btn")
+            .addEventListener("click", () => {
+                document.getElementById("coupon-popup")?.remove();
+            });
     }
 
     function showNoConfigPopup(syrupIconUrl) {
@@ -540,10 +604,16 @@
                 font-family: Arial, sans-serif;
             ">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <img src="${syrupIconUrl}" alt="${__("syrup_logo")}" style="width: 40px; height: 40px; border-radius: 8px;">
+                    <img src="${syrupIconUrl}" alt="${__(
+            "syrup_logo"
+        )}" style="width: 40px; height: 40px; border-radius: 8px;">
                     <div>
-                        <h3 style="margin: 0; font-size: 18px; color: #333;">${__("syrup_found_coupons")}</h3>
-                        <p style="margin: 0; font-size: 14px; color: #666;">${__("no_auto_apply_setup")}</p>
+                        <h3 style="margin: 0; font-size: 18px; color: #333;">${__(
+                            "syrup_found_coupons"
+                        )}</h3>
+                        <p style="margin: 0; font-size: 14px; color: #666;">${__(
+                            "no_auto_apply_setup"
+                        )}</p>
                     </div>
                 </div>
                 <div style="display: flex; justify-content: space-between; gap: 10px;">
@@ -574,14 +644,18 @@
         `;
         document.body.insertAdjacentHTML("beforeend", popupHTML);
 
-        document.getElementById("show-extension-btn").addEventListener("click", () => {
-            document.getElementById("no-config-popup")?.remove();
-            chrome.runtime.sendMessage({ action: "openPopup" });
-        });
+        document
+            .getElementById("show-extension-btn")
+            .addEventListener("click", () => {
+                document.getElementById("no-config-popup")?.remove();
+                chrome.runtime.sendMessage({ action: "openPopup" });
+            });
 
-        document.getElementById("ignore-no-config-btn").addEventListener("click", () => {
-            document.getElementById("no-config-popup")?.remove();
-        });
+        document
+            .getElementById("ignore-no-config-btn")
+            .addEventListener("click", () => {
+                document.getElementById("no-config-popup")?.remove();
+            });
     }
 
     /*******************************************************
@@ -633,9 +707,13 @@
         });
 
         // 2) Check if user is on a likely checkout page
-        const isCheckoutPath = ["checkout", "cart", "basket", "order", "payment"].some((keyword) =>
-            path.includes(keyword)
-        );
+        const isCheckoutPath = [
+            "checkout",
+            "cart",
+            "basket",
+            "order",
+            "payment",
+        ].some((keyword) => path.includes(keyword));
         if (!isCheckoutPath) {
             return;
         }
