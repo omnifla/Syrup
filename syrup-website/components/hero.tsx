@@ -37,7 +37,11 @@ export function Hero() {
 
             <div className="space-y-6">
                 <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-gray-900">
-                    We search for the internet's best coupons
+                    We search for
+                    <br />
+                    the internet's
+                    <br />
+                    best coupons
                 </h1>
                 <p className="text-xl text-gray-600">
                     Stop wasting time and money, Syrup helps you find coupon

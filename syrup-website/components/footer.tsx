@@ -8,6 +8,22 @@ export function Footer() {
                 <div className="grid md:grid-cols-4 gap-8">
                     <div className="space-y-4">
                         <h3 className="text-white font-semibold text-lg">
+                            About Syrup
+                        </h3>
+                        <ul className="space-y-2">
+                            <li>
+                                <Button
+                                    variant="link"
+                                    className="text-gray-300 p-0 h-auto"
+                                    asChild
+                                >
+                                    <Link href="/about">About</Link>
+                                </Button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="space-y-4">
+                        <h3 className="text-white font-semibold text-lg">
                             Support
                         </h3>
                         <ul className="space-y-2">
