@@ -8,6 +8,15 @@ const domainReplacements: any = {
     "nordcheckout.com": "nordvpn.com",
 };
 
+const protectedDomains: string[] = [
+    'chrome://',
+    'chrome-extension://',
+    'edge://',
+    'about:',
+    'mozilla:',
+    'newtab',
+];
+
 const Popup: React.FC = () => {
     const [pageDomain, setPageDomain] = useState<string>("");
     const [pageSubDomain, setPageSubDomain] = useState<string>("");
@@ -25,6 +34,11 @@ const Popup: React.FC = () => {
             const searchParams = new URLSearchParams(window.location.search);
             if (searchParams.has("domain")) {
                 fullDomain = searchParams.get("domain") || "";
+            }
+
+            if (protectedDomains.some(domain => fullDomain.includes(domain))) {
+                setErrorMsg("This page is protected by the browser.");
+                return;
             }
 
             const parseResult: any = parseDomain(
@@ -66,6 +80,11 @@ const Popup: React.FC = () => {
                 if (tab.url) {
                     const url = new URL(tab.url);
                     const fullDomain = url.hostname.replace("www.", "");
+
+                    if (protectedDomains.some(domain => url.origin.includes(domain))) {
+                        setErrorMsg("This page is protected by the browser.");
+                        return;
+                    }
 
                     const parseResult: any = parseDomain(
                         domainReplacements[fullDomain] || fullDomain
