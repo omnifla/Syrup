@@ -31,7 +31,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CouponList'
+                $ref: '#/components/schemas/VersionInfo'
         '400':
           description: Bad Request
           content:
@@ -167,7 +167,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CouponList'
+                $ref: '#/components/schemas/Success'
         '400':
           description: Bad Request
           content:
@@ -228,7 +228,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CouponList'
+                $ref: '#/components/schemas/Success'
         '400':
           description: Bad Request
           content:
@@ -324,6 +324,14 @@ components:
         message:
           type: string
           description: Detailed error message
+    Success:
+      type: object
+      required:
+          - success
+      properties:
+          success:
+            type: string
+            description: Success message
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
