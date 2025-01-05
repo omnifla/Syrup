@@ -8,5 +8,6 @@
   "No_coupons_found": "No coupons found",
   "Domain_invalid": "invalid Domain",
   "Settings": "Settings",
-  "Language": "Language"
+  "Language": "Language",
+  "Browser_domain": "This domain is not supported by the extension"
 }

@@ -32,17 +32,14 @@ export function LanguageSwitcher() {
                 <div className="w-[60%] h-[100%] flex flex-col border-1 border-white border-opacity-70 bg-card rounded-lg dropdown-content">
                     {
                         languages.map((lang) => (
-                            <div className="flex flex-row justify-start" onClick={() => {
+                            <div className="w-[100%] flex flex-row justify-start items-start" onClick={() => {
                                 switchLanguage(lang);
                                 setLanguage(lang);
                                 ToogleDropdown();}}>
-                                <Button onClick={() => {updateLanguage(lang);}} className="w-[100%] bg-card text-card-foreground flex flex-row hover:text-primary hover:cursor-pointer hover:bg-primary/10">
+                                <Button onClick={() => {updateLanguage(lang);}} className="w-[100%] bg-card text-card-foreground flex flex-row items-start hover:text-primary hover:cursor-pointer hover:bg-primary/10">
                                     <img src={`/icons/${lang}.svg`} alt={lang} className="h-[1.2rem] w-[1.2rem] aspect-auto" />
                                     <p className="text-card-foreground text-sm ml-2 hover:cursor-pointer">{languageNames[lang]}</p>
                                 </Button>
-                                <p className="text-sm ml-2 cursor-pointer whitespace-nowrap">
-                                    {languageNames[lang]}
-                                </p>
                             </div>
                         ))}
                     </div>

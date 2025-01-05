@@ -100,7 +100,7 @@ const Popup: React.FC = () => {
                     const fullDomain = url.hostname.replace("www.", "");
 
                     if (reservedDomains.some(domain => url.origin.includes(domain))) {
-                        setErrorMsg("Syrup looks for coupons online when you shop!");
+                        setErrorMsg("Browser_domain");
                         return;
                     }
 

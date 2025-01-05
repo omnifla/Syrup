@@ -6,6 +6,7 @@
     "Toggle theme": "Basculer le thème",
     "Coupons": "Bon de réduction",
     "Domain_invalid": "L'url est invalide.",
+    "Browser_domain": "Ce domaine n'est pas pris en charge par l'extension",
     "Theme": "Thème",
     "Light": "Clair",
     "Dark": "Sombre",
