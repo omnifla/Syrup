@@ -10,31 +10,33 @@ export const fetchCoupons = async (
     domain: string,
     setCoupons: React.Dispatch<React.SetStateAction<Coupon[] | null>>
 ) => {
+    type CouponGetResponse = {
+        coupons: {
+            code: string,
+            description: string,
+            id: string,
+            merchant_name: string,
+            score: number,
+            title: string
+        }[],
+        total: number
+    };
     try {
         const response = await fetch(
-            `https://api.discountdb.ch/api/v1/coupons/search?q=${domain.toLocaleLowerCase()}`
+            `https://api.discountdb.ch/api/v1/syrup/coupons?domain=${domain.toLocaleLowerCase()}`
         );
 
         if (response.ok) {
-            const data = await response.json();
-            const parsedData = data.data;
-            console.error("data", JSON.stringify(parsedData, null, 2));
+            const data: CouponGetResponse = await response.json();
 
-            const coupons = parsedData.map(
-                (coupon: {
-                    code: string;
-                    title: string;
-                    description: string;
-                    score: string;
-                }): Coupon => ({
+            const coupons: Coupon[] = data.coupons.map(
+                (coupon) => ({
                     code: coupon.code,
                     title: coupon.title,
                     description: coupon.description,
-                    expirationDate: coupon.score,
+                    expirationDate: coupon.score.toString()
                 })
             );
-            
-            console.error("coupons", JSON.stringify(coupons, null, 2));
 
             setCoupons(coupons);
         } else {

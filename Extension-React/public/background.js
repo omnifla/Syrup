@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "getCoupons") {
         fetch(
-            "https://api.discountdb.ch/api/v1/coupons/search?q=" + request.domain,
+            "https://api.discountdb.ch/api/v1/syrup/coupons?domain=" + request.domain,
         )
             .then((response) => response.json())
             .then((data) => {
