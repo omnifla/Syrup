@@ -15,10 +15,52 @@ paths:
       responses:
         '200':
           description: Successful response
+          headers:
+            X-RateLimit-Limit:
+              description: The maximum number of requests allowed per time window
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: The number of requests remaining in the time window
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The time when the rate limit window resets (Unix timestamp)
+              schema:
+                type: integer
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VersionInfo'
+                $ref: '#/components/schemas/CouponList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too Many Requests
+          headers:
+            X-RateLimit-RetryAfter:
+              description: Time to wait before retrying (seconds)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /coupons:
     get:
       summary: List Coupons
@@ -108,9 +150,49 @@ paths:
             type: string
       responses:
         '200':
-          description: Success
-        '404':
-          description: Coupon not found
+          description: Successful response
+          headers:
+            X-RateLimit-Limit:
+              description: The maximum number of requests allowed per time window
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: The number of requests remaining in the time window
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The time when the rate limit window resets (Unix timestamp)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CouponList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too Many Requests
+          headers:
+            X-RateLimit-RetryAfter:
+              description: Time to wait before retrying (seconds)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -129,9 +211,49 @@ paths:
             type: string
       responses:
         '200':
-          description: Success
-        '404':
-          description: Coupon not found
+          description: Successful response
+          headers:
+            X-RateLimit-Limit:
+              description: The maximum number of requests allowed per time window
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: The number of requests remaining in the time window
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The time when the rate limit window resets (Unix timestamp)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CouponList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too Many Requests
+          headers:
+            X-RateLimit-RetryAfter:
+              description: Time to wait before retrying (seconds)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
           content:
             application/json:
               schema:
