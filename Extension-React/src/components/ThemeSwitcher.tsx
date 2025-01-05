@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button.tsx";
 import CenteredScrollZone from "@/components/ui/CenteredScrollZone.tsx";
 import { useTheme } from "@/components/ThemeProvider";
 import { Sun, Moon, SunMoon, SwatchBook } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function ThemeSwitcher() {
     const { setTheme } = useTheme();
+    const { t } = useTranslation();
 
     const ToogleDropdown = () => {
         const wrapper = document.querySelector('.theme') as HTMLDivElement;
@@ -23,15 +25,18 @@ export function ThemeSwitcher() {
             </Button>
             <CenteredScrollZone className="theme">
                 <div className="w-[60%] h-[100%] flex flex-col border-1 border-white border-opacity-70 bg-card rounded-lg dropdown-content">
-                    <div>
-                        <Sun onClick={() => { setTheme("light"); ToogleDropdown(); }}/>
-                    </div>
-                    <div>
-                        <Moon  onClick={() => { setTheme("dark"); ToogleDropdown(); }}/>
-                    </div>
-                    <div>
-                        <SunMoon onClick={() => { setTheme("system"); ToogleDropdown(); }}/>
-                    </div>
+                    <Button className="w-[100%] bg-card text-card-foreground flex flex-row hover:text-primary hover:cursor-pointer hover:bg-primary/10" onClick={() => { setTheme("light"); ToogleDropdown(); }}>
+                        <Sun/>
+                        <p className="text-card-foreground text-sm ml-2 hover:cursor-pointer">{ t('Light') }</p>
+                    </Button>
+                    <Button className="w-[100%] bg-card text-card-foreground flex flex-row hover:text-primary hover:cursor-pointer hover:bg-primary/10" onClick={() => { setTheme("dark"); ToogleDropdown(); }}>
+                        <Moon/>
+                        <p className="text-card-foreground text-sm ml-2 hover:cursor-pointer">{ t('Dark') }</p>
+                    </Button>
+                    <Button className="w-[100%] bg-card text-card-foreground flex flex-row hover:text-primary hover:cursor-pointer hover:bg-primary/10" onClick={() => { setTheme("system"); ToogleDropdown(); }}>
+                        <SunMoon/>
+                        <p className="text-card-foreground text-sm ml-2 hover:cursor-pointer">{ t('System') }</p>
+                    </Button>
                 </div>
             </CenteredScrollZone>
         </div>

@@ -103,7 +103,7 @@ const Popup: React.FC = () => {
 
                         setPageDomain(domain);
                         setPageIcon(
-                            `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
+                            tab.favIconUrl || `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
                         );
 
                         fetchCoupons(domain, setCouponsDomain);
