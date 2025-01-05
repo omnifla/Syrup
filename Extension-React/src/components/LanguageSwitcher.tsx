@@ -1,20 +1,35 @@
 import { Button } from "@/components/ui/button";
-import i18n, { languageNames, languages, switchLanguage } from "@/i18n";
-import { useState } from "react";
+import { getLanguage, languageNames, languages, switchLanguage } from "@/i18n";
+import { useEffect, useState } from "react";
 
 export function LanguageSwitcher() {
-    const [language, setLanguage] = useState(i18n.language);
+    // defaults to english, will be updated on mount
+    const [language, setLanguage] = useState('en');
+    const [languagePath, setLanguagePath] = useState(`/icons/${language}.svg`);
 
-    const languagePath = (lang: string) => {
+    const updateLanguage = (lang: string): void => {
+        setLanguage(lang);
+        setLanguagePath(`/icons/${lang}.svg`);
+    }
+
+    const getLanguagePath = (lang?: string): string => {
+        lang = lang || language;
         return `/icons/${lang}.svg`;
     };
+
+    useEffect(() => {
+        getLanguage.then((lang) => {
+            setLanguage(lang);
+            updateLanguage(lang);
+        });
+    }, []);
 
     return (
         <div className="relative group">
             <div className="flex">
                 <Button variant="ghost" size="icon">
                     <img
-                        src={languagePath(language)}
+                        src={languagePath}
                         alt={language}
                         className="h-[1.2rem] aspect-auto"
                     />
@@ -27,12 +42,12 @@ export function LanguageSwitcher() {
                                 className="flex flex-row items-center hover:bg-white/10 transition-colors px-3 py-2"
                                 onClick={() => {
                                     switchLanguage(lang);
-                                    setLanguage(lang);
+                                    updateLanguage(lang);
                                 }}
                             >
                                 <Button variant="ghost" size="icon">
                                     <img
-                                        src={languagePath(lang)}
+                                        src={getLanguagePath(lang)}
                                         alt={lang}
                                         className="h-[1.2rem] w-[1.2rem] aspect-auto"
                                     />
