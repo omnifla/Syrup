@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button.tsx";
-import i18n, { languageNames, languages, switchLanguage } from "@/i18n.ts";
+import { Button } from "@/components/ui/button";
+import { languageNames, languages, switchLanguage } from "@/i18n";
 import { useState } from "react";
-import CenteredScrollZone from "@/components/ui/CenteredScrollZone.tsx";
+import CenteredScrollZone from "@/components/ui/CenteredScrollZone";
 
 export function LanguageSwitcher() {
     // defaults to english, will be updated on mount
@@ -13,22 +13,10 @@ export function LanguageSwitcher() {
         setLanguagePath(`/icons/${lang}.svg`);
     }
 
-    const getLanguagePath = (lang?: string): string => {
-        lang = lang || language;
-        return `/icons/${lang}.svg`;
-    }
-
     const ToogleDropdown = () => {
         const wrapper = document.querySelector('.language') as HTMLDivElement;
         wrapper.classList.toggle('hidden');
     }
-
-    useEffect(() => {
-        getLanguage.then((lang) => {
-            setLanguage(lang);
-            updateLanguage(lang);
-        });
-    }, []);
 
     return (
         <div className="flex relative">
@@ -38,7 +26,7 @@ export function LanguageSwitcher() {
                 onClick={() => {
                     ToogleDropdown();
                 }}>
-                <img src={languagePath(language)} alt={language} className="h-[1.2rem] aspect-auto" />
+                <img src={languagePath} alt={language} className="h-[1.2rem] aspect-auto" />
             </Button>
             <CenteredScrollZone className="language">
                 <div className="w-[60%] h-[100%] flex flex-col border-1 border-white border-opacity-70 bg-card rounded-lg dropdown-content">
@@ -48,15 +36,19 @@ export function LanguageSwitcher() {
                                 switchLanguage(lang);
                                 setLanguage(lang);
                                 ToogleDropdown();}}>
-                                <Button className="w-[100%] bg-card text-card-foreground flex flex-row hover:text-primary hover:cursor-pointer hover:bg-primary/10">
-                                    <img src={languagePath(lang)} alt={lang} className="h-[1.2rem] w-[1.2rem] aspect-auto" />
+                                <Button onClick={() => {updateLanguage(lang);}} className="w-[100%] bg-card text-card-foreground flex flex-row hover:text-primary hover:cursor-pointer hover:bg-primary/10">
+                                    <img src={`/icons/${lang}.svg`} alt={lang} className="h-[1.2rem] w-[1.2rem] aspect-auto" />
                                     <p className="text-card-foreground text-sm ml-2 hover:cursor-pointer">{languageNames[lang]}</p>
                                 </Button>
+                                <p className="text-sm ml-2 cursor-pointer whitespace-nowrap">
+                                    {languageNames[lang]}
+                                </p>
                             </div>
-                        ))
-                    }
-                </div>
+                        ))}
+                    </div>
             </CenteredScrollZone>
         </div>
     );
 }
+
+export default LanguageSwitcher;
