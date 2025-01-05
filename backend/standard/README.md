@@ -34,11 +34,11 @@ The Coupon structure represents a single coupon code and its metadata. Each fiel
 
 ```jsonc
 {
-    "id": "string",          // Unique identifier for the coupon
-    "title": "string",       // Display title with discount amount
-    "description": "string", // Detailed coupon information
-    "code": "string",        // The actual coupon code
-    "score": number,         // Relevance/reliability score
+    "id": "string",           // Unique identifier for the coupon
+    "title": "string",        // Display title with discount amount
+    "description": "string",  // Detailed coupon information
+    "code": "string",         // The actual coupon code
+    "score": number,          // Relevance/reliability score
     "merchant_name": "string" // Store/website name
 }
 ```
