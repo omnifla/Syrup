@@ -9,6 +9,15 @@ const domainReplacements: any = {
     "nordcheckout.com": "nordvpn.com",
 };
 
+const reservedDomains: string[] = [
+    'chrome://',
+    'chrome-extension://',
+    'edge://',
+    'about:',
+    'mozilla:',
+    'newtab',
+];
+
 const Popup: React.FC = () => {
     const [pageDomain, setPageDomain] = useState<string>("");
     const [pageSubDomain, setPageSubDomain] = useState<string>("");
@@ -39,6 +48,11 @@ const Popup: React.FC = () => {
             const searchParams = new URLSearchParams(window.location.search);
             if (searchParams.has("domain")) {
                 fullDomain = searchParams.get("domain") || "";
+            }
+
+            if (reservedDomains.some(domain => fullDomain.includes(domain))) {
+                setErrorMsg("Syrup looks for coupons online when you shop!");
+                return;
             }
 
             const parseResult: any = parseDomain(
@@ -84,6 +98,11 @@ const Popup: React.FC = () => {
                 if (tab.url) {
                     const url = new URL(tab.url);
                     const fullDomain = url.hostname.replace("www.", "");
+
+                    if (reservedDomains.some(domain => url.origin.includes(domain))) {
+                        setErrorMsg("Syrup looks for coupons online when you shop!");
+                        return;
+                    }
 
                     const parseResult: any = parseDomain(
                         domainReplacements[fullDomain] || fullDomain

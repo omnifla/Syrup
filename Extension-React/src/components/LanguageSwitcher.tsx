@@ -4,9 +4,17 @@ import { useState } from "react";
 import CenteredScrollZone from "@/components/ui/CenteredScrollZone.tsx";
 
 export function LanguageSwitcher() {
-    const [language, setLanguage] = useState(i18n.language);
+    // defaults to english, will be updated on mount
+    const [language, setLanguage] = useState('en');
+    const [languagePath, setLanguagePath] = useState(`/icons/${language}.svg`);
 
-    const languagePath = (lang: string) => {
+    const updateLanguage = (lang: string): void => {
+        setLanguage(lang);
+        setLanguagePath(`/icons/${lang}.svg`);
+    }
+
+    const getLanguagePath = (lang?: string): string => {
+        lang = lang || language;
         return `/icons/${lang}.svg`;
     }
 
@@ -14,6 +22,13 @@ export function LanguageSwitcher() {
         const wrapper = document.querySelector('.language') as HTMLDivElement;
         wrapper.classList.toggle('hidden');
     }
+
+    useEffect(() => {
+        getLanguage.then((lang) => {
+            setLanguage(lang);
+            updateLanguage(lang);
+        });
+    }, []);
 
     return (
         <div className="flex relative">

@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
                     Privacy Policy for Syrup
                 </h1>
                 <p className="text-sm text-gray-600 mb-6">
-                    <strong>Effective Date:</strong> 29/12/2024
+                    <strong>Effective Date:</strong> 5/1/2024
                 </p>
 
                 <section className="mb-6">
@@ -53,6 +53,10 @@ const PrivacyPolicy = () => {
                                     applied to).
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <strong>IP Addresses:</strong> Syrup may collect IP
+                            addresses for logs and security purposes.
                         </li>
                         <li>
                             <strong>No Tracking:</strong> Syrup does not track
