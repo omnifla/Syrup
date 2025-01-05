@@ -20,6 +20,19 @@ const Popup: React.FC = () => {
     );
     const [errorMsg, setErrorMsg] = useState<string>("");
 
+    const browserDomain = [
+        "arc://",
+        "chrome://",
+        'chrome-extension://',
+        "edge://",
+        "firefox://",
+        "opera://",
+        "safari://",
+        'about:',
+        'mozilla:',
+        'newtab'
+    ]
+
     useEffect(() => {
         if (!chrome.tabs) {
             let fullDomain = window.location.hostname.replace("www.", "");
@@ -54,8 +67,12 @@ const Popup: React.FC = () => {
 
                 setErrorMsg("");
             } catch (error) {
+                if (browserDomain.some((domain) => fullDomain.includes(domain))) {
+                    setErrorMsg("Browser_domain");
+                } else {
+                    setErrorMsg("Domain_invalid");
+                }
                 console.error("Error parsing domain:", error);
-                setErrorMsg("Domain seems to be invalid?");
             }
 
             return;
@@ -95,7 +112,7 @@ const Popup: React.FC = () => {
                         setErrorMsg("");
                     } catch (error) {
                         console.error("Error parsing domain:", error);
-                        setErrorMsg("Domain seems to be invalid?");
+                        setErrorMsg("Domain_invalid");
                     }
                 }
             }

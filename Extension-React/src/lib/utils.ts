@@ -12,30 +12,31 @@ export const fetchCoupons = async (
 ) => {
     try {
         const response = await fetch(
-            `https://abdallah-alwarawreh.github.io/Syrup/backend/${domain.toLowerCase()}/coupons.json`
+            `https://api.discountdb.ch/api/v1/coupons/search?q=${domain.toLocaleLowerCase()}`
         );
 
         if (response.ok) {
             const data = await response.json();
-            setCoupons(
-                data
-                    .map(
-                        (coupon: {
-                            couponCode: string;
-                            couponTitle: string;
-                            couponDescription: string;
-                            couponExpirationDate: string;
-                        }) => ({
-                            code: coupon.couponCode,
-                            title: coupon.couponTitle,
-                            description: coupon.couponDescription,
-                            expirationDate: coupon.couponExpirationDate,
-                        })
-                    )
-                    .sort((a: Coupon, b: Coupon) =>
-                        a.code.localeCompare(b.code)
-                    )
+            const parsedData = data.data;
+            console.error("data", JSON.stringify(parsedData, null, 2));
+
+            const coupons = parsedData.map(
+                (coupon: {
+                    code: string;
+                    title: string;
+                    description: string;
+                    score: string;
+                }): Coupon => ({
+                    code: coupon.code,
+                    title: coupon.title,
+                    description: coupon.description,
+                    expirationDate: coupon.score,
+                })
             );
+            
+            console.error("coupons", JSON.stringify(coupons, null, 2));
+
+            setCoupons(coupons);
         } else {
             setCoupons([]);
         }

@@ -11,7 +11,7 @@ export function LanguageSwitcher() {
     }
 
     const ToogleDropdown = () => {
-        const wrapper = document.querySelector('.drop') as HTMLDivElement;
+        const wrapper = document.querySelector('.language') as HTMLDivElement;
         wrapper.classList.toggle('hidden');
     }
 
@@ -25,7 +25,7 @@ export function LanguageSwitcher() {
                 }}>
                 <img src={languagePath(language)} alt={language} className="h-[1.2rem] aspect-auto" />
             </Button>
-            <CenteredScrollZone>
+            <CenteredScrollZone className="language">
                 <div className="w-[60%] h-[100%] flex flex-col border-1 border-white border-opacity-70 bg-card rounded-lg dropdown-content">
                     {
                         languages.map((lang) => (

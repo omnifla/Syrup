@@ -5,7 +5,12 @@
     "Light": "Clair",
     "Dark": "Sombre",
     "System": "Système",
+    "Light theme": "Thème clair",
+    "Dark theme": "Thème sombre",
+    "System theme": "Thème système",
     "No_coupons_found": "Aucun coupon trouvé",
-    "Domain seems to be invalid?": "Domaine non valide",
-    "Settings": "Paramètres"
+    "Domain_invalid": "Domaine non valide",
+    "Browser_domain": "Ce domaine n'est pas pris en charge par l'extension",
+    "Settings": "Paramètres",
+    "Language": "Langue"
 }

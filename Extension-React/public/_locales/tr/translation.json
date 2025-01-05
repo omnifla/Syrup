@@ -5,7 +5,7 @@
     "No coupons available for this site.": "Bu site için geçerli kuponlar yok.",
     "Toggle theme": "Temayı değiştir",
     "Coupons": "Kuponlar",
-    "Domain seems to be invalid?": "Alan adı geçersiz görünüyor?",
+    "Domain_invalid": "Alan adı geçersiz görünüyor?",
     "Theme": "Tema",
     "Light": "Açık",
     "Dark": "Koyu",

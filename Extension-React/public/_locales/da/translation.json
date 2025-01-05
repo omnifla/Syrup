@@ -5,12 +5,13 @@
     "No coupons available for this site.": "Ingen kuponer tilgængelige for dette websted.",
     "Toggle theme": "Skift tema",
     "Coupons": "Kuponer",
-    "Domain seems to be invalid?": "Domæne ser ud til at være ugyldigt?",
+    "Domain_invalid": "Domæne ser ud til at være ugyldigt?",
     "Theme": "Tema",
     "Light": "Lys",
     "Dark": "Mørk",
     "System": "System",
     "Light theme": "Lys tema",
     "Dark theme": "Mørk tema",
-    "System theme": "System tema"
+    "System theme": "System tema",
+    "Language": "Sprog"
 }

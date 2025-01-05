@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Footer from "./Footer";
 import { X } from "lucide-react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { useTranslation } from "react-i18next";
 
 const Settings: React.FC<{}> = () => {
@@ -18,7 +18,8 @@ const Settings: React.FC<{}> = () => {
             </header>
             <div className="center ">
                 <h1>{ t('Theme') }</h1>
-                <ThemeToggle />
+                <ThemeSwitcher />
+                <h1>{ t('Language') }</h1>
                 <LanguageSwitcher />
             </div>
             <Footer />

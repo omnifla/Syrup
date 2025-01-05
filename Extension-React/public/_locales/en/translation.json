@@ -6,6 +6,7 @@
   "Dark": "Dark",
   "System": "System",
   "No_coupons_found": "No coupons found",
-  "Domain seems to be invalid?": "invalid Domain",
-  "Settings": "Settings"
+  "Domain_invalid": "invalid Domain",
+  "Settings": "Settings",
+  "Language": "Language"
 }
