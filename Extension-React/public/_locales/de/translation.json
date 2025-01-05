@@ -5,12 +5,14 @@
     "No coupons available for this site.": "Auf dieser Seite sind keine Gutscheine verfügbar.",
     "Toggle theme": "Farbschema umschalten",
     "Coupons": "Gutscheine",
-    "Domain seems to be invalid?": "Die Domain scheint ungültig zu sein.",
-    "Theme": "Farbschema",
+    "Domain_invalid": "Die Domain scheint ungültig zu sein.",
+    "Browser_domain": "Diese Domain wird von der Erweiterung nicht unterstützt",
+    "Theme": "Thema",
     "Light": "Hell",
     "Dark": "Dunkel",
     "System": "System",
-    "Light theme": "Helles Farbschema",
-    "Dark theme": "Dunkles Farbschema",
-    "System theme": "Systemfarbschema"
+    "Light theme": "Helles Thema",
+    "Dark theme": "Dunkles Thema",
+    "System theme": "Systemthema",
+    "Language": "Sprache"
 }

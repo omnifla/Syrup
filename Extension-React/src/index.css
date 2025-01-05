@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 95%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -31,8 +31,8 @@
   }
   .dark {
     --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
+    --foreground: 0 0% 92%;
+    --card: 240 10% 7%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
@@ -61,6 +61,13 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground z-10;
   }
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist.ttf') format('truetype');
+}
+* {
+  font-family: 'Geist', sans-serif;
 }

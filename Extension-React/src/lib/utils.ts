@@ -10,32 +10,35 @@ export const fetchCoupons = async (
     domain: string,
     setCoupons: React.Dispatch<React.SetStateAction<Coupon[] | null>>
 ) => {
+    type CouponGetResponse = {
+        coupons: {
+            code: string,
+            description: string,
+            id: string,
+            merchant_name: string,
+            score: number,
+            title: string
+        }[],
+        total: number
+    };
     try {
         const response = await fetch(
-            `https://abdallah-alwarawreh.github.io/Syrup/backend/${domain.toLowerCase()}/coupons.json`
+            `https://api.discountdb.ch/api/v1/syrup/coupons?domain=${domain.toLocaleLowerCase()}`
         );
 
         if (response.ok) {
-            const data = await response.json();
-            setCoupons(
-                data
-                    .map(
-                        (coupon: {
-                            couponCode: string;
-                            couponTitle: string;
-                            couponDescription: string;
-                            couponExpirationDate: string;
-                        }) => ({
-                            code: coupon.couponCode,
-                            title: coupon.couponTitle,
-                            description: coupon.couponDescription,
-                            expirationDate: coupon.couponExpirationDate,
-                        })
-                    )
-                    .sort((a: Coupon, b: Coupon) =>
-                        a.code.localeCompare(b.code)
-                    )
+            const data: CouponGetResponse = await response.json();
+
+            const coupons: Coupon[] = data.coupons.map(
+                (coupon) => ({
+                    code: coupon.code,
+                    title: coupon.title,
+                    description: coupon.description,
+                    expirationDate: coupon.score.toString()
+                })
             );
+
+            setCoupons(coupons);
         } else {
             setCoupons([]);
         }
