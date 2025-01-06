@@ -3,6 +3,8 @@
 ## Overview
 The Syrup API provides a standardized interface for coupon code providers to integrate with the Syrup browser extension. This document outlines the required endpoints and data structures that providers must implement to be compatible with Syrup.
 
+[Refer to @ImGajeed76 backend](https://github.com/ImGajeed76/discountdb-api)
+
 ## Base URL Configuration
 The API endpoints must be accessible under the `/syrup` path, but providers have complete flexibility in choosing their base URL. The base URL can be any valid HTTP/HTTPS URL where you host your API. Examples include:
 
