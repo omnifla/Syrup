@@ -22,6 +22,7 @@ export function Header() {
                 header?.classList.add('scrolled');
             } else {
                 header?.classList.remove('scrolled');
+                header?.classList.remove('hidden');
             }
         };
 
