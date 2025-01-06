@@ -97,9 +97,18 @@ For major changes, please open an issue first to discuss what you’d like to co
 
 Special thanks to the amazing people who made Syrup possible:  
 
-- **Nufshi** and **skyerush** for their support in creating the video.  
-- Thanks for our lovely contributors @cranberry3148 @hammerill @CuriousCodingCanadian @MerkomassDev
-- and **Taco** for incredible emotional support.  
+- **Nufshi** and **skyerush** for their support in creating the video.
+- **Taco** for incredible emotional support.
+- And for our lovely contributors:
+  - @abstra208 - UI, Safari Extension, Translation and Bug Fixes.
+  - @mvlwarekekw - Translation and Bug Fixes.
+  - @1A3Dev - UI, Safari Extension and Bug Fixes.
+  - @cranberry3148 - Auto Apply Coupons and Bug Fixes.
+  - @ImGajeed76 - API and Endpoints.
+  - @hammerill - Github Build Script.
+  - @chipseater - Redirection Handler in Website.
+  - @JxxIT - Bug Fixes.
+  - And to all other individuals who edited the README.
 
 ---
 
