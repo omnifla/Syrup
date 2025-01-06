@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import CouponsList from "@/components/CouponsList";
 
 export interface CouponData {
@@ -20,11 +19,13 @@ const CouponsEntry: React.FC<CouponData> = ({pageIcon, pageDomain, couponsDomain
 
     return (
         <div className="h-[60vh] flex flex-col pt-2">
-            <Header pageIcon={pageIcon} pageDomain={pageDomain} />
+            <div className="flex items-center gap-4 pb-2 mb-2 pt-1 border-border border-b-2 border-t-2">
+                <img src={pageIcon} alt="Page Icon" className="w-8 h-8" />
+                <p className="text-lg font-bold text-primary">{pageDomain}</p>
+            </div>
             <CouponsList
                 coupons={couponsDomain}
-                handleCopy={handleCopy}
-            />
+                handleCopy={handleCopy} />
         </div>
     );
 }

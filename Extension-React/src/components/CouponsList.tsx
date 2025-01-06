@@ -9,7 +9,7 @@ const CouponsList: React.FC<{
     const { t } = useTranslation();
 
     return (
-        <ScrollArea className="flex-1 pb-2 border-border border-b-2">
+        <ScrollArea className="flex-1 pb-2">
             {coupons ? (
                 coupons.length > 0 ? (
                     <div className="space-y-2">

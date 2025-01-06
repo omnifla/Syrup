@@ -1,16 +1,16 @@
 {
-    "Expires:": "Expire le :",
-    "Copied!": "Copié !",
-    "Copy": "Copier",
-    "No coupons available for this site.": "Pas de coupons de réduction disponibles pour ce site.",
-    "Toggle theme": "Changer de thème",
-    "Coupons": "Coupons de réduction",
-    "Domain seems to be invalid?": "Le nom de domaine ne semble pas être valide ?",
+    "languageName": "Français",
+    "Coupons": "Bon de réduction",
     "Theme": "Thème",
     "Light": "Clair",
     "Dark": "Sombre",
     "System": "Système",
     "Light theme": "Thème clair",
     "Dark theme": "Thème sombre",
-    "System theme": "Thème système"
+    "System theme": "Thème système",
+    "No_coupons_found": "Aucun coupon trouvé",
+    "Domain_invalid": "Domaine non valide",
+    "Browser_domain": "Ce domaine n'est pas pris en charge par l'extension",
+    "Settings": "Paramètres",
+    "Language": "Langue"
 }

@@ -3,6 +3,7 @@ import { Coupon } from "@/components/CouponCard";
 import { fetchCoupons } from "@/lib/utils";
 import { parseDomain } from "parse-domain";
 import CouponsPage from "@/components/CouponsPage";
+import Header from "@/components/Header";
 
 const domainReplacements: any = {
     "nordcheckout.com": "nordvpn.com",
@@ -27,6 +28,19 @@ const Popup: React.FC = () => {
         null
     );
     const [errorMsg, setErrorMsg] = useState<string>("");
+
+    const browserDomain = [
+        "arc://",
+        "chrome://",
+        'chrome-extension://',
+        "edge://",
+        "firefox://",
+        "opera://",
+        "safari://",
+        'about:',
+        'mozilla:',
+        'newtab'
+    ]
 
     useEffect(() => {
         if (!chrome.tabs) {
@@ -67,8 +81,12 @@ const Popup: React.FC = () => {
 
                 setErrorMsg("");
             } catch (error) {
+                if (browserDomain.some((domain) => fullDomain.includes(domain))) {
+                    setErrorMsg("Browser_domain");
+                } else {
+                    setErrorMsg("Domain_invalid");
+                }
                 console.error("Error parsing domain:", error);
-                setErrorMsg("Domain seems to be invalid?");
             }
 
             return;
@@ -82,7 +100,7 @@ const Popup: React.FC = () => {
                     const fullDomain = url.hostname.replace("www.", "");
 
                     if (reservedDomains.some(domain => url.origin.includes(domain))) {
-                        setErrorMsg("Syrup looks for coupons online when you shop!");
+                        setErrorMsg("Browser_domain");
                         return;
                     }
 
@@ -104,7 +122,7 @@ const Popup: React.FC = () => {
 
                         setPageDomain(domain);
                         setPageIcon(
-                            `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
+                            tab.favIconUrl || `https://www.google.com/s2/favicons?sz=64&domain=${domain}`
                         );
 
                         fetchCoupons(domain, setCouponsDomain);
@@ -113,7 +131,7 @@ const Popup: React.FC = () => {
                         setErrorMsg("");
                     } catch (error) {
                         console.error("Error parsing domain:", error);
-                        setErrorMsg("Domain seems to be invalid?");
+                        setErrorMsg("Domain_invalid");
                     }
                 }
             }
@@ -137,15 +155,18 @@ const Popup: React.FC = () => {
     };
 
     return (
-        <CouponsPage
-            pageIcon={pageIcon}
-            pageDomain={pageDomain}
-            pageSubDomain={pageSubDomain}
-            isSubDomain={isSubDomain}
-            couponsDomain={couponsDomain}
-            couponsSubDomain={couponsSubDomain}
-            handleCopy={handleCopy}
-            errorMsg={errorMsg} />
+        <main className="grid grid-cols-1 grid-rows-[10%,90%] h-screen w-screen overflow-hidden">
+            <Header />
+            <CouponsPage
+                pageIcon={pageIcon}
+                pageDomain={pageDomain}
+                pageSubDomain={pageSubDomain}
+                isSubDomain={isSubDomain}
+                couponsDomain={couponsDomain}
+                couponsSubDomain={couponsSubDomain}
+                handleCopy={handleCopy}
+                errorMsg={errorMsg} />
+        </main>
     );
 };
 
