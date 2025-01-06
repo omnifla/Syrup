@@ -101,7 +101,7 @@ export default function about() {
         };
 
         fetchContributors();
-    });
+    }, []);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
