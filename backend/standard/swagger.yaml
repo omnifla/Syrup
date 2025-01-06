@@ -258,6 +258,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /merchants:
+    get:
+      summary: List all Merchants
+      description: Returns a list of all merchants and their domains
+      operationId: listMerchants
+      responses:
+        '200':
+          description: Successful response
+          headers:
+            X-RateLimit-Limit:
+              description: The maximum number of requests allowed per time window
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: The number of requests remaining in the time window
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The time when the rate limit window resets (Unix timestamp)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too Many Requests
+          headers:
+            X-RateLimit-RetryAfter:
+              description: Time to wait before retrying (seconds)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Coupon:
@@ -327,11 +381,38 @@ components:
     Success:
       type: object
       required:
-          - success
+        - success
       properties:
-          success:
+        success:
+          type: string
+          description: Success message
+    MerchantList:
+      type: object
+      required:
+        - merchants
+        - total
+      properties:
+        merchants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Merchant'
+        total:
+          type: integer
+          description: Total number of merchants available
+    Merchant:
+      type: object
+      required:
+        - merchant_name
+        - domains
+      properties:
+        merchant_name:
+          type: string
+          description: Name of the merchant
+        domains:
+          type: array
+          items:
             type: string
-            description: Success message
+          description: List of domains associated with the merchant
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -339,4 +420,4 @@ components:
       name: X-Syrup-API-Key
       description: Optional API key for authentication
 security:
-  - ApiKeyAuth: []
+  - ApiKeyAuth: [ ]
