@@ -13,16 +13,16 @@ export function Header() {
         const handleScroll = () => {
             const header = document.querySelector('header');
             if (window.scrollY > lastScrollY) {
-                header?.classList.add('hidden');
+                header?.classList.add('scroll');
             } else {
-                header?.classList.remove('hidden');
+                header?.classList.remove('scroll');
             }
             lastScrollY = window.scrollY;
             if (window.scrollY !== 0) {
                 header?.classList.add('scrolled');
             } else {
                 header?.classList.remove('scrolled');
-                header?.classList.remove('hidden');
+                header?.classList.remove('scroll');
             }
         };
 
