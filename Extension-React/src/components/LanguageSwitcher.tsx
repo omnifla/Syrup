@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { languageNames, languages, switchLanguage } from "@/i18n";
-import { useState } from "react";
+import { getLanguage, languageNames, languages, switchLanguage } from "@/i18n";
+import { useEffect, useState } from "react";
 import CenteredScrollZone from "@/components/ui/CenteredScrollZone";
 
 export function LanguageSwitcher() {
@@ -13,10 +13,17 @@ export function LanguageSwitcher() {
         setLanguagePath(`/icons/${lang}.svg`);
     }
 
-    const ToogleDropdown = () => {
+    const toggleDropdown = () => {
         const wrapper = document.querySelector('.language') as HTMLDivElement;
         wrapper.classList.toggle('hidden');
     }
+
+    useEffect(() => {
+        getLanguage.then((lang) => {
+            setLanguage(lang);
+            setLanguagePath(`/icons/${lang}.svg`);
+        });
+    }, [])
 
     return (
         <div className="flex relative">
@@ -24,7 +31,7 @@ export function LanguageSwitcher() {
                 variant="ghost"
                 size="icon"
                 onClick={() => {
-                    ToogleDropdown();
+                    toggleDropdown();
                 }}>
                 <img src={languagePath} alt={language} className="h-[1.2rem] aspect-auto" />
             </Button>
@@ -33,9 +40,9 @@ export function LanguageSwitcher() {
                     {
                         languages.map((lang) => (
                             <div className="w-[100%] flex flex-row justify-start items-start" onClick={() => {
-                                switchLanguage(lang);
-                                setLanguage(lang);
-                                ToogleDropdown();}}>
+                                    switchLanguage(lang);
+                                    toggleDropdown();
+                                }}>
                                 <Button onClick={() => {updateLanguage(lang);}} className="w-[100%] bg-card text-card-foreground flex flex-row items-start hover:text-primary hover:cursor-pointer hover:bg-primary/10">
                                     <img src={`/icons/${lang}.svg`} alt={lang} className="h-[1.2rem] w-[1.2rem] aspect-auto" />
                                     <p className="text-card-foreground text-sm ml-2 hover:cursor-pointer">{languageNames[lang]}</p>
