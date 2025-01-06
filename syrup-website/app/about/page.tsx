@@ -13,8 +13,14 @@ const Developers = [
         github: "https://github.com/Abdallah-Alwarawreh/",
     },
     {
+        name: "Abstra208",
+        role: "Github Contributor & Translated into French and French, Canada",
+        avatar: "https://github.com/Abstra208.png?size=256",
+        github: "https://github.com/Abstra208",
+    },
+    {
         name: "mvlwarekekw",
-        role: "Github Contributor",
+        role: "Github Contributor & Translated into German",
         avatar: "https://github.com/mvlwarekekw.png?size=256",
         github: "https://github.com/mvlwarekekw",
     },
@@ -23,12 +29,6 @@ const Developers = [
         role: "Github Contributor",
         avatar: "https://github.com/1A3Dev.png?size=256",
         github: "https://github.com/1A3Dev",
-    },
-    {
-        name: "Abstra208",
-        role: "Github Contributor",
-        avatar: "https://github.com/Abstra208.png?size=256",
-        github: "https://github.com/Abstra208",
     },
     {
         name: "cranberry3148",
@@ -41,6 +41,18 @@ const Developers = [
         role: "Github Contributor",
         avatar: "https://github.com/furdiburd.png?size=256",
         github: "https://github.com/furdiburd",
+    },
+    {
+        name: "CrispyyBaconx",
+        role: "Github Contributor",
+        avatar: "https://github.com/CrispyyBaconx.png?size=256",
+        github: "https://github.com/CrispyyBaconx",
+    },
+    {
+        name: "ImGajeed76",
+        role: "Github Contributor",
+        avatar: "https://github.com/ImGajeed76.png?size=256",
+        github: "https://github.com/ImGajeed76",
     },
     {
         name: "hammerill",
@@ -56,15 +68,27 @@ const Developers = [
     },
     {
         name: "chipseater",
-        role: "Github Contributor",
+        role: "Github Contributor & Translated into French",
         avatar: "https://github.com/chipseater.png?size=256",
         github: "https://github.com/chipseater",
     },
     {
         name: "JxxIT",
-        role: "Github Contributor",
+        role: "Github Contributor & Translated into Dutch",
         avatar: "https://github.com/JxxIT.png?size=256",
         github: "https://github.com/JxxIT",
+    },
+    {
+        name: "BrenekH",
+        role: "Github Contributor",
+        avatar: "https://github.com/BrenekH.png?size=256",
+        github: "https://github.com/BrenekH",
+    },
+    {
+        name: "MitjaCH",
+        role: "Github Contributor",
+        avatar: "https://github.com/MitjaCH.png?size=256",
+        github: "https://github.com/MitjaCH",
     },
     {
         name: "MerkomassDev",
@@ -83,6 +107,96 @@ const Developers = [
         role: "Github Contributor",
         avatar: "https://github.com/MyFedora.png?size=256",
         github: "https://github.com/MyFedora",
+    },
+    {
+        name: "PixDeVl",
+        role: "Translated into Portuguese",
+        avatar: "https://github.com/pixDeVl.png?size=256",
+        github: "https://github.com/pixDeVl",
+    },
+    {
+        name: "irekit",
+        role: "Translated into Chinese Simplified",
+        avatar: "https://github.com/irekit.png?size=256",
+        github: "https://github.com/irekit",
+    },
+    {
+        name: "Smartlinuxcoder",
+        role: "Translated into Italian",
+        avatar: "https://github.com/Smartlinuxcoder.png?size=256",
+        github: "https://github.com/Smartlinuxcoder",
+    },
+    {
+        name: "Lolen10",
+        role: "Translated into German",
+        avatar: "https://github.com/Lolen10.png?size=256",
+        github: "https://github.com/Lolen10",
+    },
+    {
+        name: "slashing5",
+        role: "Translated into German",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "ghazer",
+        role: "Translated into Turkish",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "SolarPixels",
+        role: "Translated into Danish",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "ItsAdi1982",
+        role: "Translated into Hindi",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "S Pavlova",
+        role: "Translated into Bulgarian",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "jbgl",
+        role: "Translated into German",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "jbgl",
+        role: "Translated into German",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "TomakataABC",
+        role: "Translated into Czech",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "Panda",
+        role: "Translated into Danish",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "Panda",
+        role: "Translated into Danish",
+        avatar: "",
+        github: "",
+    },
+    {
+        name: "Tijn",
+        role: "Translated into Dutch",
+        avatar: "",
+        github: "",
     },
 ];
 
@@ -148,7 +262,10 @@ export default function about() {
                                 className="flex flex-col items-center rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-105"
                             >
                                 <img
-                                    src={developer.avatar}
+                                    src={
+                                        developer.avatar ||
+                                        "/Testimonials/placeholder.svg"
+                                    }
                                     alt={`${developer.name} avatar`}
                                     className="mb-4 rounded-full w-32 h-32"
                                 />
@@ -158,13 +275,15 @@ export default function about() {
                                 <p className="mb-4 text-sm text-muted-foreground">
                                     {developer.role}
                                 </p>
-                                <Link
-                                    href={developer.github}
-                                    className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
-                                >
-                                    <Github className="mr-1 h-4 w-4" />
-                                    GitHub Profile
-                                </Link>
+                                {developer.github && (
+                                    <Link
+                                        href={developer.github}
+                                        className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
+                                    >
+                                        <Github className="mr-1 h-4 w-4" />
+                                        GitHub Profile
+                                    </Link>
+                                )}
                             </div>
                         ))}
                     </div>
