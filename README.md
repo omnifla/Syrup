@@ -104,7 +104,7 @@ Special thanks to the amazing people who made Syrup possible:
     -   @mvlwarekekw - Translation and Bug Fixes.
     -   @1A3Dev - UI, Safari Extension and Bug Fixes.
     -   @cranberry3148 - Auto Apply Coupons and Bug Fixes.
-    -   @ImGajeed76 - API and Endpoints.
+    -   @ImGajeed76 - API and Endpoints and his [backend (go star)](https://github.com/ImGajeed76/discountdb-api) we use
     -   @hammerill - Github Build Script.
     -   @chipseater - Redirection Handler in Website.
     -   @JxxIT - Bug Fixes.
