@@ -1,85 +1,28 @@
 'use client';
-
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
-import { hostname } from "os";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import developers from '@/public/about/developer.json';
+import translation from '@/public/about/translation.json';
 
-const Developers = [
-    {
-        name: "Abdallah Alwarawreh",
-        role: "Creator & Lead Developer",
-        avatar: "https://github.com/Abdallah-Alwarawreh.png?size=256",
-        github: "https://github.com/Abdallah-Alwarawreh/",
-    },
-    {
-        name: "Abstra208",
-        role: "Core Developers",
-        avatar: "https://github.com/Abstra208.png?size=256",
-        github: "https://github.com/Abstra208",
-    },
-    {
-        name: "mvlwarekekw",
-        role: "Core Developers",
-        avatar: "https://github.com/mvlwarekekw.png?size=256",
-        github: "https://github.com/mvlwarekekw",
-    },
-    {
-        name: "1A3Dev",
-        role: "Core Developers",
-        avatar: "https://github.com/1A3Dev.png?size=256",
-        github: "https://github.com/1A3Dev",
-    },
-    {
-        name: "cranberry3148",
-        role: "Core Developers",
-        avatar: "https://github.com/cranberry3148.png?size=256",
-        github: "https://github.com/cranberry3148",
-    },
-    {
-        name: "ImGajeed76",
-        role: "Core Developers",
-        avatar: "https://github.com/ImGajeed76.png?size=256",
-        github: "https://github.com/ImGajeed76",
-    },
-    {
-        name: "hammerill",
-        role: "Developers",
-        avatar: "https://github.com/hammerill.png?size=256",
-        github: "https://github.com/hammerill",
-    },
-    {
-        name: "chipseater",
-        role: "Developers",
-        avatar: "https://github.com/chipseater.png?size=256",
-        github: "https://github.com/chipseater",
-    },
-    {
-        name: "JxxIT",
-        role: "Developers",
-        avatar: "https://github.com/JxxIT.png?size=256",
-        github: "https://github.com/JxxIT",
-    },
-];
-
-export interface Contributor {
-    login: string;
-    avatar_url: string;
-    html_url: string;
-    contributions: number;
-}
+const Developers = JSON.stringify(developers);
+const Translation = JSON.stringify(translation);
 
 export default function about() {
+    const [DevelopersElement, setDevelopers] = useState<JSX.Element[]>([])
+    const [TranslationElement, setTranslation] = useState<JSX.Element[]>([])
+    const [ContributorsElement, setContributors] = useState<JSX.Element[]>([])
+
     const GITHUB_API_URL = 'https://api.github.com/repos/';
     const REPO_OWNER = 'Abdallah-Alwarawreh';
     const REPO_NAME = 'syrup';
-    const [contr, setContr] = useState<Contributor[]>([]);
     useEffect(() => {
         const fetchContributors = async () => {
+            const DeveloperArray: JSX.Element[] = [];
+            const TranslationArray: JSX.Element[] = [];
+            const ContributorsArray: JSX.Element[] = [];
+
             const response = await fetch(`${GITHUB_API_URL}${REPO_OWNER}/${REPO_NAME}/contributors`);
             if (!response.ok) {
                 throw new Error('Failed to fetch contributors');
@@ -88,16 +31,35 @@ export default function about() {
             const contributors: { login: string; avatar_url: string; html_url: string; contributions: number; }[] = [];
             contributorsRAW.forEach((contributor: any) => {
                 const formattedLogin = contributor.login.replace(/-/g, ' ');
-                if (!Developers.some(dev => dev.name.toLowerCase() === formattedLogin.toLowerCase())) {
-                    contributors.push({
-                        login: formattedLogin,
-                        avatar_url: contributor.avatar_url,
-                        html_url: contributor.html_url,
-                        contributions: contributor.contributions,
-                    });
+                if (developers.some((dev: any) => dev.name === contributor.login)) {
+                    DeveloperArray.push(
+                        <div key={contributor.login} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
+                            <img src={contributor.avatar_url} alt={formattedLogin} className="w-12 h-12 rounded-full" />
+                            <h3 className="mb-3 text-xl font-semibold">{formattedLogin}</h3>
+                            <p className="text-muted-foreground">Contributions: {contributor.contributions}</p>
+                        </div>
+                    );
+                } else {
+                    ContributorsArray.push(
+                        <div key={contributor.login} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
+                            <img src={contributor.avatar_url} alt={formattedLogin} className="w-12 h-12 rounded-full" />
+                            <h3 className="mb-3 text-xl font-semibold">{formattedLogin}</h3>
+                            <p className="text-muted-foreground">Contributions: {contributor.contributions}</p>
+                        </div>
+                    );
                 }
             });
-            setContr(contributors);
+            TranslationElement.forEach((translator: any) => {
+                TranslationArray.push(
+                    <div key={translator.name} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
+                        <h3 className="mb-3 text-xl font-semibold">{translator.name}</h3>
+                        <p className="text-muted-foreground">Language: {translator.translation}</p>
+                    </div>
+                );
+            });
+            setDevelopers(DeveloperArray);
+            setTranslation(TranslationArray);
+            setContributors(ContributorsArray);
         };
 
         fetchContributors();
@@ -158,63 +120,19 @@ export default function about() {
                         Developers
                     </h2>
                     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        {Developers.map((developer) => (
-                            <div
-                                key={developer.github}
-                                className="flex flex-col items-center rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-105"
-                            >
-                                <img
-                                    src={developer.avatar}
-                                    alt={`${developer.name} avatar`}
-                                    className="mb-4 rounded-full w-32 h-32"
-                                />
-                                <h3 className="mb-1 text-xl font-semibold">
-                                    {developer.name}
-                                </h3>
-                                <p className="mb-4 text-sm text-muted-foreground">
-                                    {developer.role}
-                                </p>
-                                <Link
-                                    href={developer.github}
-                                    target="_blank"
-                                    className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
-                                >
-                                    <Github className="mr-1 h-4 w-4" />
-                                    GitHub Profile
-                                </Link>
-                            </div>
-                        ))}
+                        {DevelopersElement}
+                    </div>
+                    <h2 className="mt-12 mb-8 text-3xl font-bold text-[#0F172A]">
+                        Translators
+                    </h2>
+                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {TranslationElement}
                     </div>
                     <h2 className="mt-12 mb-8 text-3xl font-bold text-[#0F172A]">
                         Contributors
                     </h2>
                     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        {contr.map((contributor) => (
-                            <div
-                                key={contributor.html_url}
-                                className="flex flex-col items-center rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-105"
-                            >
-                                <img
-                                    src={contributor.avatar_url}
-                                    alt={`${contributor.login} avatar`}
-                                    className="mb-4 rounded-full w-32 h-32"
-                                />
-                                <h3 className="mb-1 text-xl font-semibold">
-                                    {contributor.login}
-                                </h3>
-                                <p className="mb-4 text-sm text-muted-foreground">
-                                    Contributions: {contributor.contributions}
-                                </p>
-                                <Link
-                                    href={contributor.html_url}
-                                    target="_blank"
-                                    className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
-                                >
-                                    <Github className="mr-1 h-4 w-4" />
-                                    GitHub Profile
-                                </Link>
-                            </div>
-                        ))}
+                        {ContributorsElement}
                     </div>
                 </section>
 
