@@ -76,6 +76,7 @@
                     if (response && response.coupons) {
                         coupons = response.coupons;
                         resolve();
+                        chrome.storage.local.set({ [`coupons`]: coupons });
                     } else {
                         reject("No coupons found");
                     }

@@ -25,6 +25,8 @@ export const fetchCoupons = async (
         const response = await fetch(
             `https://api.discountdb.ch/api/v1/syrup/coupons?domain=${domain.toLocaleLowerCase()}`
         );
+        const cachedCoupons = await chrome.storage.local.get(['coupons']);
+        console.error(JSON.stringify(cachedCoupons));
 
         if (response.ok) {
             const data: CouponGetResponse = await response.json();
