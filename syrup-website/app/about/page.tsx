@@ -70,7 +70,7 @@ export default function about() {
                         <div key={translator.name} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
                             <img src={`/Testimonials/placeholder.svg`} alt={`${translator.name}'s github avatar`} className="w-12 h-12 rounded-full mb-4" />
                             <h3 className="mb-3 text-xl font-semibold">{translator.name}</h3>
-                            <p className="text-muted-foreground">Language: {translator.translation}</p>
+                            <p className="text-muted-foreground">{translator.translation}</p>
                         </div>
                     );
                     setTranslation([...TranslationArray]);
