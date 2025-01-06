@@ -38,7 +38,7 @@ The Syrup extension is availabe to anyone using a Chromium or Firefox-based brow
 
 [![Chrome download link](https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png)](https://chromewebstore.google.com/detail/syrup/odfgjmajnbkiabjnfiijllkihjpilfch)
 [![Firefox download link](https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png)](https://addons.mozilla.org/en-US/firefox/addon/syrup)
-...or manually as a [.crx-file](./Syrup.crx)
+...or manually as a [.crx-file](https://github.com/Abdallah-Alwarawreh/Syrup/releases/)
 
 ---
 
