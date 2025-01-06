@@ -32,13 +32,13 @@ Key characteristics of the authentication system:
 ### Coupon
 The Coupon structure represents a single coupon code and its metadata. Each field serves a specific purpose:
 
-```json
+```jsonc
 {
-    "id": "string",          // Unique identifier for the coupon
-    "title": "string",       // Display title with discount amount
-    "description": "string", // Detailed coupon information
-    "code": "string",        // The actual coupon code
-    "score": number,         // Relevance/reliability score
+    "id": "string",           // Unique identifier for the coupon
+    "title": "string",        // Display title with discount amount
+    "description": "string",  // Detailed coupon information
+    "code": "string",         // The actual coupon code
+    "score": number,          // Relevance/reliability score
     "merchant_name": "string" // Store/website name
 }
 ```
@@ -63,7 +63,7 @@ Field Details:
 ### VersionInfo
 The VersionInfo structure helps track API compatibility:
 
-```json
+```jsonc
 {
     "version": "string", // Semantic versioning recommended
     "provider": "string" // Provider's name or identifier
@@ -80,7 +80,7 @@ GET /syrup/version
 ```
 
 #### Response
-```json
+```jsonc
 {
     "version": "1.0.0",
     "provider": "ExampleProvider"
@@ -109,7 +109,7 @@ GET /syrup/coupons
 | X-RateLimit-Reset    | The time when the rate limit window resets (Unix timestamp)|
 
 #### Response Body
-```json
+```jsonc
 {
     "coupons": [
         {
@@ -188,7 +188,7 @@ The API uses standard HTTP status codes with specific meanings in the context of
     - System failures
 
 Error responses should include a descriptive message when possible:
-```json
+```jsonc
 {
     "error": "Invalid domain format",
     "message": "Domain must be a valid hostname without protocol or path"
