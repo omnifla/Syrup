@@ -109,6 +109,12 @@ const Developers = [
         github: "https://github.com/MyFedora",
     },
     {
+        name: "MightiD",
+        role: "Github Contributor",
+        avatar: "https://github.com/MightiD.png?size=256",
+        github: "https://github.com/MightiD",
+    },
+    {
         name: "PixDeVl",
         role: "Translated into Portuguese",
         avatar: "https://github.com/pixDeVl.png?size=256",
