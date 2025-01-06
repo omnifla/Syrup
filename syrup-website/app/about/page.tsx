@@ -1,9 +1,13 @@
+'use client';
+
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { hostname } from "os";
+import { use, useEffect, useState } from "react";
 
 const Developers = [
     {
@@ -13,83 +17,95 @@ const Developers = [
         github: "https://github.com/Abdallah-Alwarawreh/",
     },
     {
+        name: "Abstra208",
+        role: "Core Developers",
+        avatar: "https://github.com/Abstra208.png?size=256",
+        github: "https://github.com/Abstra208",
+    },
+    {
         name: "mvlwarekekw",
-        role: "Github Contributer",
+        role: "Core Developers",
         avatar: "https://github.com/mvlwarekekw.png?size=256",
         github: "https://github.com/mvlwarekekw",
     },
     {
         name: "1A3Dev",
-        role: "Github Contributer",
+        role: "Core Developers",
         avatar: "https://github.com/1A3Dev.png?size=256",
         github: "https://github.com/1A3Dev",
     },
     {
-        name: "Abstra208",
-        role: "Github Contributer",
-        avatar: "https://github.com/Abstra208.png?size=256",
-        github: "https://github.com/Abstra208",
-    },
-    {
         name: "cranberry3148",
-        role: "Github Contributer",
+        role: "Core Developers",
         avatar: "https://github.com/cranberry3148.png?size=256",
         github: "https://github.com/cranberry3148",
     },
     {
-        name: "furdiburd",
-        role: "Github Contributer",
-        avatar: "https://github.com/furdiburd.png?size=256",
-        github: "https://github.com/furdiburd",
+        name: "ImGajeed76",
+        role: "Developers",
+        avatar: "https://github.com/ImGajeed76.png?size=256",
+        github: "https://github.com/ImGajeed76",
     },
     {
         name: "hammerill",
-        role: "Github Contributer",
+        role: "Developers",
         avatar: "https://github.com/hammerill.png?size=256",
         github: "https://github.com/hammerill",
     },
     {
-        name: "CuriousCodingCanadian",
-        role: "Github Contributer",
-        avatar: "https://github.com/CuriousCodingCanadian.png?size=256",
-        github: "https://github.com/CuriousCodingCanadian",
-    },
-    {
         name: "chipseater",
-        role: "Github Contributer",
+        role: "Developers",
         avatar: "https://github.com/chipseater.png?size=256",
         github: "https://github.com/chipseater",
     },
     {
         name: "JxxIT",
-        role: "Github Contributer",
+        role: "Developers",
         avatar: "https://github.com/JxxIT.png?size=256",
         github: "https://github.com/JxxIT",
     },
-    {
-        name: "MerkomassDev",
-        role: "Github Contributer",
-        avatar: "https://github.com/MerkomassDev.png?size=256",
-        github: "https://github.com/MerkomassDev",
-    },
-    {
-        name: "zzzealed",
-        role: "Github Contributer",
-        avatar: "https://github.com/zzzealed.png?size=256",
-        github: "https://github.com/zzzealed",
-    },
-    {
-        name: "MyFedora",
-        role: "Github Contributer",
-        avatar: "https://github.com/MyFedora.png?size=256",
-        github: "https://github.com/MyFedora",
-    },
 ];
 
+export interface Contributor {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+    contributions: number;
+}
+
 export default function about() {
+    const GITHUB_API_URL = 'https://api.github.com/repos/';
+    const REPO_OWNER = 'Abdallah-Alwarawreh';
+    const REPO_NAME = 'syrup';
+    const [contr, setContr] = useState<Contributor[]>([]);
+    useEffect(() => {
+        const fetchContributors = async () => {
+            const response = await fetch(`${GITHUB_API_URL}${REPO_OWNER}/${REPO_NAME}/contributors`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch contributors');
+            }
+            const contributorsRAW = await response.json();
+            const contributors: { login: string; avatar_url: string; html_url: string; contributions: number; }[] = [];
+            contributorsRAW.forEach((contributor: any) => {
+                const formattedLogin = contributor.login.replace(/-/g, ' ');
+                if (!Developers.some(dev => dev.name.toLowerCase() === formattedLogin.toLowerCase())) {
+                    contributors.push({
+                        login: formattedLogin,
+                        avatar_url: contributor.avatar_url,
+                        html_url: contributor.html_url,
+                        contributions: contributor.contributions,
+                    });
+                }
+            });
+            setContr(contributors);
+        };
+
+        fetchContributors();
+    });
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
-            <Header />
+            <div className="h-[10vh]"></div>
             <main className="container mx-auto px-4 py-16 md:px-6">
                 {/* Mission Section */}
                 <section className="mb-20">
@@ -160,6 +176,38 @@ export default function about() {
                                 </p>
                                 <Link
                                     href={developer.github}
+                                    target="_blank"
+                                    className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
+                                >
+                                    <Github className="mr-1 h-4 w-4" />
+                                    GitHub Profile
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                    <h2 className="mt-12 mb-8 text-3xl font-bold text-[#0F172A]">
+                        Contributors
+                    </h2>
+                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {contr.map((contributor) => (
+                            <div
+                                key={contributor.html_url}
+                                className="flex flex-col items-center rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-105"
+                            >
+                                <img
+                                    src={contributor.avatar_url}
+                                    alt={`${contributor.login} avatar`}
+                                    className="mb-4 rounded-full w-32 h-32"
+                                />
+                                <h3 className="mb-1 text-xl font-semibold">
+                                    {contributor.login}
+                                </h3>
+                                <p className="mb-4 text-sm text-muted-foreground">
+                                    Contributions: {contributor.contributions}
+                                </p>
+                                <Link
+                                    href={contributor.html_url}
+                                    target="_blank"
                                     className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
                                 >
                                     <Github className="mr-1 h-4 w-4" />
@@ -204,8 +252,6 @@ export default function about() {
                     </div>
                 </section>
             </main>
-
-            <Footer />
         </div>
     );
 }
