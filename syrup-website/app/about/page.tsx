@@ -42,7 +42,7 @@ const Developers = [
     },
     {
         name: "ImGajeed76",
-        role: "Developers",
+        role: "Core Developers",
         avatar: "https://github.com/ImGajeed76.png?size=256",
         github: "https://github.com/ImGajeed76",
     },
