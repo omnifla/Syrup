@@ -6,7 +6,7 @@ export interface CouponData {
     pageIcon: string;
     pageDomain: string;
     pageSubDomain: string;
-    isSubDomain?: boolean;
+    isSubDomain: boolean;
     couponsDomain: Coupon[] | null;
     couponsSubDomain: Coupon[] | null;
     handleCopy: (code: string, index: number) => void;
@@ -31,13 +31,15 @@ const CouponsPage: React.FC<CouponData> = ({pageIcon, pageDomain, pageSubDomain,
                         pageIcon={pageIcon}
                         pageDomain={pageDomain}
                         couponsDomain={couponsDomain}
-                        handleCopy={handleCopy} />
+                        handleCopy={handleCopy}
+                        isSubDomain={isSubDomain} />
                     {isSubDomain && (
                         <CouponsEntry
                             pageIcon={pageIcon}
                             pageDomain={pageSubDomain}
                             couponsDomain={couponsSubDomain}
-                            handleCopy={handleCopy} />
+                            handleCopy={handleCopy}
+                            isSubDomain={isSubDomain} />
                     )}
                 </>
             )}
