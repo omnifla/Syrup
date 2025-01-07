@@ -85,6 +85,10 @@ We welcome contributions to improve Syrup! Here’s how you can help:
 
 For major changes, please open an issue first to discuss what you’d like to contribute.
 
+### Translating
+
+You can also contribute by helping to translate Syrup! This is done through our [Crowdin](https://crowdin.com/project/syrup-extension) instance.
+
 ---
 
 ## 📚 Tech Stack
