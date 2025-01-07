@@ -1,10 +1,40 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 export function Header() {
+
+    useEffect(() => {
+        let lastScrollY = window.scrollY;
+
+        const handleScroll = () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > lastScrollY) {
+                header?.classList.add('scroll');
+            } else {
+                header?.classList.remove('scroll');
+            }
+            lastScrollY = window.scrollY;
+            if (window.scrollY !== 0) {
+                header?.classList.add('scrolled');
+            } else {
+                header?.classList.remove('scrolled');
+                header?.classList.remove('scroll');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-        <header className="container mx-auto px-4 py-8 flex justify-between items-center">
+        <header>
             <Link href="/" className="flex items-center gap-2">
                 <Image
                     src="/Syrup.svg"
@@ -15,6 +45,14 @@ export function Header() {
                 />
                 <span className="text-xl font-semibold">Syrup</span>
             </Link>
+            <nav className="flex justify-between items-center gap-[20%]">
+                <Link href="/about" className="text-muted-foreground hover:text-primary">
+                    About
+                </Link>
+                <Button className="bg-[#a82c04] hover:bg-[#8a2503]" asChild>
+                    <Link href="/download">Download</Link>
+                </Button>
+            </nav>
         </header>
     );
 }

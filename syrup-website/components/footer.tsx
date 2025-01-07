@@ -93,7 +93,7 @@ export function Footer() {
                 </div>
                 <div className="border-t border-gray-800 mt-12 pt-8 text-center">
                     <p>
-                        © {"2024 - " + new Date().getFullYear()} Syrup. All
+                        {"2024 - " + new Date().getFullYear()} <a className="hover:underline" href="https://github.joinsyrup.com" target="_blank">Syrup</a>. All
                         rights reserved.
                     </p>
                 </div>
