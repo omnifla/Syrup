@@ -26,3 +26,4 @@ dist-ssr
 # Build
 dist.crx
 dist.perm
+.vercel

@@ -75,3 +75,24 @@ body {
         --chart-5: 340 75% 55%;
     }
 }
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10%;
+    width: 100%;
+    color: black;
+    position: fixed;
+    height: 10vh;
+    transition: .4s ease;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    top: 0;
+}
+header.scroll {
+    position: fixed;
+    top: -10%;
+}
+header.scrolled {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+}

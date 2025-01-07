@@ -1,215 +1,92 @@
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+'use client';
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import developers from '@/public/about/developer.json';
+import translation from '@/public/about/translation.json';
 
-const Developers = [
-    {
-        name: "Abdallah Alwarawreh",
-        role: "Creator & Lead Developer",
-        avatar: "https://github.com/Abdallah-Alwarawreh.png?size=256",
-        github: "https://github.com/Abdallah-Alwarawreh/",
-    },
-    {
-        name: "Abstra208",
-        role: "Github Contributor & Translated into French and French, Canada",
-        avatar: "https://github.com/Abstra208.png?size=256",
-        github: "https://github.com/Abstra208",
-    },
-    {
-        name: "mvlwarekekw",
-        role: "Github Contributor & Translated into German",
-        avatar: "https://github.com/mvlwarekekw.png?size=256",
-        github: "https://github.com/mvlwarekekw",
-    },
-    {
-        name: "1A3Dev",
-        role: "Github Contributor",
-        avatar: "https://github.com/1A3Dev.png?size=256",
-        github: "https://github.com/1A3Dev",
-    },
-    {
-        name: "cranberry3148",
-        role: "Github Contributor",
-        avatar: "https://github.com/cranberry3148.png?size=256",
-        github: "https://github.com/cranberry3148",
-    },
-    {
-        name: "furdiburd",
-        role: "Github Contributor",
-        avatar: "https://github.com/furdiburd.png?size=256",
-        github: "https://github.com/furdiburd",
-    },
-    {
-        name: "CrispyyBaconx",
-        role: "Github Contributor",
-        avatar: "https://github.com/CrispyyBaconx.png?size=256",
-        github: "https://github.com/CrispyyBaconx",
-    },
-    {
-        name: "ImGajeed76",
-        role: "Github Contributor",
-        avatar: "https://github.com/ImGajeed76.png?size=256",
-        github: "https://github.com/ImGajeed76",
-    },
-    {
-        name: "hammerill",
-        role: "Github Contributor",
-        avatar: "https://github.com/hammerill.png?size=256",
-        github: "https://github.com/hammerill",
-    },
-    {
-        name: "CuriousCodingCanadian",
-        role: "Github Contributor",
-        avatar: "https://github.com/CuriousCodingCanadian.png?size=256",
-        github: "https://github.com/CuriousCodingCanadian",
-    },
-    {
-        name: "chipseater",
-        role: "Github Contributor & Translated into French",
-        avatar: "https://github.com/chipseater.png?size=256",
-        github: "https://github.com/chipseater",
-    },
-    {
-        name: "JxxIT",
-        role: "Github Contributor & Translated into Dutch",
-        avatar: "https://github.com/JxxIT.png?size=256",
-        github: "https://github.com/JxxIT",
-    },
-    {
-        name: "BrenekH",
-        role: "Github Contributor",
-        avatar: "https://github.com/BrenekH.png?size=256",
-        github: "https://github.com/BrenekH",
-    },
-    {
-        name: "MitjaCH",
-        role: "Github Contributor",
-        avatar: "https://github.com/MitjaCH.png?size=256",
-        github: "https://github.com/MitjaCH",
-    },
-    {
-        name: "MerkomassDev",
-        role: "Github Contributor",
-        avatar: "https://github.com/MerkomassDev.png?size=256",
-        github: "https://github.com/MerkomassDev",
-    },
-    {
-        name: "zzzealed",
-        role: "Github Contributor",
-        avatar: "https://github.com/zzzealed.png?size=256",
-        github: "https://github.com/zzzealed",
-    },
-    {
-        name: "MyFedora",
-        role: "Github Contributor",
-        avatar: "https://github.com/MyFedora.png?size=256",
-        github: "https://github.com/MyFedora",
-    },
-    {
-        name: "MightiD",
-        role: "Github Contributor",
-        avatar: "https://github.com/MightiD.png?size=256",
-        github: "https://github.com/MightiD",
-    },
-    {
-        name: "PixDeVl",
-        role: "Translated into Portuguese",
-        avatar: "https://github.com/pixDeVl.png?size=256",
-        github: "https://github.com/pixDeVl",
-    },
-    {
-        name: "irekit",
-        role: "Translated into Chinese Simplified",
-        avatar: "https://github.com/irekit.png?size=256",
-        github: "https://github.com/irekit",
-    },
-    {
-        name: "Smartlinuxcoder",
-        role: "Translated into Italian",
-        avatar: "https://github.com/Smartlinuxcoder.png?size=256",
-        github: "https://github.com/Smartlinuxcoder",
-    },
-    {
-        name: "Lolen10",
-        role: "Translated into German",
-        avatar: "https://github.com/Lolen10.png?size=256",
-        github: "https://github.com/Lolen10",
-    },
-    {
-        name: "slashing5",
-        role: "Translated into German",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "ghazer",
-        role: "Translated into Turkish",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "SolarPixels",
-        role: "Translated into Danish",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "ItsAdi1982",
-        role: "Translated into Hindi",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "S Pavlova",
-        role: "Translated into Bulgarian",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "jbgl",
-        role: "Translated into German",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "jbgl",
-        role: "Translated into German",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "TomakataABC",
-        role: "Translated into Czech",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "Panda",
-        role: "Translated into Danish",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "Panda",
-        role: "Translated into Danish",
-        avatar: "",
-        github: "",
-    },
-    {
-        name: "Tijn",
-        role: "Translated into Dutch",
-        avatar: "",
-        github: "",
-    },
-];
+const Developers = JSON.stringify(developers);
+const Translation = JSON.stringify(translation);
 
 export default function about() {
+    const [DevelopersElement, setDevelopers] = useState<JSX.Element[]>([])
+    const [TranslationElement, setTranslation] = useState<JSX.Element[]>([])
+    const [ContributorsElement, setContributors] = useState<JSX.Element[]>([])
+
+    const GITHUB_API_URL = 'https://api.github.com/repos/';
+    const REPO_OWNER = 'Abdallah-Alwarawreh';
+    const REPO_NAME = 'syrup';
+    useEffect(() => {
+        const fetchContributors = async () => {
+            const DeveloperArray: JSX.Element[] = [];
+            const TranslationArray: JSX.Element[] = [];
+            const ContributorsArray: JSX.Element[] = [];
+
+            const response = await fetch(`${GITHUB_API_URL}${REPO_OWNER}/${REPO_NAME}/contributors`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch contributors');
+            }
+            const contributorsRAW = await response.json();
+            const contributors: { login: string; avatar_url: string; html_url: string; contributions: number; }[] = [];
+            contributorsRAW.forEach((contributor: any) => {
+                const formattedLogin = contributor.login.replace(/-/g, ' ');
+                if (developers.some((dev: any) => dev.name === formattedLogin)) {
+                    DeveloperArray.push(
+                        <div key={contributor.login} className="flex flex-col items-center rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-105">
+                            <img src={contributor.avatar_url} alt={formattedLogin} className="mb-4 rounded-full w-32 h-32" />
+                            <h3 className="mb-1 text-xl font-semibold">{formattedLogin}</h3>
+                            <p className="mb-4 text-sm text-muted-foreground">{developers.find((dev: any) => dev.name === formattedLogin)?.role || 'Contributor'}</p>
+                            <a href={contributor.html_url} target="_blank" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"><Github className="lucide lucide-github mr-1 h-4 w-4"/> Github Profile</a>
+                        </div>
+                    );
+                } else {
+                    ContributorsArray.push(
+                        <div key={contributor.login} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
+                            <img src={contributor.avatar_url} alt={formattedLogin} className="mb-3 w-12 h-12 rounded-full" />
+                            <h3 className="mb-3 text-xl font-semibold">{formattedLogin}</h3>
+                            <p className="text-muted-foreground">Contributions: {contributor.contributions}</p>
+                            <a href={contributor.html_url} target="_blank" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mt-3"><Github className="lucide lucide-github mr-1 h-4 w-4"/> Github Profile</a>
+                        </div>
+                    );
+                }
+            });
+            const translators = JSON.parse(Translation);
+            for (const translator of translators) {
+                const img = new Image();
+                img.src = `https://github.com/${translator.name}.png`;
+                img.onload = () => {
+                    TranslationArray.push(
+                        <div key={translator.name} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
+                            <img src={img.src} alt={`${translator.name}'s github avatar`} className="w-12 h-12 rounded-full mb-4" />
+                            <h3 className="mb-3 text-xl font-semibold">{translator.name}</h3>
+                            <p className="text-muted-foreground">{translator.translation}</p>
+                        </div>
+                    );
+                    setTranslation([...TranslationArray]);
+                };
+                img.onerror = () => {
+                    TranslationArray.push(
+                        <div key={translator.name} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
+                            <img src={`/Testimonials/placeholder.svg`} alt={`${translator.name}'s github avatar`} className="w-12 h-12 rounded-full mb-4" />
+                            <h3 className="mb-3 text-xl font-semibold">{translator.name}</h3>
+                            <p className="text-muted-foreground">{translator.translation}</p>
+                        </div>
+                    );
+                    setTranslation([...TranslationArray]);
+                };
+            }
+            setDevelopers(DeveloperArray);
+            setTranslation(TranslationArray);
+            setContributors(ContributorsArray);
+        };
+
+        fetchContributors();
+    }, []);
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
-            <Header />
+            <div className="h-[10vh]"></div>
             <main className="container mx-auto px-4 py-16 md:px-6">
                 {/* Mission Section */}
                 <section className="mb-20">
@@ -262,36 +139,19 @@ export default function about() {
                         Developers
                     </h2>
                     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        {Developers.map((developer) => (
-                            <div
-                                key={developer.github}
-                                className="flex flex-col items-center rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-105"
-                            >
-                                <img
-                                    src={
-                                        developer.avatar ||
-                                        "/Testimonials/placeholder.svg"
-                                    }
-                                    alt={`${developer.name} avatar`}
-                                    className="mb-4 rounded-full w-32 h-32"
-                                />
-                                <h3 className="mb-1 text-xl font-semibold">
-                                    {developer.name}
-                                </h3>
-                                <p className="mb-4 text-sm text-muted-foreground">
-                                    {developer.role}
-                                </p>
-                                {developer.github && (
-                                    <Link
-                                        href={developer.github}
-                                        className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
-                                    >
-                                        <Github className="mr-1 h-4 w-4" />
-                                        GitHub Profile
-                                    </Link>
-                                )}
-                            </div>
-                        ))}
+                        {DevelopersElement}
+                    </div>
+                    <h2 className="mt-12 mb-8 text-3xl font-bold text-[#0F172A]">
+                        Contributors
+                    </h2>
+                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {ContributorsElement}
+                    </div>
+                    <h2 className="mt-12 mb-8 text-3xl font-bold text-[#0F172A]">
+                        Translators
+                    </h2>
+                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {TranslationElement}
                     </div>
                 </section>
 
@@ -329,8 +189,6 @@ export default function about() {
                     </div>
                 </section>
             </main>
-
-            <Footer />
         </div>
     );
 }

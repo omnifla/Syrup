@@ -20,6 +20,12 @@ export function Hero() {
             setBrowser("Firefox");
         } else if (userAgent.includes("Safari")) {
             setBrowser("Safari");
+        } else if (userAgent.includes("Edge")) {
+            setBrowser("Edge");
+        } else if (userAgent.includes("Opera")) {
+            setBrowser("Opera");
+        } else if (userAgent.includes("Arc")) {
+            setBrowser("Arc");
         } else {
             setBrowser("Chromium based");
         }

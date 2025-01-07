@@ -99,7 +99,6 @@ export function Footer() {
                         </ul>
                     </div>
                 </div>
-
                 <Separator className="my-8 bg-gray-800" />
 
                 {/* Footer Bottom */}
@@ -110,6 +109,7 @@ export function Footer() {
                             <Link href="/PrivacyPolicy">Privacy</Link>
                         </Button>
                     </div>
+
                 </div>
             </div>
         </footer>
