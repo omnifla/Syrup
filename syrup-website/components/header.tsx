@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -6,35 +6,34 @@ import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
 export function Header() {
-
     useEffect(() => {
         let lastScrollY = window.scrollY;
 
         const handleScroll = () => {
-            const header = document.querySelector('header');
+            const header = document.querySelector("header");
             if (window.scrollY > lastScrollY) {
-                header?.classList.add('scroll');
+                header?.classList.add("scroll");
             } else {
-                header?.classList.remove('scroll');
+                header?.classList.remove("scroll");
             }
             lastScrollY = window.scrollY;
             if (window.scrollY !== 0) {
-                header?.classList.add('scrolled');
+                header?.classList.add("scrolled");
             } else {
-                header?.classList.remove('scrolled');
-                header?.classList.remove('scroll');
+                header?.classList.remove("scrolled");
+                header?.classList.remove("scroll");
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener("scroll", handleScroll);
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
     return (
-        <header>
+        <header className="flex justify-between items-center fixed top-0 left-0 w-full px-[10%] h-[10vh] text-black z-[1000] backdrop-blur-[5px] transition-all duration-300">
             <Link href="/" className="flex items-center gap-2">
                 <Image
                     src="/Syrup.svg"
@@ -46,7 +45,10 @@ export function Header() {
                 <span className="text-xl font-semibold">Syrup</span>
             </Link>
             <nav className="flex justify-between items-center gap-[20%]">
-                <Link href="/about" className="text-muted-foreground hover:text-primary">
+                <Link
+                    href="/about"
+                    className="text-gray-500 hover:text-primary"
+                >
                     About
                 </Link>
                 <Button className="bg-[#a82c04] hover:bg-[#8a2503]" asChild>
