@@ -6,6 +6,7 @@ const Header: React.FC<{}> = () => {
             <a
                 href="https://joinsyrup.com/about#contributors"
                 className="text-center text-[.8rem] hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                target="_blank"
             >
                 Thanks to all contributors!
             </a>
