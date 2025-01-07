@@ -1,52 +1,99 @@
-'use client';
+"use client";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import developers from '@/public/about/developer.json';
-import translation from '@/public/about/translation.json';
+import developers from "@/public/about/developer.json";
+import translation from "@/public/about/translation.json";
 
 const Developers = JSON.stringify(developers);
 const Translation = JSON.stringify(translation);
 
 export default function about() {
-    const [DevelopersElement, setDevelopers] = useState<JSX.Element[]>([])
-    const [TranslationElement, setTranslation] = useState<JSX.Element[]>([])
-    const [ContributorsElement, setContributors] = useState<JSX.Element[]>([])
+    const [DevelopersElement, setDevelopers] = useState<JSX.Element[]>([]);
+    const [TranslationElement, setTranslation] = useState<JSX.Element[]>([]);
+    const [ContributorsElement, setContributors] = useState<JSX.Element[]>([]);
 
-    const GITHUB_API_URL = 'https://api.github.com/repos/';
-    const REPO_OWNER = 'Abdallah-Alwarawreh';
-    const REPO_NAME = 'syrup';
+    const GITHUB_API_URL = "https://api.github.com/repos/";
+    const REPO_OWNER = "Abdallah-Alwarawreh";
+    const REPO_NAME = "syrup";
     useEffect(() => {
         const fetchContributors = async () => {
             const DeveloperArray: JSX.Element[] = [];
             const TranslationArray: JSX.Element[] = [];
             const ContributorsArray: JSX.Element[] = [];
 
-            const response = await fetch(`${GITHUB_API_URL}${REPO_OWNER}/${REPO_NAME}/contributors`);
+            const response = await fetch(
+                `${GITHUB_API_URL}${REPO_OWNER}/${REPO_NAME}/contributors`
+            );
             if (!response.ok) {
-                throw new Error('Failed to fetch contributors');
+                throw new Error("Failed to fetch contributors");
             }
             const contributorsRAW = await response.json();
-            const contributors: { login: string; avatar_url: string; html_url: string; contributions: number; }[] = [];
+            const contributors: {
+                login: string;
+                avatar_url: string;
+                html_url: string;
+                contributions: number;
+            }[] = [];
             contributorsRAW.forEach((contributor: any) => {
-                const formattedLogin = contributor.login.replace(/-/g, ' ');
-                if (developers.some((dev: any) => dev.name === formattedLogin)) {
+                const formattedLogin = contributor.login.replace(/-/g, " ");
+                if (
+                    developers.some((dev: any) => dev.name === formattedLogin)
+                ) {
                     DeveloperArray.push(
-                        <div key={contributor.login} className="flex flex-col items-center rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-105">
-                            <img src={contributor.avatar_url} alt={formattedLogin} className="mb-4 rounded-full w-32 h-32" />
-                            <h3 className="mb-1 text-xl font-semibold">{formattedLogin}</h3>
-                            <p className="mb-4 text-sm text-muted-foreground">{developers.find((dev: any) => dev.name === formattedLogin)?.role || 'Contributor'}</p>
-                            <a href={contributor.html_url} target="_blank" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"><Github className="lucide lucide-github mr-1 h-4 w-4"/> Github Profile</a>
+                        <div
+                            key={contributor.login}
+                            className="flex flex-col items-center rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:shadow-lg hover:scale-105"
+                        >
+                            <img
+                                src={contributor.avatar_url}
+                                alt={formattedLogin}
+                                className="mb-4 rounded-full w-32 h-32"
+                            />
+                            <h3 className="mb-1 text-xl font-semibold">
+                                {formattedLogin}
+                            </h3>
+                            <p className="mb-4 text-sm text-muted-foreground">
+                                {developers.find(
+                                    (dev: any) => dev.name === formattedLogin
+                                )?.role || "Contributor"}
+                            </p>
+                            <a
+                                href={contributor.html_url}
+                                target="_blank"
+                                className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
+                            >
+                                <Github className="lucide lucide-github mr-1 h-4 w-4" />{" "}
+                                Github Profile
+                            </a>
                         </div>
                     );
                 } else {
                     ContributorsArray.push(
-                        <div key={contributor.login} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
-                            <img src={contributor.avatar_url} alt={formattedLogin} className="mb-3 w-12 h-12 rounded-full" />
-                            <h3 className="mb-3 text-xl font-semibold">{formattedLogin}</h3>
-                            <p className="text-muted-foreground">Contributions: {contributor.contributions}</p>
-                            <a href={contributor.html_url} target="_blank" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mt-3"><Github className="lucide lucide-github mr-1 h-4 w-4"/> Github Profile</a>
+                        <div
+                            key={contributor.login}
+                            className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105"
+                        >
+                            <img
+                                src={contributor.avatar_url}
+                                alt={formattedLogin}
+                                className="mb-3 w-12 h-12 rounded-full"
+                            />
+                            <h3 className="mb-3 text-xl font-semibold">
+                                {formattedLogin}
+                            </h3>
+                            <p className="text-muted-foreground">
+                                Contributions: {contributor.contributions}
+                            </p>
+                            <a
+                                href={contributor.html_url}
+                                target="_blank"
+                                className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mt-3"
+                            >
+                                <Github className="lucide lucide-github mr-1 h-4 w-4" />{" "}
+                                Github Profile
+                            </a>
                         </div>
                     );
                 }
@@ -54,23 +101,58 @@ export default function about() {
             const translators = JSON.parse(Translation);
             for (const translator of translators) {
                 const img = new Image();
-                img.src = `https://github.com/${translator.name}.png`;
+                if (
+                    [
+                        "slashing5",
+                        "Pavlova",
+                        "ghazer",
+                        "SolarPixels",
+                        "ItsAdi1982",
+                        "jbgl",
+                        "Panda",
+                        "Tijn",
+                    ].includes(translator.name)
+                ) {
+                    img.src = `/Testimonials/placeholder.svg`;
+                } else img.src = `https://github.com/${translator.name}.png`;
                 img.onload = () => {
                     TranslationArray.push(
-                        <div key={translator.name} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
-                            <img src={img.src} alt={`${translator.name}'s github avatar`} className="w-12 h-12 rounded-full mb-4" />
-                            <h3 className="mb-3 text-xl font-semibold">{translator.name}</h3>
-                            <p className="text-muted-foreground">{translator.translation}</p>
+                        <div
+                            key={translator.name}
+                            className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105"
+                        >
+                            <img
+                                src={img.src}
+                                alt={`${translator.name}'s github avatar`}
+                                className="w-12 h-12 rounded-full mb-4"
+                            />
+                            <h3 className="mb-3 text-xl font-semibold">
+                                {translator.name}
+                            </h3>
+                            <p className="text-muted-foreground">
+                                {translator.translation}
+                            </p>
                         </div>
                     );
                     setTranslation([...TranslationArray]);
                 };
                 img.onerror = () => {
                     TranslationArray.push(
-                        <div key={translator.name} className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105">
-                            <img src={`/Testimonials/placeholder.svg`} alt={`${translator.name}'s github avatar`} className="w-12 h-12 rounded-full mb-4" />
-                            <h3 className="mb-3 text-xl font-semibold">{translator.name}</h3>
-                            <p className="text-muted-foreground">{translator.translation}</p>
+                        <div
+                            key={translator.name}
+                            className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-lg hover:scale-105"
+                        >
+                            <img
+                                src={`/Testimonials/placeholder.svg`}
+                                alt={`${translator.name}'s github avatar`}
+                                className="w-12 h-12 rounded-full mb-4"
+                            />
+                            <h3 className="mb-3 text-xl font-semibold">
+                                {translator.name}
+                            </h3>
+                            <p className="text-muted-foreground">
+                                {translator.translation}
+                            </p>
                         </div>
                     );
                     setTranslation([...TranslationArray]);
