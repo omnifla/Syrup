@@ -13,7 +13,7 @@ export interface Coupon {
     title: string;
     description: string;
     copied?: boolean;
-    expirationDate: string;
+    expirationDate: number;
 }
 
 const CouponsEntry: React.FC<CouponData> = ({pageIcon, pageDomain, couponsDomain, handleCopy, isSubDomain}) => {
@@ -29,7 +29,7 @@ const CouponsEntry: React.FC<CouponData> = ({pageIcon, pageDomain, couponsDomain
     return (
         <div className={`${height} flex flex-col pt-2`}>
             <div className="flex items-center gap-4 pb-2 mb-2 pt-1 border-border border-b-2 border-t-2">
-                <img src={pageIcon} alt="Page Icon" className="w-8 h-8" />
+                <img src={pageIcon} alt="Page Icon" className="w-8 h-z" />
                 <p className="text-lg font-bold text-primary">{pageDomain}</p>
             </div>
             <CouponsList
