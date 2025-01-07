@@ -2,21 +2,26 @@
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useRouter } from 'next/navigation';
 import developers from '@/public/about/developer.json';
 import translation from '@/public/about/translation.json';
 
 const Developers = JSON.stringify(developers);
 const Translation = JSON.stringify(translation);
 
-export default function about() {
-    const [DevelopersElement, setDevelopers] = useState<JSX.Element[]>([])
-    const [TranslationElement, setTranslation] = useState<JSX.Element[]>([])
-    const [ContributorsElement, setContributors] = useState<JSX.Element[]>([])
+export default function About() {
+    const [DevelopersElement, setDevelopers] = useState<JSX.Element[]>([]);
+    const [TranslationElement, setTranslation] = useState<JSX.Element[]>([]);
+    const [ContributorsElement, setContributors] = useState<JSX.Element[]>([]);
+
+    const contributorsRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
     const GITHUB_API_URL = 'https://api.github.com/repos/';
     const REPO_OWNER = 'Abdallah-Alwarawreh';
     const REPO_NAME = 'syrup';
+
     useEffect(() => {
         const fetchContributors = async () => {
             const DeveloperArray: JSX.Element[] = [];
@@ -28,7 +33,6 @@ export default function about() {
                 throw new Error('Failed to fetch contributors');
             }
             const contributorsRAW = await response.json();
-            const contributors: { login: string; avatar_url: string; html_url: string; contributions: number; }[] = [];
             contributorsRAW.forEach((contributor: any) => {
                 const formattedLogin = contributor.login.replace(/-/g, ' ');
                 if (developers.some((dev: any) => dev.name === formattedLogin)) {
@@ -82,6 +86,10 @@ export default function about() {
         };
 
         fetchContributors();
+
+        if (window.location.hash === "#contributors") {
+            contributorsRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }
     }, []);
 
     return (
@@ -141,7 +149,7 @@ export default function about() {
                     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {DevelopersElement}
                     </div>
-                    <h2 className="mt-12 mb-8 text-3xl font-bold text-[#0F172A]">
+                    <h2 ref={contributorsRef} className="mt-12 mb-8 text-3xl font-bold text-[#0F172A]">
                         Contributors
                     </h2>
                     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
