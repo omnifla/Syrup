@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Star } from "lucide-react";
+import { Star } from 'lucide-react';
 import testimonials from "@/lib/Testimonials";
 
 export function Testimonials() {
     return (
-        <section className="py-24">
+        <section className="py-24 bg-gray-50">
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-2xl mx-auto mb-16">
                     <h2 className="text-4xl font-bold mb-4">
@@ -15,24 +15,23 @@ export function Testimonials() {
                         Join people who save with Syrup
                     </p>
                 </div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
                     {testimonials.map((testimonial, index) => (
                         <Card
                             key={index}
-                            className="transition-all duration-300 ease-in-out transform hover:scale-105"
+                            className="break-inside-avoid mb-6 transition-all duration-300 ease-in-out hover:shadow-lg"
                         >
                             <CardHeader>
                                 <div className="flex items-center gap-4">
                                     <Avatar>
                                         <AvatarImage
                                             src={
-                                                testimonial.avatar == ""
-                                                    ? `/Testimonials/placeholder.svg`
-                                                    : testimonial.avatar
+                                                testimonial.avatar || `/Testimonials/placeholder.svg`
                                             }
+                                            alt={`Avatar of ${testimonial.name}`}
                                         />
                                         <AvatarFallback>
-                                            {testimonial.avatar}
+                                            {testimonial.name.charAt(0)}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div>
@@ -65,3 +64,4 @@ export function Testimonials() {
         </section>
     );
 }
+
