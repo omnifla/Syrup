@@ -87,7 +87,7 @@ For major changes, please open an issue first to discuss what you’d like to co
 
 ### Translating
 
-You can also contribute by helping to translate Syrup! This is done through our Crowdin instance here: <https://crowdin.com/project/syrup-extension>.
+You can also contribute by helping to translate Syrup! This is done through our [Crowdin](https://crowdin.com/project/syrup-extension) instance.
 
 ---
 
