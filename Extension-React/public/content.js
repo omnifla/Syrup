@@ -51,15 +51,17 @@
      * 2. E-Commerce Platform Detection
      *******************************************************/
     function detectPlatform() {
-        const html = document.documentElement.innerHTML.toLowerCase();
-
-        if (
-            html.includes("woocommerce") ||
-            html.includes("wp-content/plugins/woocommerce")
-        ) {
-            return "woocommerce";
+        try {
+            const html = document.documentElement.innerHTML.toLowerCase();
+            if (
+                html.includes("woocommerce") ||
+                html.includes("wp-content/plugins/woocommerce")
+            ) {
+                return "woocommerce";
+            }
+        } catch (error) {
+            console.error("[Syrup] Error detecting platform:", error);
         }
-
         return null;
     }
 
@@ -70,18 +72,39 @@
 
     async function fetchCoupons(domain) {
         return new Promise((resolve, reject) => {
-            chrome.runtime.sendMessage(
-                { action: "getCoupons", domain },
-                (response) => {
-                    if (response && response.coupons) {
-                        coupons = response.coupons;
-                        resolve();
-                        chrome.storage.local.set({ [`coupons`]: coupons });
-                    } else {
-                        reject("No coupons found");
+            try {
+                chrome.runtime.sendMessage(
+                    { action: "getCoupons", domain },
+                    (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.error(
+                                "[Syrup] Runtime error during message passing:",
+                                chrome.runtime.lastError
+                            );
+                            reject(chrome.runtime.lastError.message);
+                            return;
+                        }
+
+                        if (
+                            response &&
+                            response.coupons &&
+                            response.coupons.length > 0
+                        ) {
+                            coupons = response.coupons;
+                            resolve();
+                            chrome.storage.local.set({ coupons });
+                        } else {
+                            console.warn(
+                                "[Syrup] No coupons returned from background."
+                            );
+                            reject("No coupons found");
+                        }
                     }
-                }
-            );
+                );
+            } catch (error) {
+                console.error("[Syrup] Error fetching coupons:", error);
+                reject("Failed to fetch coupons");
+            }
         });
     }
 
@@ -90,8 +113,9 @@
 
         try {
             const response = await fetch(url);
-            console.log("response", response);
-
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}`);
+            }
             const translations = await response.json();
             return translations;
         } catch (error) {
@@ -101,71 +125,122 @@
     }
 
     async function setLanguage(lang) {
-        currentLang = lang;
-        translations = await loadTranslations(lang);
+        try {
+            currentLang = lang;
+            translations = await loadTranslations(lang);
+        } catch (error) {
+            console.error("[Syrup] Error setting language:", error);
+        }
     }
 
     function getLanguageFromStorage(callback) {
-        chrome.storage.sync.get().then((data) => {
-            storedLanguage = data["language"];
-            callback(storedLanguage || chrome.i18n.getUILanguage() || "en");
-        });
+        try {
+            chrome.storage.sync.get().then((data) => {
+                const storedLanguage = data["language"];
+                callback(storedLanguage || chrome.i18n.getUILanguage() || "en");
+            });
+        } catch (error) {
+            console.error(
+                "[Syrup] Error getting language from storage:",
+                error
+            );
+            callback("en");
+        }
     }
 
     function getMessage(key) {
-        return translations[key]?.message || key;
+        try {
+            return translations[key]?.message || key;
+        } catch (error) {
+            console.error("[Syrup] Error getting message for key:", key, error);
+            return key;
+        }
     }
 
     function getTranslation(key, data = {}) {
-        let translated = getMessage(key);
-        for (const [name, value] of Object.entries(data)) {
-            translated = translated.replace(
-                new RegExp(`%${name}%`, "g"),
-                value
+        try {
+            let translated = getMessage(key);
+            for (const [name, value] of Object.entries(data)) {
+                translated = translated.replace(
+                    new RegExp(`%${name}%`, "g"),
+                    value
+                );
+            }
+            return translated;
+        } catch (error) {
+            console.error(
+                "[Syrup] Error getting translation for key:",
+                key,
+                error
             );
+            return key;
         }
-        return translated;
     }
     const __ = getTranslation;
 
     function isVisible(el) {
-        if (!el) return false;
-        return !!(
-            el.offsetWidth ||
-            el.offsetHeight ||
-            el.getClientRects().length
-        );
+        try {
+            if (!el) return false;
+            return !!(
+                el.offsetWidth ||
+                el.offsetHeight ||
+                el.getClientRects().length
+            );
+        } catch (error) {
+            console.error(
+                "[Syrup] Error checking visibility of element:",
+                error
+            );
+            return false;
+        }
     }
 
     function parsePrice(str) {
-        if (!str) return 0;
-        const numericString = str.replace(/[^\d.-]/g, "");
-        return parseFloat(numericString) || 0;
+        try {
+            if (!str) return 0;
+            const numericString = str.replace(/[^\d.-]/g, "");
+            return parseFloat(numericString) || 0;
+        } catch (error) {
+            console.error("[Syrup] Error parsing price:", error);
+            return 0;
+        }
     }
 
     function replaceValue(selector, value) {
-        const el = document.querySelector(selector);
-        if (el) {
-            el.value = value;
-            // Fire typical events to ensure the page sees the input
-            el.dispatchEvent(new Event("keydown", { bubbles: true }));
-            el.dispatchEvent(new Event("keyup", { bubbles: true }));
-            el.dispatchEvent(new Event("change", { bubbles: true }));
+        try {
+            const el = document.querySelector(selector);
+            if (el) {
+                el.value = value;
+                // Fire typical events to ensure the page sees the input
+                el.dispatchEvent(new Event("keydown", { bubbles: true }));
+                el.dispatchEvent(new Event("keyup", { bubbles: true }));
+                el.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+            return el;
+        } catch (error) {
+            console.error(
+                `[Syrup] Error replacing value for selector: ${selector}`,
+                error
+            );
+            return null;
         }
-        return el;
     }
 
     async function revertCoupon(inputSelector, removeCouponButtonSelector) {
-        if (inputSelector) {
-            const input = document.querySelector(inputSelector);
-            if (input) {
-                replaceValue(inputSelector, "");
+        try {
+            if (inputSelector) {
+                const input = document.querySelector(inputSelector);
+                if (input) {
+                    replaceValue(inputSelector, "");
+                }
             }
+            if (removeCouponButtonSelector) {
+                document.querySelector(removeCouponButtonSelector)?.click();
+            }
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+        } catch (error) {
+            console.error("[Syrup] Error reverting coupon:", error);
         }
-        if (removeCouponButtonSelector) {
-            document.querySelector(removeCouponButtonSelector)?.click();
-        }
-        await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     /*******************************************************
@@ -186,89 +261,97 @@
         failureSelector,
         priceSelector
     ) {
-        const preApplyButton = preApplyButtonSelector
-            ? document.querySelector(preApplyButtonSelector)
-            : null;
+        try {
+            const preApplyButton = preApplyButtonSelector
+                ? document.querySelector(preApplyButtonSelector)
+                : null;
 
-        if (preApplyButton) {
-            preApplyButton.click();
-        }
+            if (preApplyButton) {
+                preApplyButton.click();
+            }
 
-        const input = inputSelector
-            ? document.querySelector(inputSelector)
-            : null;
-        const applyButton = applyButtonSelector
-            ? document.querySelector(applyButtonSelector)
-            : null;
+            const input = inputSelector
+                ? document.querySelector(inputSelector)
+                : null;
+            const applyButton = applyButtonSelector
+                ? document.querySelector(applyButtonSelector)
+                : null;
 
-        if (input && applyButton) {
-            replaceValue(inputSelector, couponCode);
-            applyButton.disabled = false;
-            applyButton.click();
-        }
+            if (input && applyButton) {
+                replaceValue(inputSelector, couponCode);
+                applyButton.disabled = false;
+                applyButton.click();
+            }
 
-        let prePrice = 0;
-        if (priceSelector) {
-            prePrice = parsePrice(
-                document.querySelector(priceSelector)?.textContent
+            let prePrice = 0;
+            if (priceSelector) {
+                prePrice = parsePrice(
+                    document.querySelector(priceSelector)?.textContent
+                );
+            }
+
+            let successBySelector = false;
+            let failureBySelector = false;
+
+            if (successSelector && failureSelector) {
+                await new Promise((resolve) => {
+                    const startTime = Date.now();
+                    const interval = setInterval(() => {
+                        const sEl = document.querySelector(successSelector);
+                        const fEl = document.querySelector(failureSelector);
+
+                        if (sEl && isVisible(sEl)) {
+                            successBySelector = true;
+                            clearInterval(interval);
+                            resolve();
+                        } else if (fEl && isVisible(fEl)) {
+                            failureBySelector = true;
+                            clearInterval(interval);
+                            resolve();
+                        } else if (Date.now() - startTime > maxWaitTime) {
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }, 300);
+                });
+            } else {
+                // If no success/failure selectors, just wait a bit
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+            }
+
+            let postPrice = prePrice;
+            if (priceSelector) {
+                postPrice = parsePrice(
+                    document.querySelector(priceSelector)?.textContent
+                );
+            }
+
+            if (successBySelector && !failureBySelector) {
+                return {
+                    success: true,
+                    priceDrop: prePrice - postPrice,
+                    finalPrice: postPrice,
+                };
+            } else if (failureBySelector && !successBySelector) {
+                return {
+                    success: false,
+                    priceDrop: 0,
+                    finalPrice: postPrice,
+                };
+            } else {
+                const dropped = prePrice - postPrice;
+                return {
+                    success: dropped > 0,
+                    priceDrop: dropped,
+                    finalPrice: postPrice,
+                };
+            }
+        } catch (error) {
+            console.error(
+                `[Syrup] Error applying coupon ${couponCode}:`,
+                error
             );
-        }
-
-        let successBySelector = false;
-        let failureBySelector = false;
-
-        if (successSelector && failureSelector) {
-            await new Promise((resolve) => {
-                const startTime = Date.now();
-                const interval = setInterval(() => {
-                    const sEl = document.querySelector(successSelector);
-                    const fEl = document.querySelector(failureSelector);
-
-                    if (sEl && isVisible(sEl)) {
-                        successBySelector = true;
-                        clearInterval(interval);
-                        resolve();
-                    } else if (fEl && isVisible(fEl)) {
-                        failureBySelector = true;
-                        clearInterval(interval);
-                        resolve();
-                    } else if (Date.now() - startTime > maxWaitTime) {
-                        clearInterval(interval);
-                        resolve();
-                    }
-                }, 300);
-            });
-        } else {
-            // If no success/failure selector, just wait a bit
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-        }
-
-        let postPrice = prePrice;
-        if (priceSelector) {
-            postPrice = parsePrice(
-                document.querySelector(priceSelector)?.textContent
-            );
-        }
-
-        if (successBySelector && !failureBySelector) {
-            return {
-                success: true,
-                priceDrop: prePrice - postPrice,
-                finalPrice: postPrice,
-            };
-        } else if (failureBySelector && !successBySelector) {
-            return {
-                success: false,
-                priceDrop: 0,
-                finalPrice: postPrice,
-            };
-        } else {
-            const dropped = prePrice - postPrice;
-            return {
-                success: dropped > 0,
-                priceDrop: dropped,
-                finalPrice: postPrice,
-            };
+            return { success: false, priceDrop: 0, finalPrice: 0 };
         }
     }
 
@@ -297,29 +380,36 @@
 
             updateTestingPopover(i + 1, coupons.length, couponCode, bestPrice);
 
-            const result = await applySingleCoupon(
-                config.inputSelector,
-                couponCode,
-                config.preApplyButtonSelector,
-                config.applyButtonSelector,
-                config.successSelector,
-                config.failureSelector,
-                config.priceSelector
-            );
+            try {
+                const result = await applySingleCoupon(
+                    config.inputSelector,
+                    couponCode,
+                    config.preApplyButtonSelector,
+                    config.applyButtonSelector,
+                    config.successSelector,
+                    config.failureSelector,
+                    config.priceSelector
+                );
 
-            if (
-                result.success &&
-                result.priceDrop > 0 &&
-                result.finalPrice < bestPrice
-            ) {
-                bestPrice = result.finalPrice;
-                bestCoupon = couponCode;
+                if (
+                    result.success &&
+                    result.priceDrop > 0 &&
+                    result.finalPrice < bestPrice
+                ) {
+                    bestPrice = result.finalPrice;
+                    bestCoupon = couponCode;
+                }
+
+                await revertCoupon(
+                    config.inputSelector,
+                    config.removeCouponButtonSelector
+                );
+            } catch (error) {
+                console.error(
+                    `[Syrup] Error testing coupon ${couponCode}:`,
+                    error
+                );
             }
-
-            await revertCoupon(
-                config.inputSelector,
-                config.removeCouponButtonSelector
-            );
         }
 
         // Stopped by user
