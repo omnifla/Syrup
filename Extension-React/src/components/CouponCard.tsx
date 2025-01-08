@@ -11,10 +11,10 @@ export interface Coupon {
 }
 
 const colorRanges = [
-    { min: 70, color: "text-green-500" },
-    { min: 55, color: "text-lime-500" },
-    { min: 40, color: "text-yellow-500" },
-    { min: 25, color: "text-orange-500" },
+    { min: 0.7, color: "text-green-500" },
+    { min: 0.55, color: "text-lime-500" },
+    { min: 0.4, color: "text-yellow-500" },
+    { min: 0.25, color: "text-orange-500" },
     { min: 0, color: "text-red-500" }
 ] as const;
 
@@ -33,7 +33,7 @@ const CouponCard: React.FC<{
     copied: boolean;
 }> = ({ coupon, onCopy, copied }) => {
     const { t } = useTranslation();
-    let score = Math.round(coupon.score * 100);
+    let score = Math.round(coupon.score);
 
     return (
         <Card className="p-4 pt-2 pb-2 flex justify-between items-center bg-card text-card-foreground">
