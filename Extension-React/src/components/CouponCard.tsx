@@ -10,30 +10,18 @@ export interface Coupon {
     score: number;
 }
 
-/*const colorRanges = [
-    { min: 0.7, color: "text-green-500" },
-    { min: 0.55, color: "text-lime-500" },
-    { min: 0.4, color: "text-yellow-500" },
-    { min: 0.25, color: "text-orange-500" },
-    { min: 0, color: "text-red-500" }
-] as const;*/
-
 function round(value: number, precision: number) {
     var multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
 }
 
 const interpolateColor = (value: number, min: number, max: number): string => {
-    // Normalize value to 0-1 range
     const normalized = (value - min) / (max - min);
     
-    // HSL values for red (0) to green (120)
     const hue = normalized * 120;
     
     return `hsl(${hue}, 70%, 45%)`;
 };
-
-/*{getColor(score)}*/
 
 const CouponCard: React.FC<{
     coupon: Coupon;
