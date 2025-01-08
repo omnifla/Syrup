@@ -36,7 +36,7 @@ export const fetchCoupons = async (
                     code: coupon.code,
                     title: coupon.title,
                     description: coupon.description,
-                    expirationDate: coupon.score
+                    score: coupon.score
                 })
             );
 

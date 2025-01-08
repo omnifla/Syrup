@@ -13,7 +13,7 @@ export interface Coupon {
     title: string;
     description: string;
     copied?: boolean;
-    expirationDate: number;
+    score: number;
 }
 
 const CouponsEntry: React.FC<CouponData> = ({pageIcon, pageDomain, couponsDomain, handleCopy, isSubDomain}) => {

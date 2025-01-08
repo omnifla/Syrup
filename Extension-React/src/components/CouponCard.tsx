@@ -7,19 +7,19 @@ export interface Coupon {
     title: string;
     description: string;
     copied?: boolean;
-    expirationDate: number;
+    score: number;
 }
 
 const colorRanges = [
-    { min: 70, color: "text-green-500" },
-    { min: 55, color: "text-lime-500" },
-    { min: 40, color: "text-yellow-500" },
-    { min: 25, color: "text-orange-500" },
+    { min: 0.7, color: "text-green-500" },
+    { min: 0.55, color: "text-lime-500" },
+    { min: 0.4, color: "text-yellow-500" },
+    { min: 0.25, color: "text-orange-500" },
     { min: 0, color: "text-red-500" }
 ] as const;
 
-const getPercentageColor = (percentage: number): string => {
-    return colorRanges.find(range => percentage >= range.min)?.color || "text-red-500";
+const getColor = (score: number): string => {
+    return colorRanges.find(range => score >= range.min)?.color || "text-red-500";
 };
 
 function round(value: number, precision: number) {
@@ -33,16 +33,16 @@ const CouponCard: React.FC<{
     copied: boolean;
 }> = ({ coupon, onCopy, copied }) => {
     const { t } = useTranslation();
-    const percentage = Math.round(coupon.expirationDate * 100);
+    let score = Math.round(coupon.score);
 
     return (
         <Card className="p-4 pt-2 pb-2 flex justify-between items-center bg-card text-card-foreground">
             <div>
                 <p className="text-sm font-bold text-primary">{coupon.code}</p>
                 <p className="text-sm text-muted-foreground">{coupon.title}</p>
-                {coupon.expirationDate && (
-                    <p className={`text-sm ${getPercentageColor(percentage)}`}>
-                        {t(round(percentage, 1) + "% chance to work")}
+                {coupon.score && (
+                    <p className={`text-sm ${getColor(score)}`}>
+                        {'Score: ' + (round(score, 2))}
                     </p>
                 )}
             </div>
