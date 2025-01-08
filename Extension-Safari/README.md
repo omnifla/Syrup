@@ -10,6 +10,8 @@
    Clone or download the repo: `git clone https://github.com/Abdallah-Alwarawreh/Syrup.git`
 
 2. Build the main project by running `npm install && npm run build` in `Extension-React` directory
+    
+    - Additionally you might need to run this command with root privileges. If the previous command failed just run `sudo !!`
 
 3. Open the `Extension-Safari` directory and run `Syrup.xcodeproj`
 
