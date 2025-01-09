@@ -6,7 +6,7 @@ Syrup is a lightweight, open-source browser extension designed to make finding a
 
 Please read [the privacy policy](https://joinsyrup.com/PrivacyPolicy).
 
-You can help the project financially by becoming a Patreon member [here](https://www.patreon.com/c/abdallahalwarawreh/membership) or on [Ko-fi](https://ko-fi.com/abdallahalwarawreh).
+You can help the project financially by becoming a Patreon member [here](https://www.patreon.com/c/HexiumDev/membership) or on [Ko-fi](https://ko-fi.com/HexiumDev).
 
 ---
 
