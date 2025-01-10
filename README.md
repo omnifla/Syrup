@@ -91,6 +91,33 @@ You can also contribute by helping to translate Syrup! This is done through our 
 
 ---
 
+## 🚀 Backend / API
+
+> ⚠️ Work in Progress! Feel free to contribute and shape the future of Syrup!
+
+### Exchangeable Backend System
+
+The backend system is designed to be fully exchangeable! You can:
+- 🏠 Host existing backends yourself
+- 🛠️ Write your own implementation
+- 🔌 Use different providers
+- ⚙️ Configure everything in the extension settings
+
+### API Standard
+
+The backend follows the Syrup API Standard (SAS). Check out our [backend documentation](https://github.com/Abdallah-Alwarawreh/Syrup/tree/main/backend/standard) for all the details! Found something that could be improved? Create an issue - we'd love to hear your thoughts!
+
+### Current Implementation
+
+The current backend is maintained by [@ImGajeed76](https://github.com/ImGajeed76). Check out the implementation here: [discountdb-api](https://github.com/ImGajeed76/discountdb-api)
+
+Got questions? Feel free to:
+- 💬 Contact @ImGajeed76 on Discord
+- 📝 Open an issue in the [discountdb-api](https://github.com/ImGajeed76/discountdb-api) repo
+- 🤝 Contribute to the project (and maybe leave a star 😉)
+
+---
+
 ## 📚 Tech Stack
 
 [Techstack](./techstack.md)
