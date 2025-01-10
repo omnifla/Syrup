@@ -232,13 +232,27 @@
     }
 
     const logger = {
-        get isDev() {
-            // Chrome extensions in dev mode don't have an update_url
-            return !chrome.runtime.getManifest().update_url;
-        },
-
         prefix: "[Syrup]",
+        isDev: false,
         forceDebug: false,
+
+        init() {
+            return new Promise((resolve) => {
+                try {
+                    //https://stackoverflow.com/questions/30213993/management-permissions-for-chrome-extension-in-content-script
+                    chrome.runtime.sendMessage(
+                        { action: "checkDev" },
+                        (response) => {
+                            this.isDev = response;
+                            resolve();
+                        }
+                    );
+                } catch {
+                    //assume not dev
+                    resolve();
+                }
+            });
+        },
 
         log(...args) {
             if (this.isDev || this.forceDebug) {
@@ -829,6 +843,7 @@
      * 8. Main
      *******************************************************/
     async function main() {
+        await logger.init();
         let domain = window.location.hostname.replace("www.", "");
         if (domainReplacements[domain]) domain = domainReplacements[domain];
         const path = window.location.pathname;
