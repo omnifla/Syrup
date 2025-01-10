@@ -14,7 +14,7 @@ export interface CouponData {
     errorMsg: string;
 }
 
-const CouponsPage: React.FC<CouponData> = ({pageIcon, pageDomain, pageSubDomain, isSubDomain, couponsDomain, couponsSubDomain, handleCopy, errorMsg}) => {
+const CouponsPage: React.FC<CouponData> = ({ pageDomain, pageSubDomain, isSubDomain, couponsDomain, couponsSubDomain, handleCopy, errorMsg}) => {
     const { t } = useTranslation();
 
     const parsedDomain = parseDomain(fromUrl(pageDomain));
@@ -52,10 +52,10 @@ const CouponsPage: React.FC<CouponData> = ({pageIcon, pageDomain, pageSubDomain,
     }
 
     return (
-        <div className="w-full h-full grid grid-rows-[12%,88%]">
-            <div className="domain-switch flex flex-row h-[90%] w-[90%] border-border border-2 rounded-lg mx-[5%]">
+        <div className="w-full h-full grid grid-rows-[10%,90%] grid-cols-1">
+            <div className="flex flex-row h-full border-border border-2 rounded-lg mx-4">
                 {errorMsg ? (
-                    <div className="w-[100%] m-2 flex items-center justify-center bg-card rounded-lg text-foreground text-sm">
+                    <div className="w-full m-2 flex items-center justify-center bg-card rounded-lg text-foreground text-sm">
                         <p className="text-sm text-center text-red-500 dark:text-red-300">
                             {t(errorMsg)}
                         </p>
@@ -64,17 +64,17 @@ const CouponsPage: React.FC<CouponData> = ({pageIcon, pageDomain, pageSubDomain,
                     <>
                         {isSubDomain ? (
                             <>
-                                <label htmlFor="domain" className="DomainLabel w-[50%] m-2 flex items-center justify-center rounded-lg text-foreground text-sm cursor-pointer">
+                                <label htmlFor="domain" className="DomainLabel w-[50%] m-1.5 flex items-center justify-center rounded-lg text-foreground text-sm cursor-pointer bg-card">
                                     {domainName}
-                                    <input className="hidden" type="radio" name="couponType" id="domain" onChange={handleDomain}/>
+                                    <input className="hidden" type="radio" name="couponType" id="domain" onChange={handleDomain} defaultChecked />
                                 </label>
-                                <label htmlFor="subDomain" className="SubDomainLabel w-[50%] m-2 flex items-center justify-center rounded-lg text-foreground text-sm cursor-pointer">
+                                <label htmlFor="subDomain" className="SubDomainLabel w-[50%] m-1.5 flex items-center justify-center rounded-lg text-foreground text-sm cursor-pointer">
                                     {subDomainName}
                                     <input className="hidden" type="radio" name="couponType" id="subDomain" onChange={handleDomain}/>
                                 </label>
                             </>
                         ) : (
-                            <label htmlFor="domain" className="w-[100%] m-2 flex items-center justify-center bg-card rounded-lg text-foreground text-sm cursor-pointer">
+                            <label htmlFor="domain" className="w-[100%] m-1.5 flex items-center justify-center bg-card rounded-lg text-foreground text-sm cursor-pointer">
                                 {domainName}
                                 <input className="hidden" type="radio" name="couponType" id="domain"/>
                             </label>
@@ -85,17 +85,13 @@ const CouponsPage: React.FC<CouponData> = ({pageIcon, pageDomain, pageSubDomain,
             {errorMsg ? (
                 <div></div>
             ) : (
-                <div>
+                <div className="w-full h-full">
                     <CouponsEntry
                         className="h-[100%] Domain"
-                        pageIcon={pageIcon}
-                        pageDomain={pageDomain}
                         couponsDomain={couponsDomain}
                         handleCopy={handleCopy} />
                     <CouponsEntry
                         className="h-[100%] SubDomain hidden"
-                        pageIcon={pageIcon}
-                        pageDomain={pageSubDomain}
                         couponsDomain={couponsSubDomain}
                         handleCopy={handleCopy} />
                 </div>
