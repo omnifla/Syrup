@@ -1,6 +1,6 @@
 import Dropdown from "./Dropdown";
 
-const Header: React.FC<{}> = () => {
+const Header: React.FC = () => {
 
     return (
         <header className="w-[100%] h-[100%] bg-background/90">

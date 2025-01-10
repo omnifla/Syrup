@@ -1,7 +1,8 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import CouponCard, { Coupon } from "@/components/CouponCard";
+import CouponCard from "@/components/CouponCard";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
+import { Coupon } from "@/lib/sas/models.ts";
 
 const CouponsList: React.FC<{
     coupons: Coupon[] | null;
