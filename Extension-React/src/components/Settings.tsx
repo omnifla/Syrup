@@ -16,11 +16,15 @@ const Settings: React.FC = () => {
                         settings.classList.toggle('hidden');}}><X />
                 </Button>
             </header>
-            <div className="center ">
-                <h1>{ t('Theme') }</h1>
-                <ThemeSwitcher />
-                <h1>{ t('Language') }</h1>
-                <LanguageSwitcher />
+            <div>
+                <div className="flex flex-row">
+                    <h1>{ t('Theme') }</h1>
+                    <ThemeSwitcher />
+                </div>
+                <div className="flex flex-row">
+                    <h1>{ t('Language') }</h1>
+                    <LanguageSwitcher />
+                </div>
             </div>
             <Footer />
         </div>
