@@ -21,7 +21,8 @@ const CouponsList: React.FC<CouponData> = ({ couponsDomain, handleCopy, classNam
     }, [couponsDomain]);
 
     return (
-        <div className={`${className} h-[92%] m-4 p-2 rounded-lg border-2 border-border`}>
+        <div className={`${className} h-[92%] m-4 p-2 rounded-lg border-2 border-border relative`}>
+            <div className="w-full h-[10%] bg-gradient-to-t from-shadow to-transparent absolute top-0 left-0"></div>
             <ScrollArea className="h-full">
                 {couponsDomain ? (
                     couponsDomain.length > 0 ? (
@@ -53,6 +54,7 @@ const CouponsList: React.FC<CouponData> = ({ couponsDomain, handleCopy, classNam
                     </p>
                 )}
             </ScrollArea>
+            <div className="w-full h-[10%] bg-gradient-to-t from-shadow to-transparent absolute bottom-0 left-0"></div>
         </div>
     )
 }
