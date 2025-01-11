@@ -1,8 +1,13 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "getCoupons") {
+        let domain = "";
+        try {
+            domain = localStorage.getItem("domain");
+        } catch (e) {
+            domain = "https://api.discountdb.ch/api/v1/syrup/coupons";
+        }
         fetch(
-            "https://api.discountdb.ch/api/v1/syrup/coupons?domain=" +
-                request.domain
+            domain + "?domain=" + request.domain
         )
             .then((response) => response.json())
             .then((data) => {

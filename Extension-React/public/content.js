@@ -92,7 +92,7 @@
                         ) {
                             coupons = response.coupons;
                             resolve();
-                            chrome.storage.local.set({ coupons });
+                            localStorage.setItem("coupons", JSON.stringify(coupons));
                         } else {
                             logger.warn("No coupons returned from background");
                             resolve();
