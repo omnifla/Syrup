@@ -1,6 +1,6 @@
 import CouponsEntry from "@/components/CouponsEntry";
 import { useTranslation } from "react-i18next";
-import { Coupon } from "@/components/CouponCard";
+import { Coupon } from "@/lib/sas/models.ts";
 
 export interface CouponData {
     pageIcon: string;
@@ -17,8 +17,8 @@ const CouponsPage: React.FC<CouponData> = ({pageIcon, pageDomain, pageSubDomain,
     const { t } = useTranslation();
 
     return (
-        <div className="w-screen h-screen flex flex-col pt-2">
-                <h2 className="text-lg font-semibold pb-2 mb-2 text-primary text-center border-border border-b-2">
+        <div className="w-screen h-screen flex flex-col p-2">
+                <h2 className="text-lg font-semibold pb-2 text-primary text-center">
                     { t('Coupons') }
                 </h2>
             {errorMsg ? (

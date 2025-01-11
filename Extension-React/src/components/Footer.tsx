@@ -1,6 +1,6 @@
 import { Github } from "lucide-react";
 
-const Header: React.FC<{}> = () => {
+const Header: React.FC = () => {
     return (
         <footer className="p-4 flex justify-between items-center border-t-2 border-border">
             <a

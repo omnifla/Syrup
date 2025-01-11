@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { Ellipsis, Settings } from "lucide-react";
 
-const Dropdown: React.FC<{}> = () => {
+const Dropdown: React.FC = () => {
     return (
         <div className="relative">
             <Button variant="ghost" size="icon" onClick={() => {
