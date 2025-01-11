@@ -1,7 +1,7 @@
-import CouponsEntry from "@/components/CouponsEntry";
 import { useTranslation } from "react-i18next";
 import { Coupon } from "@/components/CouponCard";
 import { parseDomain, fromUrl } from "parse-domain";
+import CouponsList from "@/components/CouponsList";
 
 export interface CouponData {
     pageIcon: string;
@@ -86,12 +86,12 @@ const CouponsPage: React.FC<CouponData> = ({ pageDomain, pageSubDomain, isSubDom
                 <div></div>
             ) : (
                 <div className="w-full h-full">
-                    <CouponsEntry
-                        className="h-[100%] Domain"
+                    <CouponsList
+                        className="Domain"
                         couponsDomain={couponsDomain}
                         handleCopy={handleCopy} />
-                    <CouponsEntry
-                        className="h-[100%] SubDomain hidden"
+                    <CouponsList
+                        className="SubDomain hidden"
                         couponsDomain={couponsSubDomain}
                         handleCopy={handleCopy} />
                 </div>
