@@ -30,7 +30,7 @@ export const getLanguage = async (): Promise<string> => {
 
     storedLanguage = language;
     return storedLanguage;
-}
+};
 
 export const initializeI18n = async () => {
     const language = (await getLanguage()) || fallbackLanguage;

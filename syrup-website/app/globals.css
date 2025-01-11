@@ -75,3 +75,10 @@ body {
         --chart-5: 340 75% 55%;
     }
 }
+
+header.scroll {
+    top: -10%;
+}
+header.scrolled {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+}

@@ -8,6 +8,9 @@ Syrup.
 
 [Refer to @ImGajeed76 backend](https://github.com/ImGajeed76/discountdb-api)
 
+View the API documentation
+here: [Syrup API Standard](https://app.swaggerhub.com/apis/GITHUBSTAGING362/syrup-api-standard/1.0.0)
+
 ## Base URL Configuration
 
 The API endpoints must be accessible under the `/syrup` path, but providers have complete flexibility in choosing their

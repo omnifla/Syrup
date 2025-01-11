@@ -22,7 +22,7 @@ export default function Home() {
                 roboto.className
             )}
         >
-            <Header />
+            <div className="h-[10vh]"></div>
             <main>
                 <Hero />
                 <HowItWorks />
@@ -30,7 +30,6 @@ export default function Home() {
                 <Testimonials />
                 <FAQ />
             </main>
-            <Footer />
         </div>
     );
 }
