@@ -4,6 +4,7 @@ import Backend from "i18next-http-backend";
 import universalLanguageDetect from "@unly/universal-language-detector";
 
 import langNames from "@/json/language_names.json";
+import { getSetting, setSetting } from "@/lib/settings.ts";
 
 export const languages = Object.keys(langNames);
 export const languageNames: Record<string, string> = langNames;
@@ -15,33 +16,24 @@ const systemLanguage = universalLanguageDetect({
 });
 export let storedLanguage: string;
 
-const saveLanguage = (lang: string): void => {
-    chrome.storage.sync.set(
-        {
-            language: lang,
-        },
-        () => {
-            storedLanguage = lang;
-        }
-    );
+const saveLanguage = async (lang: string): Promise<void> => {
+    await setSetting("language", lang);
+    storedLanguage = lang;
 };
 
-export const getLanguage: Promise<string> = chrome.storage.sync.get().then((data) => {
-    storedLanguage = data["language"];
-
-    if (!storedLanguage) {
-        storedLanguage = systemLanguage
-        // save the detected language on first open
-        saveLanguage(storedLanguage);
+export const getLanguage = async (): Promise<string> => {
+    let language = await getSetting("language");
+    if (!language) {
+        language = systemLanguage;
+        await saveLanguage(language);
     }
 
-    console.log("[Syrup] Got language", storedLanguage);
-
+    storedLanguage = language;
     return storedLanguage;
-});
+}
 
 export const initializeI18n = async () => {
-    const language = (await getLanguage) || fallbackLanguage;
+    const language = (await getLanguage()) || fallbackLanguage;
 
     const options = {
         loadPath: "/_locales/{{lng}}/translation.json",
@@ -65,9 +57,9 @@ export const initializeI18n = async () => {
 initializeI18n();
 
 export const switchLanguage = (lng: string) => {
-    i18n.changeLanguage(lng).then(() => {
+    i18n.changeLanguage(lng).then(async () => {
         console.log("[Syrup] Language switched to", lng);
-        saveLanguage(lng);
+        await saveLanguage(lng);
     });
 };
 
