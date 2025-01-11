@@ -1,1 +1,1 @@
-export { SyrupApiClientV1 } from "src/lib/sas/v1";
+export { SyrupApiClientV1 } from "@/lib/sas/v1";
