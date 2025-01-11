@@ -1,13 +1,16 @@
 import {
     ApiConfig,
-    CouponListResponse, ErrorResponse,
+    CouponListResponse,
+    ErrorResponse,
     ListCouponsParams,
     MerchantListResponse,
-    SuccessResponse, VersionResponse
+    SuccessResponse,
+    VersionResponse
 } from "@/lib/sas/models.ts";
 import { CacheManager, CacheOptions } from "@/lib/sas/cache.ts";
+import { SyrupAPIV1 } from "@/lib/sas/v1/interfaces.ts";
 
-export class SyrupApiClient_v1_0_0 {
+export class SyrupApiClientV1 implements SyrupAPIV1 {
     private readonly baseUrl: string;
     private readonly apiKey?: string;
     private readonly cacheManager: CacheManager;
@@ -85,7 +88,7 @@ export class SyrupApiClient_v1_0_0 {
     /**
      * Get Client Version information
      */
-    getClientVersion(): string {
+    async getClientVersion(): Promise<string> {
         return "1.0.0";
     }
 

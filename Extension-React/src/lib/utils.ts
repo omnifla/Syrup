@@ -1,9 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { SyrupApiClient_v1_0_0 } from "@/lib/sas";
+import { SyrupApiClientV1 } from "@/lib/sas";
 import { Coupon } from "@/lib/sas/models.ts";
 
-export const syrupApiClient = new SyrupApiClient_v1_0_0("https://api.discountdb.ch/api/v1/syrup");
+export const syrupApiClient = new SyrupApiClientV1("https://api.discountdb.ch/api/v1/syrup");
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
