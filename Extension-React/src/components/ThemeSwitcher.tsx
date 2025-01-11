@@ -1,7 +1,7 @@
 import { useTheme, Theme } from "@/components/ThemeProvider";
 import { useTranslation } from "react-i18next";
 
-export function ThemeSwitcher() {
+export default function ThemeSwitcher() {
     const { setTheme } = useTheme();
     const { t } = useTranslation();
     const { theme } = useTheme();
@@ -14,5 +14,3 @@ export function ThemeSwitcher() {
         </select>
     );
 }
-
-export default ThemeSwitcher;
