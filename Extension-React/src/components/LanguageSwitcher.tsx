@@ -12,7 +12,7 @@ export function LanguageSwitcher() {
     }
 
     useEffect(() => {
-        getLanguage.then((lang) => {
+        getLanguage().then((lang: string) => {
             setLanguage(lang);
             setLanguagePath(`/icons/${lang}.svg`);
         });
