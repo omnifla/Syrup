@@ -1,25 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
-
-export interface Coupon {
-    code: string;
-    title: string;
-    description: string;
-    copied?: boolean;
-    score: number;
-}
+import { Coupon } from "@/lib/sas/models.ts";
 
 function round(value: number, precision: number) {
-    var multiplier = Math.pow(10, precision || 0);
+    const multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
 }
 
 const interpolateColor = (value: number, min: number, max: number): string => {
     const normalized = (value - min) / (max - min);
-    
+
     const hue = normalized * 120;
-    
+
     return `hsl(${hue}, 70%, 45%)`;
 };
 
@@ -31,7 +24,7 @@ const CouponCard: React.FC<{
     maxScore: number;
 }> = ({ coupon, onCopy, copied, minScore, maxScore }) => {
     const { t } = useTranslation();
-    let score = round(coupon.score, 2);
+    const score = round(coupon.score, 2);
     const color = interpolateColor(score, minScore, maxScore);
 
     return (
@@ -49,7 +42,7 @@ const CouponCard: React.FC<{
                 {copied ? t("Copied!") : t("Copy")}
             </Button>
         </Card>
-    )
+    );
 };
 
 export default CouponCard;
