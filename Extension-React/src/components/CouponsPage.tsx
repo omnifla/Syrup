@@ -49,6 +49,7 @@ const CouponsPage: React.FC<CouponData> = ({
     const subDomainName: string = getSubDomainName(parsedSubDomain);
 
     const handleDomain = () => {
+
         const domain = document.querySelector(
             'input[name="couponType"]:checked'
         )?.id;
@@ -80,6 +81,7 @@ const CouponsPage: React.FC<CouponData> = ({
                     <>
                         {isSubDomain ? (
                             <>
+
                                 <label
                                     htmlFor="domain"
                                     className="DomainLabel w-[50%] m-1.5 flex items-center justify-center rounded-lg text-foreground text-sm hover:cursor-pointer bg-card"
@@ -120,6 +122,7 @@ const CouponsPage: React.FC<CouponData> = ({
                                     name="couponType"
                                     id="domain"
                                 />
+
                             </label>
                         )}
                     </>
@@ -132,6 +135,7 @@ const CouponsPage: React.FC<CouponData> = ({
                     <CouponsList
                         className="Domain"
                         couponsDomain={couponsDomain}
+
                         handleCopy={handleCopy}
                     />
                     <CouponsList
@@ -139,6 +143,7 @@ const CouponsPage: React.FC<CouponData> = ({
                         couponsDomain={couponsSubDomain}
                         handleCopy={handleCopy}
                     />
+
                 </div>
             )}
         </div>

@@ -10,7 +10,7 @@ const Dropdown: React.FC = () => {
                     dropdown.classList.toggle('hidden');
                 }}><Ellipsis />
             </Button>
-            <div className="dropdown flex flex-col absolute hidden">
+            <div className="dropdown flex flex-col absolute hidden bg-card rounded-lg">
                 <ThemeToggle />
                 <Button variant="ghost" size="icon" onClick={() => {
                         const settings = document.querySelector('.settings') as HTMLDivElement;
