@@ -75,7 +75,7 @@
             try {
                 chrome.runtime.sendMessage(
                     { action: "getCoupons", domain },
-                    (response) => {
+                    async (response) => {
                         if (chrome.runtime.lastError) {
                             logger.error(
                                 "Runtime error during message passing:",
@@ -91,8 +91,8 @@
                             response.coupons.length > 0
                         ) {
                             coupons = response.coupons;
+                            await browser.storage.local.set({ coupons });
                             resolve();
-                            localStorage.setItem("coupons", JSON.stringify(coupons));
                         } else {
                             logger.warn("No coupons returned from background");
                             resolve();

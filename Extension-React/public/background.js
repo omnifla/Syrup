@@ -1,13 +1,13 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "getCoupons") {
-        let domain = "";
+        let database = "";
         try {
-            domain = localStorage.getItem("domain");
+            database = localStorage.getItem("database");
         } catch (e) {
-            domain = "https://api.discountdb.ch/api/v1/syrup/coupons";
+            database = "https://api.discountdb.ch/api/v1/syrup/coupons";
         }
         fetch(
-            domain + "?domain=" + request.domain
+            database + "?domain=" + request.domain
         )
             .then((response) => response.json())
             .then((data) => {

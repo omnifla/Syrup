@@ -27,7 +27,7 @@ const Settings: React.FC = () => {
                     <LanguageSwitcher />
                 </div>
                 <div className="flex flex-col">
-                    <h1>Custom Database For coupons</h1>
+                    <h1>{t("custom_database")}</h1>
                     <CustomDatabase />
                 </div>
             </div>
