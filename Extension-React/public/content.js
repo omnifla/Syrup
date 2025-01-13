@@ -33,6 +33,15 @@
             removeCouponButtonSelector:
                 "button[data-testid='coupon-delete-applied-button']",
         },
+        "fossil.com": {
+            inputSelector: ".coupon-code-field",
+            preApplyButtonSelector: ".optional-promo",
+            applyButtonSelector: ".promo-code-btn",
+            successSelector: ".coupon-code-applied",
+            failureSelector: ".coupon-error-message",
+            priceSelector: ".grand-total",
+            removeCouponButtonSelector: ".remove-coupon",
+        },
     };
 
     const platformConfigs = {
@@ -75,29 +84,29 @@
             try {
                 chrome.runtime.sendMessage(
                     { action: "getCoupons", domain },
-                    async (response) => {
-                        if (chrome.runtime.lastError) {
-                            logger.error(
-                                "Runtime error during message passing:",
-                                chrome.runtime.lastError
-                            );
-                            reject(chrome.runtime.lastError.message);
-                            return;
-                        }
+                        (response) => {
+                            const fetchedCoupons = JSON.stringify(response.coupons);
+                            if (chrome.runtime.lastError) {
+                                logger.error(
+                                    "Runtime error during message passing:",
+                                    chrome.runtime.lastError
+                                );
+                                reject(chrome.runtime.lastError.message);
+                                return;
+                            }
 
-                        if (
-                            response &&
-                            response.coupons &&
-                            response.coupons.length > 0
-                        ) {
-                            coupons = response.coupons;
-                            await browser.storage.local.set({ coupons });
-                            resolve();
-                        } else {
-                            logger.warn("No coupons returned from background");
-                            resolve();
+                            if (
+                                fetchedCoupons &&
+                                fetchedCoupons.length > 0
+                            ) {
+                                localStorage.setItem("database", fetchedCoupons);
+                                coupons = fetchedCoupons;
+                                resolve();
+                            } else {
+                                logger.warn("No coupons returned from background");
+                                resolve();
+                            }
                         }
-                    }
                 );
             } catch (error) {
                 logger.error("Error fetching coupons:", error);
@@ -408,13 +417,14 @@
 
         showTestingPopover(coupons.length);
 
-        for (let i = 0; i < coupons.length; i++) {
+        logger.warn("Parsed coupons:", coupons.length);
+        for (let i = 0; i < parseCoupons.length; i++) {
             if (stopTesting || useBestNow) {
                 break;
             }
 
-            const coupon = coupons[i];
-            const couponCode = coupon.couponCode || coupon; // handle either {couponCode: "..."} or raw string
+            const coupon = parseCoupons[i];
+            const couponCode = coupon.code || coupon; // handle either {couponCode: "..."} or raw string
 
             updateTestingPopover(i + 1, coupons.length, couponCode, bestPrice);
 
@@ -844,7 +854,8 @@
      *******************************************************/
     async function main() {
         await logger.init();
-        let domain = window.location.hostname.replace("www.", "");
+        let domain = window.location.hostname.replace("www.", "").replace("https://", "").replace("http://", "");
+        console.error(domain);
         if (domainReplacements[domain]) domain = domainReplacements[domain];
         const path = window.location.pathname;
 
