@@ -418,12 +418,12 @@
         showTestingPopover(coupons.length);
 
         logger.warn("Parsed coupons:", coupons.length);
-        for (let i = 0; i < parseCoupons.length; i++) {
+        for (let i = 0; i < coupons.length; i++) {
             if (stopTesting || useBestNow) {
                 break;
             }
 
-            const coupon = parseCoupons[i];
+            const coupon = coupons[i];
             const couponCode = coupon.code || coupon; // handle either {couponCode: "..."} or raw string
 
             updateTestingPopover(i + 1, coupons.length, couponCode, bestPrice);
