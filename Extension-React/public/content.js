@@ -861,7 +861,6 @@
     async function main() {
         await logger.init();
         let domain = window.location.hostname.replace("www.", "").replace("https://", "").replace("http://", "");
-        console.error(domain);
         if (domainReplacements[domain]) domain = domainReplacements[domain];
         const path = window.location.pathname;
 
