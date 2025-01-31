@@ -15,7 +15,7 @@
         "@unly/universal-language-detector": "^2.0.3",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
-        "i18next": "^24.2.0",
+        "i18next": "^24.2.1",
         "i18next-http-backend": "^3.0.1",
         "lucide-react": "^0.469.0",
         "parse-domain": "^8.2.2",
