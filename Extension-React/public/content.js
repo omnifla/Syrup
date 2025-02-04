@@ -119,17 +119,17 @@
 
     async function loadTranslations(lang) {
         const url = chrome.runtime.getURL(`_locales/${lang}/messages.json`);
+        const urlFallback = chrome.runtime.getURL(`_locales/en/messages.json`);
 
         try {
             const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error ${response.status}`);
-            }
             const translations = await response.json();
             return translations;
         } catch (error) {
-            logger.error("Failed to load translations:", error);
-            return {};
+            logger.error("Failed to load translations:", error, ". " , "Falling back to en");
+            const response = await fetch(urlFallback);
+            const translations = await response.json();
+            return translations;
         }
     }
 
